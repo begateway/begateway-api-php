@@ -28,8 +28,16 @@ class ResponseCheckout extends ResponseBase {
   }
 
   private function _compileErrors() {
-    return 'there are errors in request parameters';
+    $message = 'there are errors in request parameters.';
+    if (isset($this->getResponse()->errors)) {
+      foreach ($this->getResponse()->errors as $name => $desc) {
+        $message .= ' ' . print_r($name, true);
+        foreach($desc as $value) {
+          $message .= ' ' . $value . '.';
+        }
+      }
+    }
+    return $message;
   }
-
 }
 ?>
