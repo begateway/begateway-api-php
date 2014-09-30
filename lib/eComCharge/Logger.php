@@ -10,6 +10,8 @@ class Logger {
 
   private $_level;
   private static $instance;
+  private $_output = 'php://stderr';
+  private $_message_callback = false;
 
   private function __construct() {
     $this->_level = self::INFO;
@@ -21,14 +23,24 @@ class Logger {
     if (!empty($place)) { $p = "( $place )"; }
 
     if ($this->_level >= $level) {
-      print("[" . self::getLevelName($level) . " $p] => ");
-      if (is_string($msg)) { print($msg); } else { print_r($msg); }
-      print(PHP_EOL);
+      $message = "[" . self::getLevelName($level) . " $p] => ";
+      $message .= print_r($msg, true);
+      $message .= PHP_EOL;
+      if ($this->_output) { $this->sendToFile($message); }
+      if ($this->_message_callback != false) { call_user_func($this->_message_callback, $message); }
     }
   }
 
   public function setLogLevel($level) {
     $this->_level = $level;
+  }
+
+  public function setOutputCallback($callback) {
+    $this->_message_callback = $callback;
+  }
+
+  public function setOutputFile($path) {
+    $this->_output = $path;
   }
 
   public static function getLevelName($level) {
@@ -47,6 +59,12 @@ class Logger {
     }
 
     return self::$instance;
+  }
+
+  private function sendToFile($message) {
+    $fh = fopen($this->_output, 'w+');
+    fwrite($fh, $message);
+    fclose($fh);
   }
 
 
