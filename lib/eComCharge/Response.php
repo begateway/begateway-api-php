@@ -16,14 +16,14 @@ class Response extends ResponseBase {
   }
 
   public function isTest() {
-    if (isset($this->getResponse()->transaction))
+    if ($this->hasTransactionSection()) {
       return $this->getResponse()->transaction->test == true;
-
+    }
     return false;
   }
 
   public function getStatus() {
-    if (is_object($this->getResponse()) && isset($this->getResponse()->transaction)) {
+    if ($this->hasTransactionSection()) {
       return $this->getResponse()->transaction->status;
     }elseif ($this->isError()) {
       return 'error';
@@ -32,11 +32,23 @@ class Response extends ResponseBase {
   }
 
   public function getUid() {
-    if (is_object($this->getResponse()) && isset($this->getResponse()->transaction)) {
+    if ($this->hasTransactionSection()) {
       return $this->getResponse()->transaction->uid;
     }else{
       return false;
     }
+  }
+
+  public function getTrackingId() {
+    if ($this->hasTransactionSection()) {
+      return $this->getResponse()->transaction->tracking_id;
+    }else{
+      return false;
+    }
+  }
+
+  public function hasTransactionSection() {
+    return (is_object($this->getResponse()) && isset($this->getResponse()->transaction));
   }
 
   public function getMessage() {
