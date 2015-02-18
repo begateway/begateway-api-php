@@ -2,20 +2,15 @@
 namespace eComCharge;
 
 class Webhook extends Response {
-  protected $_shop_id;
-
-  protected $_shop_key;
-
   protected $_json_in = 'php://input';
 
-  public function __construct($shop_id, $shop_key) {
-    $this->_shop_id = $shop_id;
-    $this->_shop_key = $shop_key;
+  public function __construct() {
     $this->decodeReceivedJson();
   }
 
   public function isAuthorized() {
-    return $this->_getShopIdFromAuthorization() == $this->_shop_id && $this->_getShopKeyFromAuthorization() == $this->_shop_key;
+    return $this->_getShopIdFromAuthorization() == Settings::$shopId
+           && $this->_getShopKeyFromAuthorization() == Settings::$shopKey;
   }
 
   public function decodeReceivedJson() {

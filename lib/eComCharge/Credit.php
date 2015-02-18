@@ -7,11 +7,9 @@ class Credit extends ApiAbstract {
   protected $_description;
   protected $_tracking_id;
 
-  public function __construct($shop_id, $shop_key) {
+  public function __construct() {
     $this->money = new Money();
     $this->card = new Card();
-
-    parent::__construct($shop_id, $shop_key);
   }
 
   public function setDescription($description) {

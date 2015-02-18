@@ -9,7 +9,7 @@ class GatewayTransport {
         $json = json_encode($t_request);
 
         Logger::getInstance()->write("Request to $host", Logger::DEBUG, get_class() );
-        Logger::getInstance()->write("with Shop Id $shop_id & Shop key $shop_key", Logger::DEBUG, get_class() );
+        Logger::getInstance()->write("with Shop Id " . Settings::$shopId . " & Shop key " . Settings::$shopKey, Logger::DEBUG, get_class() );
         if (!empty($json))
           Logger::getInstance()->write("with message " .  $json, Logger::DEBUG, get_class());
 
@@ -19,7 +19,7 @@ class GatewayTransport {
           curl_setopt($process, CURLOPT_POSTFIELDS, $json);
         }
         curl_setopt($process, CURLOPT_URL, $host);
-        curl_setopt($process, CURLOPT_USERPWD, $shop_id . ":" . $shop_key);
+        curl_setopt($process, CURLOPT_USERPWD, Settings::$shopId . ":" . Settings::$shopKey);
         curl_setopt($process, CURLOPT_TIMEOUT, 30);
         curl_setopt($process, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($process, CURLOPT_SSL_VERIFYPEER, false);

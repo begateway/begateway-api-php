@@ -4,11 +4,15 @@ namespace eComCharge;
 class ResponseCheckout extends ResponseBase {
 
   public function isSuccess() {
-    return is_object($this->getResponse()->checkout);
+    return isset($this->getResponse()->checkout);
   }
 
   public function isError() {
-    return parent::isError() || $this->getResponse()->checkout->status == 'error';
+    $error = parent::isError();
+    if (isset($this->getResponse()->checkout) && isset($this->getResponse()->checkout->status)) {
+      $error = $error || $this->getResponse()->checkout->status == 'error';
+    }
+    return $error;
   }
 
   public function getMessage() {

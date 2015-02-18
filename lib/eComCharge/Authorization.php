@@ -10,12 +10,10 @@ class Authorization extends ApiAbstract {
   protected $_notification_url;
   protected $_return_url;
 
-  public function __construct($shop_id, $shop_key) {
+  public function __construct() {
     $this->customer = new Customer();
     $this->money = new Money();
     $this->card = new Card();
-
-    parent::__construct($shop_id, $shop_key);
   }
 
   public function setDescription($description) {
