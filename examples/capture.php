@@ -1,13 +1,10 @@
 <?php
-namespace eComCharge;
-
 require_once __DIR__ . '/../lib/ecomcharge.php';
 require_once __DIR__ . '/test_shop_data.php';
 
+\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
 
-Logger::getInstance()->setLogLevel(Logger::DEBUG);
-
-$transaction = new Authorization(SHOP_ID, SHOP_SECRET_KEY);
+$transaction = new \eComCharge\Authorization;
 
 $amount = rand(100, 10000);
 
@@ -41,7 +38,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Capture transaction " . $response->getUid() . PHP_EOL);
 
-  $capture = new Capture(SHOP_ID, SHOP_SECRET_KEY);
+  $capture = new \eComCharge\Capture;
   $capture->setParentUid($response->getUid());
   $capture->money->setAmount($transaction->money->getAmount());
 

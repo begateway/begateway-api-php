@@ -1,12 +1,10 @@
 <?php
-namespace eComCharge;
-
-require_once __DIR__ . '/test_shop_data.php';
 require_once __DIR__ . '/../lib/ecomcharge.php';
+require_once __DIR__ . '/test_shop_data.php';
 
-Logger::getInstance()->setLogLevel(Logger::DEBUG);
+\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
 
-$token = new CardToken(SHOP_ID, SHOP_SECRET_KEY);
+$token = new \eComCharge\CardToken;
 $token->card->setCardNumber('4200000000000000');
 $token->card->setCardHolder('John Doe');
 $token->card->setCardExpMonth(1);
@@ -18,7 +16,7 @@ if ($response->isSuccess()) {
   print("Card token: " . $response->card->getCardToken() . PHP_EOL);
   print("Trying to make a payment by the token and with CVC 123" . PHP_EOL);
 
-  $transaction = new Payment(SHOP_ID, SHOP_SECRET_KEY);
+  $transaction = new \eComCharge\Payment;
 
   $amount = rand(100, 10000);
 

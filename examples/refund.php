@@ -1,13 +1,10 @@
 <?php
-namespace eComCharge;
-
 require_once __DIR__ . '/../lib/ecomcharge.php';
 require_once __DIR__ . '/test_shop_data.php';
 
+\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
 
-Logger::getInstance()->setLogLevel(Logger::DEBUG);
-
-$transaction = new Payment(SHOP_ID, SHOP_SECRET_KEY);
+$transaction = new \eComCharge\Payment;
 
 $amount = rand(100, 10000);
 
@@ -31,7 +28,6 @@ $transaction->customer->setZip('LV-1082');
 $transaction->customer->setIp('127.0.0.1');
 $transaction->customer->setEmail('john@example.com');
 
-
 $response = $transaction->submit();
 
 print("Transaction message: " . $response->getMessage() . PHP_EOL);
@@ -41,7 +37,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Refund transaction " . $response->getUid() . PHP_EOL);
 
-  $refund = new Refund(SHOP_ID, SHOP_SECRET_KEY);
+  $refund = new \eComCharge\Refund;
   $refund->setParentUid($response->getUid());
   $refund->money->setAmount($transaction->money->getAmount());
   $refund->setReason('customer request');

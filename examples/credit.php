@@ -1,12 +1,10 @@
 <?php
-namespace eComCharge;
-
-require_once __DIR__ . '/test_shop_data.php';
 require_once __DIR__ . '/../lib/ecomcharge.php';
+require_once __DIR__ . '/test_shop_data.php';
 
-Logger::getInstance()->setLogLevel(Logger::DEBUG);
+\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
 
-$transaction = new Payment(SHOP_ID, SHOP_SECRET_KEY);
+$transaction = new \eComCharge\Payment;
 
 $amount = rand(100, 10000);
 
@@ -40,7 +38,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Credit to card " . $transaction->card->getCardNumber() . PHP_EOL);
 
-  $credit = new Credit(SHOP_ID, SHOP_SECRET_KEY);
+  $credit = new \eComCharge\Credit;
 
   $amount = rand(100, 10000);
 
