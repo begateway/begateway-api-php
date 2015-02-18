@@ -1,10 +1,12 @@
 <?php
-class WebhookTest extends UnitTestCase {
+namespace eComCharge;
+
+class WebhookTest extends TestCase {
 
   public function test_WebhookIsSentWithCorrectCredentials() {
     $w = $this->getTestObjectInstance();
-    $s = TestData::getShopId();
-    $k = TestData::getShopKey();
+    $s = Settings::$shopId;
+    $k = Settings::$shopKey;
 
     $_SERVER['PHP_AUTH_USER'] = $s;
     $_SERVER['PHP_AUTH_PW'] = $k;
@@ -25,7 +27,7 @@ class WebhookTest extends UnitTestCase {
   public function test_RequestIsValidAndItIsSuccess() {
     $w = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Webhook');
+    $reflection = new \ReflectionClass('eComCharge\Webhook');
     $property = $reflection->getProperty('_response');
     $property->setAccessible(true);
     $property->setValue($w,json_decode($this->webhookMessage()));
@@ -40,7 +42,7 @@ class WebhookTest extends UnitTestCase {
   public function test_RequestIsValidAndItIsFailed() {
     $w = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Webhook');
+    $reflection = new \ReflectionClass('eComCharge\Webhook');
     $property = $reflection->getProperty('_response');
     $property->setAccessible(true);
     $property->setValue($w,json_decode($this->webhookMessage('failed')));
@@ -56,7 +58,7 @@ class WebhookTest extends UnitTestCase {
   public function test_RequestIsValidAndItIsTest() {
     $w = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Webhook');
+    $reflection = new \ReflectionClass('eComCharge\Webhook');
     $property = $reflection->getProperty('_response');
     $property->setAccessible(true);
     $property->setValue($w,json_decode($this->webhookMessage('failed', true)));
@@ -73,7 +75,7 @@ class WebhookTest extends UnitTestCase {
   public function test_NotValidRequestReceived() {
     $w = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Webhook');
+    $reflection = new \ReflectionClass('eComCharge\Webhook');
     $property = $reflection->getProperty('_response');
     $property->setAccessible(true);
     $property->setValue($w,json_decode(''));
@@ -82,12 +84,9 @@ class WebhookTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance() {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    return new eComCharge\Webhook($id, $key);
+    return new Webhook();
   }
 
   private function webhookMessage($status = 'successful', $test = true ) {

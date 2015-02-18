@@ -1,5 +1,7 @@
 <?php
-class PaymentTest extends UnitTestCase {
+namespace eComCharge;
+
+class PaymentTest extends TestCase {
 
   public function test_setDescription() {
 
@@ -49,12 +51,12 @@ class PaymentTest extends UnitTestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Payment');
+    $reflection = new \ReflectionClass('eComCharge\Payment');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, 'https://processing.ecomcharge.com/transactions/payments');
+    $this->assertEqual($url, Settings::$apiBase . '/transactions/payments');
 
   }
 
@@ -96,7 +98,7 @@ class PaymentTest extends UnitTestCase {
       )
     );
 
-    $reflection = new ReflectionClass( 'eComCharge\Payment');
+    $reflection = new \ReflectionClass( 'eComCharge\Payment');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -195,19 +197,9 @@ class PaymentTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance($threed = false) {
-    authorizeFromEnv();
+    self::authorizeFromEnv($threed);
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    if ($threed) {
-      $id = TestData::getShopId3d();
-      $key =  TestData::getShopKey3d();
-    }
-
-    return new eComCharge\Payment($id, $key);
+    return new Payment();
   }
-
-
 }
 ?>

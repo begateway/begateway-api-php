@@ -1,5 +1,7 @@
 <?php
-class QueryByTokenTest extends UnitTestCase {
+namespace eComCharge;
+
+class QueryByTokenTest extends TestCase {
 
   public function test_setToken() {
     $q = $this->getTestObjectInstance();
@@ -14,12 +16,12 @@ class QueryByTokenTest extends UnitTestCase {
     $q = $this->getTestObjectInstance();
     $q->setToken('1234');
 
-    $reflection = new ReflectionClass('eComCharge\QueryByToken');
+    $reflection = new \ReflectionClass('eComCharge\QueryByToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');
 
-    $this->assertEqual($url, 'https://checkout.ecomcharge.com/ctp/api/checkouts/1234');
+    $this->assertEqual($url, Settings::$checkoutBase . '/ctp/api/checkouts/1234');
 
   }
 
@@ -52,9 +54,9 @@ class QueryByTokenTest extends UnitTestCase {
   }
 
   protected function runParentTransaction($amount = 10.00 ) {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $transaction = new eComCharge\GetPaymentPageToken(TestData::getShopId(), TestData::getShopKey());
+    $transaction = new GetPaymentPageToken();
 
     $url = 'http://www.example.com';
 
@@ -82,12 +84,9 @@ class QueryByTokenTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance() {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    return new eComCharge\QueryByToken($id, $key);
+    return new QueryByToken();
   }
 }
 ?>

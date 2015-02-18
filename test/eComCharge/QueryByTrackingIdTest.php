@@ -1,5 +1,7 @@
 <?php
-class QueryByTrackingIdTest extends UnitTestCase {
+namespace eComCharge;
+
+class QueryByTrackingIdTest extends TestCase {
 
   public function test_trackingId() {
     $q = $this->getTestObjectInstance();
@@ -14,12 +16,12 @@ class QueryByTrackingIdTest extends UnitTestCase {
     $q = $this->getTestObjectInstance();
     $q->setTrackingId('1234');
 
-    $reflection = new ReflectionClass('eComCharge\QueryByTrackingId');
+    $reflection = new \ReflectionClass('eComCharge\QueryByTrackingId');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');
 
-    $this->assertEqual($url, 'https://processing.ecomcharge.com/transactions/tracking_id/1234');
+    $this->assertEqual($url, Settings::$apiBase . '/transactions/tracking_id/1234');
 
   }
 
@@ -55,9 +57,9 @@ class QueryByTrackingIdTest extends UnitTestCase {
   }
 
   protected function runParentTransaction($amount = 10.00 ) {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $transaction = new eComCharge\Payment(TestData::getShopId(), TestData::getShopKey());
+    $transaction = new Payment();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');
@@ -83,12 +85,9 @@ class QueryByTrackingIdTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance() {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    return new eComCharge\QueryByTrackingId($id, $key);
+    return new QueryByTrackingId();
   }
 }
 ?>

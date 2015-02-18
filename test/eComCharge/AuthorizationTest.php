@@ -1,5 +1,7 @@
 <?php
-class AuthorizationTest extends UnitTestCase {
+namespace eComCharge;
+
+class AuthorizationTest extends TestCase {
 
   public function test_setDescription() {
 
@@ -13,36 +15,24 @@ class AuthorizationTest extends UnitTestCase {
   }
 
   public function test_setTrackingId() {
-
     $auth = $this->getTestObjectInstance();
-
     $tracking_id = 'Test tracking_id';
-
     $auth->setTrackingId($tracking_id);
     $this->assertEqual($auth->getTrackingId(), $tracking_id);
   }
 
   public function test_setNotificationUrl() {
-
     $auth = $this->getTestObjectInstance();
-
     $url = 'http://www.example.com';
-
     $auth->setNotificationUrl($url);
-
     $this->assertEqual($auth->getNotificationUrl(), $url);
   }
 
   public function test_setReturnUrl() {
-
     $auth = $this->getTestObjectInstance();
-
     $url = 'http://www.example.com';
-
     $auth->setReturnUrl($url);
-
     $this->assertEqual($auth->getReturnUrl(), $url);
-
   }
 
   public function test_buildRequestMessage() {
@@ -83,7 +73,7 @@ class AuthorizationTest extends UnitTestCase {
       )
     );
 
-    $reflection = new ReflectionClass( 'eComCharge\Authorization');
+    $reflection = new \ReflectionClass( 'eComCharge\Authorization');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -96,13 +86,12 @@ class AuthorizationTest extends UnitTestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Authorization');
+    $reflection = new \ReflectionClass('eComCharge\Authorization');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, 'https://processing.ecomcharge.com/transactions/authorizations');
-
+    $this->assertEqual($url, Settings::$apiBase . '/transactions/authorizations');
   }
 
   public function test_successAuthorization() {
@@ -121,7 +110,6 @@ class AuthorizationTest extends UnitTestCase {
     $this->assertNotNull($response->getUid());
     $this->assertEqual($response->getStatus(), 'successful');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
-
   }
 
   public function test_incompleteAuthorization() {
@@ -143,7 +131,6 @@ class AuthorizationTest extends UnitTestCase {
     $this->assertTrue(preg_match('/process/', $response->getResponse()->transaction->redirect_url));
     $this->assertEqual($response->getStatus(), 'incomplete');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
-
   }
 
   public function test_failedAuthorization() {
@@ -163,7 +150,6 @@ class AuthorizationTest extends UnitTestCase {
     $this->assertNotNull($response->getUid());
     $this->assertEqual($response->getStatus(), 'failed');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
-
   }
 
   public function test_errorAuthorization() {
@@ -182,10 +168,7 @@ class AuthorizationTest extends UnitTestCase {
     $this->assertTrue($response->isError());
     $this->assertEqual($response->getMessage(), 'Date is expired. Exp year Invalid. Format should be: yyyy.');
     $this->assertEqual($response->getStatus(), 'error');
-
   }
-
-
 
   protected function getTestObject($threed = false) {
 
@@ -214,20 +197,10 @@ class AuthorizationTest extends UnitTestCase {
     return $transaction;
   }
 
-  protected function getTestObjectInstance($threed = false) {
-    authorizeFromEnv();
+  protected function getTestObjectInstance($threeds = false) {
+    self::authorizeFromEnv($threeds);
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    if ($threed) {
-      $id = TestData::getShopId3d();
-      $key = TestData::getShopKey3d();
-    }
-
-    return new eComCharge\Authorization($id, $key);
+    return new Authorization();
   }
-
-
 }
 ?>

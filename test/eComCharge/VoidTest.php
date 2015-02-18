@@ -1,5 +1,7 @@
 <?php
-class VoidTest extends UnitTestCase {
+namespace eComCharge;
+
+class VoidTest extends TestCase {
 
   public function test_setParentUid() {
     $transaction = $this->getTestObjectInstance();
@@ -19,7 +21,7 @@ class VoidTest extends UnitTestCase {
       )
     );
 
-    $reflection = new ReflectionClass( 'eComCharge\Void' );
+    $reflection = new \ReflectionClass( 'eComCharge\Void' );
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -32,12 +34,12 @@ class VoidTest extends UnitTestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Void');
+    $reflection = new \ReflectionClass('eComCharge\Void');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, 'https://processing.ecomcharge.com/transactions/voids');
+    $this->assertEqual($url, Settings::$apiBase . '/transactions/voids');
 
   }
 
@@ -81,9 +83,9 @@ class VoidTest extends UnitTestCase {
   }
 
   protected function runParentTransaction($amount = 10.00 ) {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $transaction = new eComCharge\Authorization(TestData::getShopId(), TestData::getShopKey());
+    $transaction = new Authorization();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');
@@ -120,12 +122,9 @@ class VoidTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance() {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    return new eComCharge\Void($id, $key);
+    return new Void();
   }
 }
 ?>

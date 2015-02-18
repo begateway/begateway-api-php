@@ -1,5 +1,7 @@
 <?php
-class GetPaymentPageTokenTest extends UnitTestCase {
+namespace eComCharge;
+
+class GetPaymentPageTokenTest extends TestCase {
 
   public function test_setDescription() {
     $auth = $this->getTestObjectInstance();
@@ -108,7 +110,7 @@ class GetPaymentPageTokenTest extends UnitTestCase {
       )
     );
 
-    $reflection = new ReflectionClass( 'eComCharge\GetPaymentPageToken');
+    $reflection = new \ReflectionClass( 'eComCharge\GetPaymentPageToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -121,12 +123,12 @@ class GetPaymentPageTokenTest extends UnitTestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\GetPaymentPageToken');
+    $reflection = new \ReflectionClass('eComCharge\GetPaymentPageToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, 'https://checkout.ecomcharge.com/ctp/api/checkouts');
+    $this->assertEqual($url, Settings::$checkoutBase . '/ctp/api/checkouts');
 
   }
 
@@ -193,12 +195,9 @@ class GetPaymentPageTokenTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance() {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    return new eComCharge\GetPaymentPageToken($id, $key);
+    return new GetPaymentPageToken();
   }
 
 

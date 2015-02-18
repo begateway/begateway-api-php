@@ -1,5 +1,7 @@
 <?php
-class CreditTest extends UnitTestCase {
+namespace eComCharge;
+
+class CreditTest extends TestCase {
 
  public function test_setDescription() {
 
@@ -36,7 +38,7 @@ class CreditTest extends UnitTestCase {
       )
     );
 
-    $reflection = new ReflectionClass( 'eComCharge\Credit' );
+    $reflection = new \ReflectionClass( 'eComCharge\Credit' );
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -49,12 +51,12 @@ class CreditTest extends UnitTestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Credit');
+    $reflection = new \ReflectionClass('eComCharge\Credit');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, 'https://processing.ecomcharge.com/transactions/credits');
+    $this->assertEqual($url, Settings::$apiBase . '/transactions/credits');
 
   }
 
@@ -102,9 +104,9 @@ class CreditTest extends UnitTestCase {
   }
 
   protected function runParentTransaction($amount = 10.00 ) {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $transaction = new eComCharge\Payment(TestData::getShopId(), TestData::getShopKey());
+    $transaction = new Payment();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');
@@ -143,12 +145,9 @@ class CreditTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance() {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    return new eComCharge\Credit($id, $key);
+    return new Credit();
   }
 }
 ?>
