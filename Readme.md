@@ -57,7 +57,7 @@ transactions
 
 ## Documentation
 
-Visit [https://docs.ecomcharge.com](https://docs.ecomcharge.com) for
+Visit [https://doc.ecomcharge.com](https://doc.ecomcharge.com) for
 up-to-date documentation
 
 ## Tests
