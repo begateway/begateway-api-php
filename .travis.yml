@@ -1,0 +1,10 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+before_install:
+  - sudo apt-get update -qq
+  - grep -q RELEASE=14.04 /etc/lsb-release && sudo apt-get install -qq php5-json
+script:
+  - "cd ./test && ./run-tests.sh"
