@@ -1,5 +1,5 @@
 # eComCharge bePaid integration library
-=======================================
+
 [![Build Status Master](https://travis-ci.org/ecomcharge/bepaid-api-php.svg?branch=master)](https://travis-ci.org/ecomcharge/bepaid-api-php)
 
 ## Requirements
