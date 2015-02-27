@@ -1,13 +1,19 @@
 <?php
-class GatewayTransportExceptionTest extends UnitTestCase {
+namespace eComCharge;
+
+class GatewayTransportExceptionTest extends TestCase {
+
+  function setUp() {
+    $this->_apiBase = Settings::$apiBase;
+    Settings::$apiBase = 'https://thedomaindoesntexist.ecomcharge.com';
+  }
+
+  function tearDown() {
+    Settings::$apiBase = $this->_apiBase;
+  }
 
   public function test_networkIssuesHandledCorrectly() {
     $auth = $this->getTestObject();
-
-    $reflection = new ReflectionClass('eComCharge\Authorization');
-    $property = $reflection->getProperty('_service_url');
-    $property->setAccessible(true);
-    $property->setValue($auth, 'https://thedomaindoesntexist.ecomcharge.com');
 
     $amount = rand(0,10000) / 100;
 
@@ -17,7 +23,7 @@ class GatewayTransportExceptionTest extends UnitTestCase {
     $response = $auth->submit();
 
     $this->assertTrue($response->isError());
-    $this->assertPattern('|Could not resolve host: thedomaindoesntexist.ecomcharge.com|', $response->getMessage());
+    $this->assertPattern("|thedomaindoesntexist.ecomcharge.com|", $response->getMessage());
 
   }
 
@@ -49,17 +55,9 @@ class GatewayTransportExceptionTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance($threed = false) {
-    authorizeFromEnv();
+    self::authorizeFromEnv($threed);
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    if ($threed) {
-      $id = TestData::getShopId3d();
-      $key = TestData::getShopKey3d();
-    }
-
-    return new eComCharge\Authorization($id, $key);
+    return new Authorization();
   }
 
 

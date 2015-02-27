@@ -5,7 +5,7 @@ class QueryByToken extends ApiAbstract {
   protected $_token;
 
   protected function _endpoint() {
-    return $this->_pp_service_url . '/ctp/api/checkouts/' . $this->getToken();
+    return Settings::$checkoutBase . '/ctp/api/checkouts/' . $this->getToken();
   }
   public function setToken($token) {
     $this->_token = $token;

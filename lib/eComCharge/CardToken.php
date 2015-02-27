@@ -4,10 +4,8 @@ namespace eComCharge;
 class CardToken extends ApiAbstract {
   public $card;
 
-  public function __construct($shop_id, $shop_key) {
+  public function __construct() {
     $this->card = new Card();
-
-    parent::__construct($shop_id, $shop_key);
   }
 
   public function submit() {
@@ -15,7 +13,7 @@ class CardToken extends ApiAbstract {
   }
 
   protected function _endpoint() {
-    return $this->_service_domain . '/credit_cards';
+    return Settings::$apiBase . '/credit_cards';
   }
 
   protected function _buildRequestMessage() {

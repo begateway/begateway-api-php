@@ -1,5 +1,7 @@
 <?php
-class QueryByUidTest extends UnitTestCase {
+namespace eComCharge;
+
+class QueryByUidTest extends TestCase {
 
   public function test_setUid() {
     $q = $this->getTestObjectInstance();
@@ -14,12 +16,12 @@ class QueryByUidTest extends UnitTestCase {
     $q = $this->getTestObjectInstance();
     $q->setUid('1234');
 
-    $reflection = new ReflectionClass('eComCharge\QueryByUid');
+    $reflection = new \ReflectionClass('eComCharge\QueryByUid');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');
 
-    $this->assertEqual($url, 'https://processing.ecomcharge.com/transactions/1234');
+    $this->assertEqual($url, Settings::$apiBase . '/transactions/1234');
 
   }
 
@@ -53,9 +55,9 @@ class QueryByUidTest extends UnitTestCase {
   }
 
   protected function runParentTransaction($amount = 10.00 ) {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $transaction = new eComCharge\Payment(TestData::getShopId(), TestData::getShopKey());
+    $transaction = new Payment();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');
@@ -81,12 +83,9 @@ class QueryByUidTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance() {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    return new eComCharge\QueryByUid($id, $key);
+    return new QueryByUid();
   }
 }
 ?>

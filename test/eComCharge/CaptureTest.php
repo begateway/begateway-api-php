@@ -1,6 +1,7 @@
 <?php
+namespace eComCharge;
 
-class CaptureTest extends UnitTestCase {
+class CaptureTest extends TestCase {
 
   public function test_setParentUid() {
     $transaction = $this->getTestObjectInstance();
@@ -20,7 +21,7 @@ class CaptureTest extends UnitTestCase {
       )
     );
 
-    $reflection = new ReflectionClass( 'eComCharge\Capture' );
+    $reflection = new \ReflectionClass( 'eComCharge\Capture' );
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -33,12 +34,12 @@ class CaptureTest extends UnitTestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\Capture');
+    $reflection = new \ReflectionClass('eComCharge\Capture');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, 'https://processing.ecomcharge.com/transactions/captures');
+    $this->assertEqual($url, Settings::$apiBase . '/transactions/captures');
 
   }
 
@@ -82,9 +83,9 @@ class CaptureTest extends UnitTestCase {
   }
 
   protected function runParentTransaction($amount = 10.00 ) {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $transaction = new eComCharge\Authorization(TestData::getShopId(), TestData::getShopKey());
+    $transaction = new Authorization();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');
@@ -121,12 +122,9 @@ class CaptureTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance() {
-    authorizeFromEnv();
+    self::authorizeFromEnv();
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    return new eComCharge\Capture($id, $key);
+    return new Capture();
   }
 }
 ?>

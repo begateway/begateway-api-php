@@ -1,5 +1,7 @@
 <?php
-class CreditCardTokenizationTest extends UnitTestCase {
+namespace eComCharge;
+
+class CreditCardTokenizationTest extends TestCase {
 
   public function test_buildRequestMessage() {
     $token = $this->getTestObject();
@@ -14,7 +16,7 @@ class CreditCardTokenizationTest extends UnitTestCase {
     );
 
 
-    $reflection = new ReflectionClass( 'eComCharge\CardToken');
+    $reflection = new \ReflectionClass( 'eComCharge\CardToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -27,12 +29,12 @@ class CreditCardTokenizationTest extends UnitTestCase {
 
     $token = $this->getTestObjectInstance();
 
-    $reflection = new ReflectionClass('eComCharge\CardToken');
+    $reflection = new \ReflectionClass('eComCharge\CardToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($token, '_endpoint');
 
-    $this->assertEqual($url, 'https://processing.ecomcharge.com/credit_cards');
+    $this->assertEqual($url, Settings::$apiBase . '/credit_cards');
 
   }
 
@@ -124,31 +126,15 @@ class CreditCardTokenizationTest extends UnitTestCase {
   }
 
   protected function getTestObjectInstance($threed = false) {
-    authorizeFromEnv();
+    self::authorizeFromEnv($threed);
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    if ($threed) {
-      $id = TestData::getShopId3d();
-      $key = TestData::getShopKey3d();
-    }
-
-    return new eComCharge\CardToken($id, $key);
+    return new CardToken();
   }
 
   protected function getAuthorizationTestObjectInstance($threed = false) {
-    authorizeFromEnv();
+    self::authorizeFromEnv($threed);
 
-    $id = TestData::getShopId();
-    $key =  TestData::getShopKey();
-
-    if ($threed) {
-      $id = TestData::getShopId3d();
-      $key = TestData::getShopKey3d();
-    }
-
-    return new eComCharge\Authorization($id, $key);
+    return new Authorization();
   }
 
 

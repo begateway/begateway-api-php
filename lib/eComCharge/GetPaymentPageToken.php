@@ -16,18 +16,16 @@ class GetPaymentPageToken extends ApiAbstract {
   protected $_readonly;
   protected $_hidden;
 
-  public function __construct($shop_id, $shop_key) {
+  public function __construct() {
     $this->customer = new Customer();
     $this->money = new Money();
     $this->setPaymentTransactionType();
     $this->_language = Language::getDefaultLanguage();
     $this->_readonly = array();
     $this->_hidden = array();
-
-    parent::__construct($shop_id, $shop_key);
   }
   protected function _endpoint() {
-    return $this->_pp_service_url . '/ctp/api/checkouts';
+    return Settings::$checkoutBase . '/ctp/api/checkouts';
   }
 
   protected function _buildRequestMessage() {

@@ -1,12 +1,10 @@
 <?php
-namespace eComCharge;
-
 require_once __DIR__ . '/../lib/ecomcharge.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-Logger::getInstance()->setLogLevel(Logger::DEBUG);
+\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
 
-$transaction = new GetPaymentPageToken(SHOP_ID, SHOP_SECRET_KEY);
+$transaction = new \eComCharge\GetPaymentPageToken;
 
 $amount = rand(100, 10000);
 
@@ -30,7 +28,6 @@ $transaction->customer->setZip('LV-1082');
 $transaction->customer->setIp('127.0.0.1');
 $transaction->customer->setEmail('john@example.com');
 $transaction->setAddressHidden();
-
 
 $response = $transaction->submit();
 

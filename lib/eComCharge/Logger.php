@@ -12,6 +12,7 @@ class Logger {
   private static $instance;
   private $_output = 'php://stderr';
   private $_message_callback = false;
+  private $_mask = true;
 
   private function __construct() {
     $this->_level = self::INFO;
@@ -24,7 +25,7 @@ class Logger {
 
     if ($this->_level >= $level) {
       $message = "[" . self::getLevelName($level) . " $p] => ";
-      $message .= print_r($msg, true);
+      $message .= print_r($this->filter($msg), true);
       $message .= PHP_EOL;
       if ($this->_output) { $this->sendToFile($message); }
       if ($this->_message_callback != false) { call_user_func($this->_message_callback, $message); }
@@ -33,6 +34,10 @@ class Logger {
 
   public function setLogLevel($level) {
     $this->_level = $level;
+  }
+
+  public function setPANfitering($option) {
+    $this->_mask = $option;
   }
 
   public function setOutputCallback($callback) {
@@ -67,6 +72,16 @@ class Logger {
     fclose($fh);
   }
 
+  private function filter($message) {
+    $card_filter = '/("number":")(\d{1})\d{8,13}(\d{4})(")/';
+    $cvc_filter  = '/("verification_value":")(\d{3,4})(")/';
+    $modified = $message;
+    if ($this->_mask) {
+      $modified = preg_replace($card_filter,'$1$2 xxxx $3$4', $modified);
+      $modified = preg_replace($cvc_filter,'$1xxx$3', $modified);
+    }
 
+    return $modified;
+  }
 }
 ?>

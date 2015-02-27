@@ -5,7 +5,7 @@ class QueryByUid extends ApiAbstract {
   protected $_uid;
 
   protected function _endpoint() {
-    return $this->_service_url . '/' . $this->getUid();
+    return Settings::$apiBase . '/transactions/' . $this->getUid();
   }
   public function setUid($uid) {
     $this->_uid = $uid;

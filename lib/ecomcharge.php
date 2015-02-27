@@ -13,6 +13,7 @@ if (!function_exists('mb_detect_encoding')) {
   throw new Exception('eComCharge needs the Multibyte String PHP extension.');
 }
 
+require_once (__DIR__ . '/eComCharge/Settings.php');
 require_once (__DIR__ . '/eComCharge/Logger.php');
 require_once (__DIR__ . '/eComCharge/Language.php');
 require_once (__DIR__ . '/eComCharge/Customer.php');
@@ -22,7 +23,7 @@ require_once (__DIR__ . '/eComCharge/ResponseBase.php');
 require_once (__DIR__ . '/eComCharge/Response.php');
 require_once (__DIR__ . '/eComCharge/ResponseCheckout.php');
 require_once (__DIR__ . '/eComCharge/ResponseCardToken.php');
-require_once (__DIR__ . '/eComCharge/Api.php');
+require_once (__DIR__ . '/eComCharge/ApiAbstract.php');
 require_once (__DIR__ . '/eComCharge/ChildTransaction.php');
 require_once (__DIR__ . '/eComCharge/GatewayTransport.php');
 require_once (__DIR__ . '/eComCharge/Authorization.php');
@@ -37,5 +38,4 @@ require_once (__DIR__ . '/eComCharge/QueryByToken.php');
 require_once (__DIR__ . '/eComCharge/GetPaymentPageToken.php');
 require_once (__DIR__ . '/eComCharge/Webhook.php');
 require_once (__DIR__ . '/eComCharge/CardToken.php');
-
 ?>

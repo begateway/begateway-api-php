@@ -5,9 +5,8 @@ abstract class ChildTransaction extends ApiAbstract {
   protected $_parent_uid;
   public $money;
 
-  public function __construct($shop_id,$shop_key) {
+  public function __construct() {
     $this->money = new Money();
-    parent::__construct($shop_id,$shop_key);
   }
 
   public function setParentUid($uid) {
