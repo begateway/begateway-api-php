@@ -23,7 +23,7 @@ class GatewayTransportExceptionTest extends TestCase {
     $response = $auth->submit();
 
     $this->assertTrue($response->isError());
-    $this->assertPattern('|Could not resolve host: thedomaindoesntexist.ecomcharge.com|', $response->getMessage());
+    $this->assertPattern("|resolve host: thedomaindoesntexist.ecomcharge.com|", $response->getMessage());
 
   }
 
