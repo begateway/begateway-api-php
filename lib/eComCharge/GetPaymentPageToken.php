@@ -12,7 +12,6 @@ class GetPaymentPageToken extends ApiAbstract {
   protected $_cancel_url;
   protected $_notification_url;
   protected $_transaction_type;
-  protected $_language;
   protected $_readonly;
   protected $_hidden;
 
@@ -24,6 +23,7 @@ class GetPaymentPageToken extends ApiAbstract {
     $this->_readonly = array();
     $this->_hidden = array();
   }
+
   protected function _endpoint() {
     return Settings::$checkoutBase . '/ctp/api/checkouts';
   }
@@ -148,7 +148,6 @@ class GetPaymentPageToken extends ApiAbstract {
   public function getLanguage() {
     return $this->_language;
   }
-
 
   public function getReadonlyFields() {
     return $this->_readonly;

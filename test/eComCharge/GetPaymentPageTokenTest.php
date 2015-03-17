@@ -90,7 +90,7 @@ class GetPaymentPageTokenTest extends TestCase {
           'decline_url' => 'http://www.example.com/d',
           'fail_url' => 'http://www.example.com/f',
           'notification_url' => 'http://www.example.com/n',
-          'language' => 'en',
+          'language' => 'zh',
           'customer_fields' => array(
             'hidden' => array(),
             'read_only' => array(),
@@ -181,6 +181,7 @@ class GetPaymentPageTokenTest extends TestCase {
     $transaction->setSuccessUrl($url . '/s' );
     $transaction->setDeclineUrl($url . '/d' );
     $transaction->setFailUrl($url . '/f' );
+    $transaction->setLanguage('zh');
 
     $transaction->customer->setFirstName('John');
     $transaction->customer->setLastName('Doe');

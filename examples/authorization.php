@@ -12,6 +12,7 @@ $transaction->money->setAmount($amount);
 $transaction->money->setCurrency('EUR');
 $transaction->setDescription('test');
 $transaction->setTrackingId('my_custom_variable');
+$transaction->setLanguage('ru');
 
 $transaction->card->setCardNumber('4200000000000000');
 $transaction->card->setCardHolder('John Doe');

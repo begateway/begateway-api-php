@@ -70,6 +70,7 @@ class PaymentTest extends TestCase {
         'tracking_id' => 'my_custom_variable',
         'notification_url' => '',
         'return_url' => '',
+        'language' => 'en',
         'credit_card' => array(
           'number' => '4200000000000000',
           'verification_value' => '123',

@@ -45,6 +45,7 @@ class AuthorizationTest extends TestCase {
         'tracking_id' => 'my_custom_variable',
         'notification_url' => '',
         'return_url' => '',
+        'language' => 'de',
         'credit_card' => array(
           'number' => '4200000000000000',
           'verification_value' => '123',
@@ -178,6 +179,7 @@ class AuthorizationTest extends TestCase {
     $transaction->money->setCurrency('EUR');
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
+    $transaction->setLanguage('de');
 
     $transaction->card->setCardNumber('4200000000000000');
     $transaction->card->setCardHolder('John Doe');

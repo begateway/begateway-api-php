@@ -3,6 +3,7 @@ namespace eComCharge;
 
 abstract class ApiAbstract {
   protected abstract function _buildRequestMessage();
+  protected $_language;
 
   public function submit() {
     try {
@@ -26,6 +27,17 @@ abstract class ApiAbstract {
     list($module,$klass) = explode('\\', get_class($this));
     $klass = strtolower($klass) . 's';
     return $klass;
+  }
+  public function setLanguage($language_code) {
+    if (in_array($language_code, Language::getSupportedLanguages())) {
+      $this->_language = $language_code;
+    }else{
+      $this->_language = Language::getDefaultLanguage();
+    }
+  }
+
+  public function getLanguage() {
+    return $this->_language;
   }
 }
 ?>
