@@ -14,6 +14,7 @@ class Authorization extends ApiAbstract {
     $this->customer = new Customer();
     $this->money = new Money();
     $this->card = new Card();
+    $this->_language = Language::getDefaultLanguage();
   }
 
   public function setDescription($description) {
@@ -53,6 +54,7 @@ class Authorization extends ApiAbstract {
         'tracking_id' => $this->getTrackingId(),
         'notification_url' => $this->getNotificationUrl(),
         'return_url' => $this->getReturnUrl(),
+        'language' => $this->getLanguage(),
         'credit_card' => array(
           'number' => $this->card->getCardNumber(),
           'verification_value' => $this->card->getCardCvc(),
