@@ -4,18 +4,25 @@ namespace eComCharge;
 class Money {
   protected $_amount;
   protected $_currency;
+  protected $_cents;
 
   public function __construct($amount = 0, $currency = 'USD') {
-    $this->_amount = $amount;
     $this->_currency = $currency;
+    $this->setAmount($amount);
   }
 
   public function getCents() {
-    return (int)($this->_amount * $this->_currency_multiplyer($this->_currency));
+    return $this->_cents;
+  }
+
+  public function setCents($cents) {
+    $this->_cents = (int)$cents;
+    $this->_amount = (float)($this->_cents / $this->_currency_multiplyer());
   }
 
   public function setAmount($amount){
     $this->_amount = (float)$amount;
+    $this->_cents = (int)($this->_amount * $this->_currency_multiplyer());
   }
   public function getAmount() {
     return (float)$this->_amount;
@@ -28,7 +35,7 @@ class Money {
     return $this->_currency;
   }
 
-  private function _currency_multiplyer($order_currency) {
+  private function _currency_multiplyer() {
     //array currency code => mutiplyer
     $exceptions = array(
         'BIF' => 1,
@@ -69,7 +76,7 @@ class Money {
     );
     $multiplyer = 100; //default value
     foreach ($exceptions as $key => $value) {
-        if (($order_currency == $key)) {
+        if (($this->_currency == $key)) {
             $multiplyer = $value;
             break;
         }
