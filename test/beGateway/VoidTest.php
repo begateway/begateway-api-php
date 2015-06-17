@@ -39,7 +39,7 @@ class VoidTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/transactions/voids');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/voids');
 
   }
 

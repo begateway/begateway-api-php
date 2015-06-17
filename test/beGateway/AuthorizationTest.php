@@ -92,7 +92,7 @@ class AuthorizationTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/transactions/authorizations');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/authorizations');
   }
 
   public function test_successAuthorization() {

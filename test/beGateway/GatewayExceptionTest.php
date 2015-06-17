@@ -4,12 +4,12 @@ namespace beGateway;
 class GatewayTransportExceptionTest extends TestCase {
 
   function setUp() {
-    $this->_apiBase = Settings::$apiBase;
-    Settings::$apiBase = 'https://thedomaindoesntexist.begateway.com';
+    $this->_apiBase = Settings::$gatewayBase;
+    Settings::$gatewayBase = 'https://thedomaindoesntexist.begateway.com';
   }
 
   function tearDown() {
-    Settings::$apiBase = $this->_apiBase;
+    Settings::$gatewayBase = $this->_apiBase;
   }
 
   public function test_networkIssuesHandledCorrectly() {

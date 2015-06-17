@@ -56,7 +56,7 @@ class CreditTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/transactions/credits');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/credits');
 
   }
 

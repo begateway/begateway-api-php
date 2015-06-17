@@ -47,7 +47,7 @@ class RefundTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/transactions/refunds');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/refunds');
 
   }
 

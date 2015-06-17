@@ -13,7 +13,7 @@ class CardToken extends ApiAbstract {
   }
 
   protected function _endpoint() {
-    return Settings::$apiBase . '/credit_cards';
+    return Settings::$gatewayBase . '/credit_cards';
   }
 
   protected function _buildRequestMessage() {

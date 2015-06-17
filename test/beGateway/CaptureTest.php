@@ -39,7 +39,7 @@ class CaptureTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/transactions/captures');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/captures');
 
   }
 

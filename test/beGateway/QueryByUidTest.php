@@ -21,7 +21,7 @@ class QueryByUidTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/transactions/1234');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/1234');
 
   }
 

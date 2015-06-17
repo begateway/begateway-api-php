@@ -20,7 +20,7 @@ abstract class ApiAbstract {
   }
 
   protected function _endpoint() {
-    return Settings::$apiBase . '/transactions/' . $this->_getTransactionType();
+    return Settings::$gatewayBase . '/transactions/' . $this->_getTransactionType();
   }
 
   protected function _getTransactionType() {

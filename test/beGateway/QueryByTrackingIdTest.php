@@ -21,7 +21,7 @@ class QueryByTrackingIdTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/transactions/tracking_id/1234');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/tracking_id/1234');
 
   }
 

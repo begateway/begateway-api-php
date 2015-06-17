@@ -56,7 +56,7 @@ class PaymentTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/transactions/payments');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/payments');
 
   }
 

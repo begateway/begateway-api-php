@@ -34,7 +34,7 @@ class CreditCardTokenizationTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($token, '_endpoint');
 
-    $this->assertEqual($url, Settings::$apiBase . '/credit_cards');
+    $this->assertEqual($url, Settings::$gatewayBase . '/credit_cards');
 
   }
 
