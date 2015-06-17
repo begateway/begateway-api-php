@@ -25,6 +25,7 @@ require_once(dirname(__FILE__) . '/../lib/beGateway.php');
 \beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::INFO);
 
 require_once(dirname(__FILE__) . '/beGateway/TestCase.php');
+require_once(dirname(__FILE__) . '/beGateway/MoneyTest.php');
 require_once(dirname(__FILE__) . '/beGateway/AuthorizationTest.php');
 require_once(dirname(__FILE__) . '/beGateway/PaymentTest.php');
 require_once(dirname(__FILE__) . '/beGateway/CaptureTest.php');
