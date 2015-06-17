@@ -25,7 +25,7 @@ class Logger {
 
     if ($this->_level >= $level) {
       $message = "[" . self::getLevelName($level) . " $p] => ";
-      $message .= print_r($this->filter($msg), true);
+      $message .= print_r($this->filter(var_dump($msg)), true);
       $message .= PHP_EOL;
       if ($this->_output) { $this->sendToFile($message); }
       if ($this->_message_callback != false) { call_user_func($this->_message_callback, $message); }
