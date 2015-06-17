@@ -1,6 +1,6 @@
 # beGateway payment system API integration library
 
-[![Build Status Master](https://travis-ci.org/ecomcharge/begateway-api-php.svg?branch=master)](https://travis-ci.org/ecomcharge/begateway-api-php)
+[![Build Status Master](https://travis-ci.org/beGateway/begateway-api-php.svg?branch=master)](https://travis-ci.org/ecomcharge/begateway-api-php)
 
 ## Requirements
 
