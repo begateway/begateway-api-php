@@ -1,7 +1,8 @@
 <?php
 echo "Running the beGateway bePaid PHP bindings test suite.\n".
      "If you're trying to use the PHP bindings you'll probably want ".
-     "to require('lib/beGateway.php'); instead of this file\n";
+     "to require('lib/beGateway.php'); instead of this file\n\n" .
+     "Setup the env variable LOG_LEVEL=DEBUG for more verbose output\n" ;
 
 $ok = @include_once(dirname(__FILE__).'/simpletest/autorun.php');
 if (!$ok) {
@@ -22,7 +23,13 @@ error_reporting(E_ALL | E_STRICT);
 require_once(dirname(__FILE__) . '/../lib/beGateway.php');
 
 
-\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::INFO);
+$log_level = getenv('LOG_LEVEL');
+
+if ($log_level == 'DEBUG') {
+  \beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
+} else {
+  \beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::INFO);
+}
 
 require_once(dirname(__FILE__) . '/beGateway/TestCase.php');
 require_once(dirname(__FILE__) . '/beGateway/MoneyTest.php');
