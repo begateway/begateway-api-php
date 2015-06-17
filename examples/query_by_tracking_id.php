@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../lib/beGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
+\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
 
-$transaction = new \eComCharge\Payment;
+$transaction = new \beGateway\Payment;
 
 $amount = rand(100, 10000);
 
@@ -37,7 +37,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Query by tracking id " . $transaction->getTrackingId() . PHP_EOL);
 
-  $query = new \eComCharge\QueryByTrackingId;
+  $query = new \beGateway\QueryByTrackingId;
   $query->setTrackingId($transaction->getTrackingId());
 
   $query_response = $query->submit();

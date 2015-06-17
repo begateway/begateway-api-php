@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../lib/beGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
+\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
 
-$transaction = new \eComCharge\Payment;
+$transaction = new \beGateway\Payment;
 
 $amount = rand(100, 10000);
 

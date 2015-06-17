@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class QueryByTrackingIdTest extends TestCase {
 
@@ -16,7 +16,7 @@ class QueryByTrackingIdTest extends TestCase {
     $q = $this->getTestObjectInstance();
     $q->setTrackingId('1234');
 
-    $reflection = new \ReflectionClass('eComCharge\QueryByTrackingId');
+    $reflection = new \ReflectionClass('beGateway\QueryByTrackingId');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');

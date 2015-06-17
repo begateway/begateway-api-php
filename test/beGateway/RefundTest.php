@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class RefundTest extends TestCase {
 
@@ -29,7 +29,7 @@ class RefundTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'eComCharge\Refund' );
+    $reflection = new \ReflectionClass( 'beGateway\Refund' );
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -42,7 +42,7 @@ class RefundTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('eComCharge\Refund');
+    $reflection = new \ReflectionClass('beGateway\Refund');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');

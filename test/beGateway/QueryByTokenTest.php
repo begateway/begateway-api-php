@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class QueryByTokenTest extends TestCase {
 
@@ -16,7 +16,7 @@ class QueryByTokenTest extends TestCase {
     $q = $this->getTestObjectInstance();
     $q->setToken('1234');
 
-    $reflection = new \ReflectionClass('eComCharge\QueryByToken');
+    $reflection = new \ReflectionClass('beGateway\QueryByToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');

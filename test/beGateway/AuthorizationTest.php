@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class AuthorizationTest extends TestCase {
 
@@ -74,7 +74,7 @@ class AuthorizationTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'eComCharge\Authorization');
+    $reflection = new \ReflectionClass( 'beGateway\Authorization');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -87,7 +87,7 @@ class AuthorizationTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('eComCharge\Authorization');
+    $reflection = new \ReflectionClass('beGateway\Authorization');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');

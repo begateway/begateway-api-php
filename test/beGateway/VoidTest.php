@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class VoidTest extends TestCase {
 
@@ -21,7 +21,7 @@ class VoidTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'eComCharge\Void' );
+    $reflection = new \ReflectionClass( 'beGateway\Void' );
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -34,7 +34,7 @@ class VoidTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('eComCharge\Void');
+    $reflection = new \ReflectionClass('beGateway\Void');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');

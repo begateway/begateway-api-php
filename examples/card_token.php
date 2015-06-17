@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../lib/beGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
+\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
 
-$token = new \eComCharge\CardToken;
+$token = new \beGateway\CardToken;
 $token->card->setCardNumber('4200000000000000');
 $token->card->setCardHolder('John Doe');
 $token->card->setCardExpMonth(1);
@@ -16,7 +16,7 @@ if ($response->isSuccess()) {
   print("Card token: " . $response->card->getCardToken() . PHP_EOL);
   print("Trying to make a payment by the token and with CVC 123" . PHP_EOL);
 
-  $transaction = new \eComCharge\Payment;
+  $transaction = new \beGateway\Payment;
 
   $amount = rand(100, 10000);
 

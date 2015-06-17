@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../lib/beGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
+\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
 
-$transaction = new \eComCharge\Authorization;
+$transaction = new \beGateway\Authorization;
 
 $amount = rand(100, 10000);
 
@@ -38,7 +38,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Capture transaction " . $response->getUid() . PHP_EOL);
 
-  $capture = new \eComCharge\Capture;
+  $capture = new \beGateway\Capture;
   $capture->setParentUid($response->getUid());
   $capture->money->setAmount($transaction->money->getAmount());
 

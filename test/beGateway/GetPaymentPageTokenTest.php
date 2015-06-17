@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class GetPaymentPageTokenTest extends TestCase {
 
@@ -110,7 +110,7 @@ class GetPaymentPageTokenTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'eComCharge\GetPaymentPageToken');
+    $reflection = new \ReflectionClass( 'beGateway\GetPaymentPageToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -123,7 +123,7 @@ class GetPaymentPageTokenTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('eComCharge\GetPaymentPageToken');
+    $reflection = new \ReflectionClass('beGateway\GetPaymentPageToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');

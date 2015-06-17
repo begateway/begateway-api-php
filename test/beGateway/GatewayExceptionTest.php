@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class GatewayTransportExceptionTest extends TestCase {
 

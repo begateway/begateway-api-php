@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class QueryByUidTest extends TestCase {
 
@@ -16,7 +16,7 @@ class QueryByUidTest extends TestCase {
     $q = $this->getTestObjectInstance();
     $q->setUid('1234');
 
-    $reflection = new \ReflectionClass('eComCharge\QueryByUid');
+    $reflection = new \ReflectionClass('beGateway\QueryByUid');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');
