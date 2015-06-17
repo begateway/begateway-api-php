@@ -5,7 +5,7 @@ class GatewayTransportExceptionTest extends TestCase {
 
   function setUp() {
     $this->_apiBase = Settings::$gatewayBase;
-    Settings::$gatewayBase = 'https://thedomaindoesntexist.begateway.com';
+    Settings::$gatewayBase = 'https://thedomaindoesntexist.begatewaynotexist.com';
   }
 
   function tearDown() {
@@ -23,7 +23,7 @@ class GatewayTransportExceptionTest extends TestCase {
     $response = $auth->submit();
 
     $this->assertTrue($response->isError());
-    $this->assertPattern("|thedomaindoesntexist.begateway.com|", $response->getMessage());
+    $this->assertPattern("|thedomaindoesntexist.begatewaynotexist.com|", $response->getMessage());
 
   }
 
