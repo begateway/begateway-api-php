@@ -1,6 +1,6 @@
-# eComCharge bePaid integration library
+# beGateway payment system API integration library
 
-[![Build Status Master](https://travis-ci.org/ecomcharge/bepaid-api-php.svg?branch=master)](https://travis-ci.org/ecomcharge/bepaid-api-php)
+[![Build Status Master](https://travis-ci.org/ecomcharge/begateway-api-php.svg?branch=master)](https://travis-ci.org/ecomcharge/begateway-api-php)
 
 ## Requirements
 
@@ -15,7 +15,7 @@ PHP 5.3+
 
 ### Shop with 3-D Secure
 
-  * Shop Id __362_
+  * Shop Id __362__
   * Shop secret key __9ad8ad735945919845b9a1996af72d886ab43d3375502256dbf8dd16bca59a4e__
 
 ### Test data set
@@ -35,12 +35,12 @@ Simple usage looks like:
 
 ```php
 require_once __DIR__ . 'PATH_TO_INSTALLED_LIBRARY/lib/beGateway.php';
-\eComCharge\Settings::setShopId('your_shop_id');
-\eComCharge\Settings::setShopKey('your_shop_key');
+\beGateway\Settings::setShopId('your_shop_id');
+\beGateway\Settings::setShopKey('your_shop_key');
 
-\eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::INFO);
+\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::INFO);
 
-$transaction = new \eComCharge\Payment;
+$transaction = new \beGateway\Payment;
 
 $transaction->money->setAmount(1.00);
 $transaction->money->setCurrency('EUR');
