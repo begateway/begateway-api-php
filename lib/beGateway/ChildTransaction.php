@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 abstract class ChildTransaction extends ApiAbstract {
   protected $_parent_uid;

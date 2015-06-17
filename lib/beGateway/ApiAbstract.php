@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 abstract class ApiAbstract {
   protected abstract function _buildRequestMessage();

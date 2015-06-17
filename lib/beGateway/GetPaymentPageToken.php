@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class GetPaymentPageToken extends ApiAbstract {
   public $customer;

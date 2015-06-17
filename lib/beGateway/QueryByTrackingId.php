@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class QueryByTrackingId extends ApiAbstract {
   protected $_tracking_id;

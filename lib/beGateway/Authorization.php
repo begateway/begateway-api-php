@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class Authorization extends ApiAbstract {
   public $customer;

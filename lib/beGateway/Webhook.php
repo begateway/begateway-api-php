@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class Webhook extends Response {
   protected $_json_in = 'php://input';

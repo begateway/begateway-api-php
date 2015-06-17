@@ -1,5 +1,5 @@
 <?php
-namespace eComCharge;
+namespace beGateway;
 
 class QueryByUid extends ApiAbstract {
   protected $_uid;

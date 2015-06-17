@@ -11,7 +11,7 @@ PHP 5.3+
 Simple usage looks like:
 
 ```php
-require_once __DIR__ . 'PATH_TO_INSTALLED_LIBRARY/lib/ecomcharge.php';
+require_once __DIR__ . 'PATH_TO_INSTALLED_LIBRARY/lib/beGateway.php';
 \eComCharge\Settings::setShopId('your_shop_id');
 \eComCharge\Settings::setShopKey('your_shop_key');
 
@@ -68,6 +68,6 @@ Visit https://doc.ecomcharge.com for up-to-date documentation.
 To run tests
 
 ```bash
-php -f ./test/ecomcharge.php
+php -f ./test/beGateway.php
 ```
 

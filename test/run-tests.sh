@@ -1,3 +1,3 @@
 #!/bin/bash
 
-`which php` -f ecomcharge.php
+`which php` -f beGateway.php

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../lib/ecomcharge.php';
+require_once __DIR__ . '/../lib/beGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
 \eComCharge\Logger::getInstance()->setLogLevel(\eComCharge\Logger::DEBUG);
