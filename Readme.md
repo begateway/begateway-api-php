@@ -6,6 +6,29 @@
 
 PHP 5.3+
 
+## Test data
+
+### Shop without 3-D Secure
+
+  * Shop Id __361__
+  * Shop secret key __b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d__
+
+### Shop with 3-D Secure
+
+  * Shop Id __362_
+  * Shop secret key __9ad8ad735945919845b9a1996af72d886ab43d3375502256dbf8dd16bca59a4e__
+
+### Test data set
+
+  * Card name __John Doe__
+  * Card expiry month __01__ to get a success payment
+  * Card expiry month __10__ to get a failed payment
+  * CVC __123__
+
+### Test card numbers
+
+Refer to the documentation https://doc.begateway.com/test-integration#test-card-number for valid test card numbers.
+
 ## Getting started
 
 Simple usage looks like:
@@ -61,7 +84,7 @@ transactions.
 
 ## Documentation
 
-Visit https://doc.ecomcharge.com for up-to-date documentation.
+Visit https://doc.begateway.com for up-to-date documentation.
 
 ## Tests
 
