@@ -34,4 +34,3 @@ class CardToken extends ApiAbstract {
 
 }
 ?>
-

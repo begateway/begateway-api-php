@@ -36,8 +36,8 @@ class TestCase extends \UnitTestCase {
       }
     }
 
-    Settings::setShopId($shop_id);
-    Settings::setShopKey($shop_key);
+    Settings::$shopId = $shop_id;
+    Settings::$shopKey = $shop_key;
   }
 }
 ?>
