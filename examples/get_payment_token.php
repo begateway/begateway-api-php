@@ -4,7 +4,7 @@ require_once __DIR__ . '/test_shop_data.php';
 
 \beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
 
-$transaction = new \beGateway\GetPaymentPageToken;
+$transaction = new \beGateway\GetPaymentToken;
 
 $amount = rand(100, 10000);
 

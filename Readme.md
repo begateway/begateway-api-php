@@ -61,7 +61,7 @@ require_once __DIR__ . 'PATH_TO_INSTALLED_LIBRARY/lib/beGateway.php';
 
 \beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::INFO);
 
-$transaction = new \beGateway\GetPaymentPageToken;
+$transaction = new \beGateway\GetPaymentToken;
 
 $transaction->money->setAmount(1.00);
 $transaction->money->setCurrency('EUR');
