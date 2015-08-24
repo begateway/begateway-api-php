@@ -1,7 +1,7 @@
 <?php
 namespace beGateway;
 
-class GetPaymentPageTokenTest extends TestCase {
+class GetPaymentTokenTest extends TestCase {
 
   public function test_setDescription() {
     $auth = $this->getTestObjectInstance();
@@ -110,7 +110,7 @@ class GetPaymentPageTokenTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'beGateway\GetPaymentPageToken');
+    $reflection = new \ReflectionClass( 'beGateway\GetPaymentToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -123,7 +123,7 @@ class GetPaymentPageTokenTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\GetPaymentPageToken');
+    $reflection = new \ReflectionClass('beGateway\GetPaymentToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
@@ -144,6 +144,24 @@ class GetPaymentPageTokenTest extends TestCase {
     $this->assertTrue($response->isValid());
     $this->assertTrue($response->isSuccess());
     $this->assertNotNull($response->getToken());
+
+  }
+
+  public function test_redirectUrl() {
+    $auth = $this->getTestObject();
+
+    $amount = rand(0,10000) / 100;
+
+    $auth->money->setAmount($amount);
+
+    $response = $auth->submit();
+
+    $this->assertTrue($response->isValid());
+    $this->assertTrue($response->isSuccess());
+    $this->assertNotNull($response->getToken());
+    $this->assertNotNull($response->getRedirectUrl());
+    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/checkout?token=' . $response->getToken(),
+                       $response->getRedirectUrl());
 
   }
 
@@ -198,7 +216,7 @@ class GetPaymentPageTokenTest extends TestCase {
   protected function getTestObjectInstance() {
     self::authorizeFromEnv();
 
-    return new GetPaymentPageToken();
+    return new GetPaymentToken();
   }
 
 

@@ -56,7 +56,7 @@ class QueryByTokenTest extends TestCase {
   protected function runParentTransaction($amount = 10.00 ) {
     self::authorizeFromEnv();
 
-    $transaction = new GetPaymentPageToken();
+    $transaction = new GetPaymentToken();
 
     $url = 'http://www.example.com';
 

@@ -35,7 +35,7 @@ require_once (__DIR__ . '/beGateway/Credit.php');
 require_once (__DIR__ . '/beGateway/QueryByUid.php');
 require_once (__DIR__ . '/beGateway/QueryByTrackingId.php');
 require_once (__DIR__ . '/beGateway/QueryByToken.php');
-require_once (__DIR__ . '/beGateway/GetPaymentPageToken.php');
+require_once (__DIR__ . '/beGateway/GetPaymentToken.php');
 require_once (__DIR__ . '/beGateway/Webhook.php');
 require_once (__DIR__ . '/beGateway/CardToken.php');
 ?>

@@ -1,7 +1,7 @@
 <?php
 namespace beGateway;
 
-class GetPaymentPageToken extends ApiAbstract {
+class GetPaymentToken extends ApiAbstract {
   public $customer;
   public $money;
   protected $_description;
@@ -71,10 +71,6 @@ class GetPaymentPageToken extends ApiAbstract {
 
   public function submit() {
     return new ResponseCheckout($this->_remoteRequest());
-  }
-
-  public function getToken() {
-    return $this->getResponse()->checkout->token;
   }
 
   public function setDescription($description) {
