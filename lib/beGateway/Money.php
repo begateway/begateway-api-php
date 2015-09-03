@@ -12,20 +12,22 @@ class Money {
   }
 
   public function getCents() {
-    return $this->_cents;
+    $cents = ($this->_cents) ? $this->_cents : (int)($this->_amount * $this->_currency_multiplyer());
+    return $cents;
   }
 
   public function setCents($cents) {
     $this->_cents = (int)$cents;
-    $this->_amount = (float)($this->_cents / $this->_currency_multiplyer());
+    $this->_amount = NULL;
   }
 
   public function setAmount($amount){
     $this->_amount = (float)$amount;
-    $this->_cents = (int)($this->_amount * $this->_currency_multiplyer());
+    $this->_cents = NULL;
   }
   public function getAmount() {
-    return (float)$this->_amount;
+    $amount = ($this->_amount) ? $this->_amount : (float)($this->_cents / $this->_currency_multiplyer());
+    return $amount;
   }
 
   public function setCurrency($currency){
