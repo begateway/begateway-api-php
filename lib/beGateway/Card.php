@@ -56,7 +56,7 @@ class Card {
     return $this->_card_token;
   }
 
-  public function setSkip3D(bool $skip) {
+  public function setSkip3D($skip = false) {
     $this->_card_skip_threed_secure = $skip;
   }
   public function getSkip3D() {

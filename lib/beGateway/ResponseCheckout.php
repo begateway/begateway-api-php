@@ -44,6 +44,8 @@ class ResponseCheckout extends ResponseBase {
           $message .= ' ' . $value . '.';
         }
       }
+    } elseif (isset($this->getResponse()->checkout->message)){
+      $message = $this->getResponse()->checkout->message;
     }
     return $message;
   }
