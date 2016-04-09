@@ -28,7 +28,7 @@ class TestCase extends \UnitTestCase {
 
       $shop_pub_key = getenv('SHOP_PUB_KEY_3D');
       if (!$shop_pub_key) {
-        $shop_key = self::SHOP_PUB_KEY_3D;
+        $shop_pub_key = self::SHOP_PUB_KEY_3D;
       }
     }else{
       $shop_id = getenv('SHOP_ID');
