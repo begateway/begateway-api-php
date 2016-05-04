@@ -69,7 +69,7 @@ class CreditCardTokenizationTest extends TestCase {
     $this->assertEqual($response2->card->getCardExpMonth(), '1');
     $this->assertEqual($response2->card->getCardExpYear(), '2030');
     $this->assertNotNull($response2->card->getCardToken());
-    $this->assertNotEqual($response2->card->getCardToken(), $old_token);
+    $this->assertEqual($response2->card->getCardToken(), $old_token);
 
     # make authorization with token
     $amount = rand(0,10000) / 100;
