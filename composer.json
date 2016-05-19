@@ -2,15 +2,15 @@
     "name": "begateway/begateway-api-php",
     "description" : "beGateway PHP API library",
     "keywords": [
-      "ecomcharge",
+      "bepaid",
       "begateway",
       "payment processing",
       "api"
     ],
     "license" : "MIT",
     "authors": [
-      { "name" : "eComCharge",
-        "email": "admin@ecomcharge.com"
+      { "name" : "beGateway",
+        "email": "admin@begateway.com"
       }
     ],
     "require" : {
