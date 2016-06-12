@@ -2,6 +2,8 @@
 namespace beGateway;
 
 class GetPaymentToken extends ApiAbstract {
+  public static $version = 2;
+
   public $customer;
   public $money;
   protected $_description;
@@ -14,6 +16,7 @@ class GetPaymentToken extends ApiAbstract {
   protected $_transaction_type;
   protected $_readonly;
   protected $_hidden;
+  protected $_payment_methods;
 
   public function __construct() {
     $this->customer = new Customer();
@@ -22,6 +25,7 @@ class GetPaymentToken extends ApiAbstract {
     $this->_language = Language::getDefaultLanguage();
     $this->_readonly = array();
     $this->_hidden = array();
+    $this->_payment_methods = array();
   }
 
   protected function _endpoint() {
@@ -31,6 +35,7 @@ class GetPaymentToken extends ApiAbstract {
   protected function _buildRequestMessage() {
     $request = array(
       'checkout' => array(
+        'version' => self::$version,
         'transaction_type' => $this->getTransactionType(),
         'order' => array(
           'amount' => $this->money->getCents(),
@@ -64,6 +69,7 @@ class GetPaymentToken extends ApiAbstract {
       )
     );
 
+    $request['checkout']['payment_method'] = $this->_getPaymentMethods();
     Logger::getInstance()->write($request, Logger::DEBUG, get_class() . '::' . __FUNCTION__);
 
     return $request;
@@ -223,6 +229,10 @@ class GetPaymentToken extends ApiAbstract {
     $this->_hidden = array_diff($this->_hidden, array('address'));
   }
 
+  public function addPaymentMethod($method) {
+    $this->_payment_methods[] = $method;
+  }
+
   private function _searchAndAdd($array, $value) {
     // search for $value in $array
     // if not found, adds $value to $array and returns $array
@@ -234,5 +244,20 @@ class GetPaymentToken extends ApiAbstract {
     return $arr;
   }
 
+  private function _getPaymentMethods() {
+    $arResult = array();
+
+    if (!empty($this->_payment_methods)) {
+      $arResult['types'] = array();
+      foreach ($this->_payment_methods as $pm) {
+        $arResult['types'][] = $pm->getName();
+        $arResult[$pm->getName()] = $pm->getParamsArray();
+      }
+    } else {
+      $arResult['types'] = array('credit_card');
+    }
+
+    return $arResult;
+  }
 }
 ?>

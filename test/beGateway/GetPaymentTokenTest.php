@@ -77,7 +77,8 @@ class GetPaymentTokenTest extends TestCase {
     $auth = $this->getTestObject();
     $arr = array(
       'checkout' => array(
-        'transaction_type' => 'authorization',
+        'version' => 2,
+        'transaction_type' => 'payment',
         'order' => array(
           'amount' => 1233,
           'currency' => 'EUR',
@@ -106,6 +107,79 @@ class GetPaymentTokenTest extends TestCase {
           'zip' => 'LV-1082',
           'address' => 'Demo str 12',
           'phone' => ''
+        ),
+        'payment_method' => array(
+          'types' => array('credit_card')
+        )
+      )
+    );
+
+    $reflection = new \ReflectionClass( 'beGateway\GetPaymentToken');
+    $method = $reflection->getMethod('_buildRequestMessage');
+    $method->setAccessible(true);
+
+    $request = $method->invoke($auth, '_buildRequestMessage');
+
+    $this->assertEqual($arr, $request);
+  }
+
+  public function test_buildRequestMessageWithErip() {
+    $auth = $this->getTestObject();
+    $auth->money->setAmount(100);
+    $auth->money->setCurrency('BYN');
+    $erip = new PaymentMethod\Erip(array(
+      'account_number' => '1234',
+      'service_number' => '99999999',
+      'order_id' => 100001,
+      'service_info' => array('Test payment')
+    ));
+    $cc = new PaymentMethod\CreditCard();
+
+    $auth->addPaymentMethod($erip);
+    $auth->addPaymentMethod($cc);
+
+    $arr = array(
+      'checkout' => array(
+        'version' => 2,
+        'transaction_type' => 'payment',
+        'order' => array(
+          'amount' => 10000,
+          'currency' => 'BYN',
+          'description' => 'test',
+          'tracking_id' => 'my_custom_variable',
+        ),
+        'settings' => array(
+          'success_url' => 'http://www.example.com/s',
+          'cancel_url' => 'http://www.example.com/c',
+          'decline_url' => 'http://www.example.com/d',
+          'fail_url' => 'http://www.example.com/f',
+          'notification_url' => 'http://www.example.com/n',
+          'language' => 'zh',
+          'customer_fields' => array(
+            'hidden' => array(),
+            'read_only' => array(),
+          ),
+        ),
+        'customer' => array(
+          'email' => 'john@example.com',
+          'first_name' => 'John',
+          'last_name' => 'Doe',
+          'country' => 'LV',
+          'city' => 'Riga',
+          'state' => '',
+          'zip' => 'LV-1082',
+          'address' => 'Demo str 12',
+          'phone' => ''
+        ),
+        'payment_method' => array(
+          'types' => array('erip', 'credit_card'),
+          'erip' => array(
+            'account_number' => '1234',
+            'service_number' => '99999999',
+            'order_id' => 100001,
+            'service_info' => array('Test payment')
+          ),
+          'credit_card' => array()
         )
       )
     );
@@ -160,9 +234,10 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertTrue($response->isSuccess());
     $this->assertNotNull($response->getToken());
     $this->assertNotNull($response->getRedirectUrl());
-    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/checkout?token=' . $response->getToken(),
+    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/v2/checkout?token=' . $response->getToken(),
                        $response->getRedirectUrl());
-
+    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/v2/checkout',
+                       $response->getRedirectUrlScriptName());
   }
 
   public function test_errorTokenRequest() {
@@ -181,8 +256,6 @@ class GetPaymentTokenTest extends TestCase {
 
   }
 
-
-
   protected function getTestObject() {
 
     $transaction = $this->getTestObjectInstance();
@@ -191,7 +264,7 @@ class GetPaymentTokenTest extends TestCase {
 
     $transaction->money->setAmount(12.33);
     $transaction->money->setCurrency('EUR');
-    $transaction->setAuthorizationTransactionType();
+    $transaction->setPaymentTransactionType();
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
     $transaction->setNotificationUrl($url . '/n' );
@@ -218,7 +291,5 @@ class GetPaymentTokenTest extends TestCase {
 
     return new GetPaymentToken();
   }
-
-
 }
 ?>

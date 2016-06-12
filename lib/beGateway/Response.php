@@ -15,6 +15,10 @@ class Response extends ResponseBase {
     return $this->getStatus() == 'incomplete';
   }
 
+  public function isPending() {
+    return $this->getStatus() == 'pending';
+  }
+
   public function isTest() {
     if ($this->hasTransactionSection()) {
       return $this->getResponse()->transaction->test == true;
@@ -42,6 +46,14 @@ class Response extends ResponseBase {
   public function getTrackingId() {
     if ($this->hasTransactionSection()) {
       return $this->getResponse()->transaction->tracking_id;
+    }else{
+      return false;
+    }
+  }
+
+  public function getPaymentMethod() {
+    if ($this->hasTransactionSection()) {
+      return $this->getResponse()->transaction->payment_method_type;
     }else{
       return false;
     }
