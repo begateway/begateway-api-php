@@ -36,6 +36,7 @@ class WebhookTest extends TestCase {
     $this->assertTrue($w->isSuccess());
     $this->assertEqual($w->getMessage(), 'Successfully processed');
     $this->assertNotNull($w->getUid());
+    $this->assertEqual($w->getPaymentMethod(), 'credit_card');
   }
 
 
@@ -142,7 +143,8 @@ class WebhookTest extends TestCase {
       "test":$test,
       "currency":"USD",
       "description":"Test order",
-      "type":"payment"
+      "type":"payment",
+      "payment_method_type":"credit_card"
    }
 }
 EOD;
