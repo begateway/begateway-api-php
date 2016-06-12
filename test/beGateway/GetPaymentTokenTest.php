@@ -77,7 +77,8 @@ class GetPaymentTokenTest extends TestCase {
     $auth = $this->getTestObject();
     $arr = array(
       'checkout' => array(
-        'transaction_type' => 'authorization',
+        'version' => 2,
+        'transaction_type' => 'payment',
         'order' => array(
           'amount' => 1233,
           'currency' => 'EUR',
@@ -106,6 +107,9 @@ class GetPaymentTokenTest extends TestCase {
           'zip' => 'LV-1082',
           'address' => 'Demo str 12',
           'phone' => ''
+        ),
+        'payment_method' => array(
+          'types' => array('credit_card')
         )
       )
     );
@@ -160,7 +164,7 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertTrue($response->isSuccess());
     $this->assertNotNull($response->getToken());
     $this->assertNotNull($response->getRedirectUrl());
-    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/checkout?token=' . $response->getToken(),
+    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/v2/checkout?token=' . $response->getToken(),
                        $response->getRedirectUrl());
 
   }
@@ -181,8 +185,6 @@ class GetPaymentTokenTest extends TestCase {
 
   }
 
-
-
   protected function getTestObject() {
 
     $transaction = $this->getTestObjectInstance();
@@ -191,7 +193,7 @@ class GetPaymentTokenTest extends TestCase {
 
     $transaction->money->setAmount(12.33);
     $transaction->money->setCurrency('EUR');
-    $transaction->setAuthorizationTransactionType();
+    $transaction->setPaymentTransactionType();
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
     $transaction->setNotificationUrl($url . '/n' );
@@ -218,7 +220,5 @@ class GetPaymentTokenTest extends TestCase {
 
     return new GetPaymentToken();
   }
-
-
 }
 ?>
