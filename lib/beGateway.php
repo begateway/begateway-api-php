@@ -38,4 +38,7 @@ require_once (__DIR__ . '/beGateway/QueryByToken.php');
 require_once (__DIR__ . '/beGateway/GetPaymentToken.php');
 require_once (__DIR__ . '/beGateway/Webhook.php');
 require_once (__DIR__ . '/beGateway/CardToken.php');
+require_once (__DIR__ . '/beGateway/PaymentMethod/Base.php');
+require_once (__DIR__ . '/beGateway/PaymentMethod/Erip.php');
+require_once (__DIR__ . '/beGateway/PaymentMethod/CreditCard.php');
 ?>
