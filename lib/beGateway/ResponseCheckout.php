@@ -35,6 +35,10 @@ class ResponseCheckout extends ResponseBase {
     return $this->getResponse()->checkout->redirect_url;
   }
 
+  public function getRedirectUrlScriptName() {
+    return preg_replace('/(.+)\?token=(.+)/', '$1', $this->getRedirectUrl());
+  }
+
   private function _compileErrors() {
     $message = 'there are errors in request parameters.';
     if (isset($this->getResponse()->errors)) {

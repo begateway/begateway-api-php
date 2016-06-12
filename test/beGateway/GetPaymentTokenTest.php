@@ -236,7 +236,8 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertNotNull($response->getRedirectUrl());
     $this->assertEqual(\beGateway\Settings::$checkoutBase . '/v2/checkout?token=' . $response->getToken(),
                        $response->getRedirectUrl());
-
+    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/v2/checkout',
+                       $response->getRedirectUrlScriptName());
   }
 
   public function test_errorTokenRequest() {
