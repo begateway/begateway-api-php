@@ -123,6 +123,76 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertEqual($arr, $request);
   }
 
+  public function test_buildRequestMessageWithErip() {
+    $auth = $this->getTestObject();
+    $auth->money->setAmount(100);
+    $auth->money->setCurrency('BYN');
+    $erip = new PaymentMethod\Erip(array(
+      'account_number' => '1234',
+      'service_number' => '99999999',
+      'order_id' => 100001,
+      'service_info' => array('Test payment')
+    ));
+    $cc = new PaymentMethod\CreditCard();
+
+    $auth->addPaymentMethod($erip);
+    $auth->addPaymentMethod($cc);
+
+    $arr = array(
+      'checkout' => array(
+        'version' => 2,
+        'transaction_type' => 'payment',
+        'order' => array(
+          'amount' => 10000,
+          'currency' => 'BYN',
+          'description' => 'test',
+          'tracking_id' => 'my_custom_variable',
+        ),
+        'settings' => array(
+          'success_url' => 'http://www.example.com/s',
+          'cancel_url' => 'http://www.example.com/c',
+          'decline_url' => 'http://www.example.com/d',
+          'fail_url' => 'http://www.example.com/f',
+          'notification_url' => 'http://www.example.com/n',
+          'language' => 'zh',
+          'customer_fields' => array(
+            'hidden' => array(),
+            'read_only' => array(),
+          ),
+        ),
+        'customer' => array(
+          'email' => 'john@example.com',
+          'first_name' => 'John',
+          'last_name' => 'Doe',
+          'country' => 'LV',
+          'city' => 'Riga',
+          'state' => '',
+          'zip' => 'LV-1082',
+          'address' => 'Demo str 12',
+          'phone' => ''
+        ),
+        'payment_method' => array(
+          'types' => array('erip', 'credit_card'),
+          'erip' => array(
+            'account_number' => '1234',
+            'service_number' => '99999999',
+            'order_id' => 100001,
+            'service_info' => array('Test payment')
+          ),
+          'credit_card' => array()
+        )
+      )
+    );
+
+    $reflection = new \ReflectionClass( 'beGateway\GetPaymentToken');
+    $method = $reflection->getMethod('_buildRequestMessage');
+    $method->setAccessible(true);
+
+    $request = $method->invoke($auth, '_buildRequestMessage');
+
+    $this->assertEqual($arr, $request);
+  }
+
   public function test_endpoint() {
 
     $auth = $this->getTestObjectInstance();
