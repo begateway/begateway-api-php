@@ -129,7 +129,7 @@ class GetPaymentTokenTest extends TestCase {
     $auth->money->setCurrency('BYN');
     $erip = new PaymentMethod\Erip(array(
       'account_number' => '1234',
-      'service_number' => '99999999',
+      'service_no' => '99999999',
       'order_id' => 100001,
       'service_info' => array('Test payment')
     ));
@@ -175,7 +175,7 @@ class GetPaymentTokenTest extends TestCase {
           'types' => array('erip', 'credit_card'),
           'erip' => array(
             'account_number' => '1234',
-            'service_number' => '99999999',
+            'service_no' => '99999999',
             'order_id' => 100001,
             'service_info' => array('Test payment')
           ),

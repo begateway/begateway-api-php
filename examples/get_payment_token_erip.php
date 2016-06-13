@@ -10,7 +10,7 @@ $cc = new \beGateway\PaymentMethod\CreditCard;
 $erip = new \beGateway\PaymentMethod\Erip(array(
   'order_id' => 1234,
   'account_number' => '99999999',
-  'service_number' => 99999999
+  'service_no' => '99999999'
 ));
 
 $transaction->addPaymentMethod($cc);

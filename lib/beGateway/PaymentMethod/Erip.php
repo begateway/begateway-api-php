@@ -12,7 +12,7 @@ class Erip extends Base {
     $arParams = array(
       'order_id' => $this->_params['order_id'],
       'account_number' => $this->_params['account_number'],
-      'service_number' => $this->_params['service_number'],
+      'service_no' => $this->_params['service_no'],
     );
 
     $service_info = $this->_params['service_info'];

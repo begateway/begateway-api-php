@@ -12,7 +12,7 @@ class EripTest extends \beGateway\TestCase {
     $erip = $this->getTestObject();
     $this->assertEqual($erip->getParamsArray(), array(
       'account_number' => '1234',
-      'service_number' => '99999999',
+      'service_no' => '99999999',
       'order_id' => 100001,
       'service_info' => array('Test payment')
     ));
@@ -21,7 +21,7 @@ class EripTest extends \beGateway\TestCase {
   public function getTestObject() {
     return new Erip(array(
       'account_number' => '1234',
-      'service_number' => '99999999',
+      'service_no' => '99999999',
       'order_id' => 100001,
       'service_info' => array('Test payment')
     ));
