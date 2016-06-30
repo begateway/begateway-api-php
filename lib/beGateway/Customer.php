@@ -13,6 +13,7 @@ class Customer {
   protected $_customer_state;
   protected $_customer_zip;
   protected $_customer_phone;
+  protected $_customer_birth_date = NULL;
 
   public function setIP($ip) {
     $this->_customer_ip = $ip;
@@ -83,6 +84,13 @@ class Customer {
   }
   public function getPhone() {
     return $this->_customer_phone;
+  }
+
+  public function setBirthDate($birthdate) {
+    $this->_customer_birth_date = $birthdate;
+  }
+  public function getBirthDate() {
+    return $this->_customer_birth_date;
   }
 }
 ?>

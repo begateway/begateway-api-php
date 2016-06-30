@@ -59,6 +59,7 @@ class AuthorizationTest extends TestCase {
         'customer' => array(
           'ip' => '127.0.0.1',
           'email' => 'john@example.com',
+          'birth_date' => '1970-01-01'
         ),
 
         'billing_address' => array(
@@ -195,6 +196,7 @@ class AuthorizationTest extends TestCase {
     $transaction->customer->setZip('LV-1082');
     $transaction->customer->setIp('127.0.0.1');
     $transaction->customer->setEmail('john@example.com');
+    $transaction->customer->setBirthDate('1970-01-01');
 
     return $transaction;
   }

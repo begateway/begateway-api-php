@@ -64,7 +64,8 @@ class GetPaymentToken extends ApiAbstract {
           'state' => $this->customer->getState(),
           'zip' => $this->customer->getZip(),
           'address' => $this->customer->getAddress(),
-          'phone' => $this->customer->getPhone()
+          'phone' => $this->customer->getPhone(),
+          'birth_date' => $this->customer->getBirthDate()
         )
       )
     );

@@ -67,6 +67,7 @@ class Authorization extends ApiAbstract {
         'customer' => array(
           'ip' => $this->customer->getIP(),
           'email' => $this->customer->getEmail(),
+          'birth_date' => $this->customer->getBirthDate(),
         ),
         'billing_address' => array(
           'first_name' => $this->customer->getFirstName(),
