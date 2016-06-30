@@ -1,7 +1,16 @@
 ## Changelog
 
-### 2.2.3
+### 2.5.3
+
+  * Add customer birth date
   
+### 2.5.2
+
+  * Add `erip` payment method
+  * Support V2.0 of payment page
+
+### 2.2.3
+
   * Add default `false` value to `setSkip3D` function call
 
 ### 2.2.1

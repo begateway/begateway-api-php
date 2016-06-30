@@ -106,7 +106,8 @@ class GetPaymentTokenTest extends TestCase {
           'state' => '',
           'zip' => 'LV-1082',
           'address' => 'Demo str 12',
-          'phone' => ''
+          'phone' => '',
+          'birth_date' => ''
         ),
         'payment_method' => array(
           'types' => array('credit_card')
@@ -169,7 +170,8 @@ class GetPaymentTokenTest extends TestCase {
           'state' => '',
           'zip' => 'LV-1082',
           'address' => 'Demo str 12',
-          'phone' => ''
+          'phone' => '',
+          'birth_date' => null
         ),
         'payment_method' => array(
           'types' => array('erip', 'credit_card'),
