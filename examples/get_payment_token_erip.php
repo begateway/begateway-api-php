@@ -19,7 +19,7 @@ $transaction->addPaymentMethod($erip);
 $amount = rand(100, 10000);
 
 $transaction->money->setAmount($amount);
-$transaction->money->setCurrency('BYR');
+$transaction->money->setCurrency('BYN');
 $transaction->setDescription('test');
 $transaction->setTrackingId('my_custom_variable');
 $transaction->setLanguage('ru');
