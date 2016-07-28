@@ -37,10 +37,20 @@ class MoneyTest extends TestCase {
     $money = $this->getTestObject();
 
     $money->setCents(2550);
-    $money->setCurrency('BYR');
+    $money->setCurrency('JPY');
 
     $this->assertEqual($money->getCents(),2550);
     $this->assertEqual($money->getAmount(),2550);
+  }
+
+  public function test_set99Amount() {
+    $money = $this->getTestObject();
+
+    $money->setAmount(20.99);
+    $money->setCurrency('EUR');
+
+    $this->assertEqual($money->getCents(),2099);
+    $this->assertEqual($money->getAmount(),20.99);
   }
 
   protected function getTestObject() {
