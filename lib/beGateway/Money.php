@@ -12,22 +12,26 @@ class Money {
   }
 
   public function getCents() {
-    $cents = ($this->_cents) ? $this->_cents : (int)($this->_amount * $this->_currency_multiplyer());
+    $cents = ($this->_cents) ? $this->_cents : intval(strval($this->_amount * $this->_currency_multiplyer()));
     return $cents;
   }
 
   public function setCents($cents) {
-    $this->_cents = (int)$cents;
+    $this->_cents = intval($cents);
     $this->_amount = NULL;
   }
 
   public function setAmount($amount){
-    $this->_amount = (float)$amount;
+    $this->_amount = $amount;
     $this->_cents = NULL;
   }
   public function getAmount() {
-    $amount = ($this->_amount) ? $this->_amount : (float)($this->_cents / $this->_currency_multiplyer());
-    return $amount;
+    if ($this->_amount) {
+      $amount = $this->_amount;
+    } else {
+      $amount = $this->_cents / $this->_currency_multiplyer();
+    }
+    return floatval(strval($amount));
   }
 
   public function setCurrency($currency){
@@ -37,53 +41,31 @@ class Money {
     return $this->_currency;
   }
 
-  private function _currency_multiplyer() {
+  private function _currency_power() {
+
     //array currency code => mutiplyer
     $exceptions = array(
-        'BIF' => 1,
-        'BYR' => 1,
-        'CLF' => 1,
-        'CLP' => 1,
-        'CVE' => 1,
-        'DJF' => 1,
-        'GNF' => 1,
-        'IDR' => 1,
-        'IQD' => 1,
-        'IRR' => 1,
-        'ISK' => 1,
-        'JPY' => 1,
-        'KMF' => 1,
-        'KPW' => 1,
-        'KRW' => 1,
-        'LAK' => 1,
-        'LBP' => 1,
-        'MMK' => 1,
-        'PYG' => 1,
-        'RWF' => 1,
-        'SLL' => 1,
-        'STD' => 1,
-        'UYI' => 1,
-        'VND' => 1,
-        'VUV' => 1,
-        'XAF' => 1,
-        'XOF' => 1,
-        'XPF' => 1,
-        'MOP' => 10,
-        'BHD' => 1000,
-        'JOD' => 1000,
-        'KWD' => 1000,
-        'LYD' => 1000,
-        'OMR' => 1000,
-        'TND' => 1000
+        'BIF' => 0, 'BYR' => 0, 'CLF' => 0, 'CLP' => 0, 'CVE' => 0,
+        'DJF' => 0, 'GNF' => 0, 'IDR' => 0, 'IQD' => 0, 'IRR' => 0,
+        'ISK' => 0, 'JPY' => 0, 'KMF' => 0, 'KPW' => 0, 'KRW' => 0,
+        'LAK' => 0, 'LBP' => 0, 'MMK' => 0, 'PYG' => 0, 'RWF' => 0,
+        'SLL' => 0, 'STD' => 0, 'UYI' => 0, 'VND' => 0, 'VUV' => 0,
+        'XAF' => 0, 'XOF' => 0, 'XPF' => 0, 'MOP' => 1, 'BHD' => 3,
+        'JOD' => 3, 'KWD' => 3, 'LYD' => 3, 'OMR' => 3, 'TND' => 3
     );
-    $multiplyer = 100; //default value
+
+    $power = 2; //default value
     foreach ($exceptions as $key => $value) {
         if (($this->_currency == $key)) {
-            $multiplyer = $value;
+            $power = $value;
             break;
         }
     }
-    return $multiplyer;
+    return $power;
+  }
+
+  private function _currency_multiplyer() {
+    return pow(10,$this->_currency_power());
   }
 }
 ?>

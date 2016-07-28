@@ -49,8 +49,18 @@ class MoneyTest extends TestCase {
     $money->setAmount(20.99);
     $money->setCurrency('EUR');
 
-    $this->assertEqual($money->getCents(),2099);
-    $this->assertEqual($money->getAmount(),20.99);
+    $this->assertEqual($money->getCents(), 2099);
+    $this->assertEqual($money->getAmount(), 20.99);
+  }
+
+  public function test_setRoundAmount() {
+    $money = $this->getTestObject();
+
+    $money->setAmount(151.2);
+    $money->setCurrency('EUR');
+
+    $this->assertEqual($money->getCents(), 15120);
+    $this->assertEqual($money->getAmount(), 151.20);
   }
 
   protected function getTestObject() {
