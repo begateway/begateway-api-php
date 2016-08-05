@@ -20,6 +20,6 @@
         "ext-mbstring": "*"
     },
     "autoload": {
-     "psr-4": { "beGateway\\" : "lib/" }
+     "psr-4": { "beGateway\\" : "lib/beGateway" }
     }
 }
