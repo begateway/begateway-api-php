@@ -30,21 +30,21 @@ class Customer {
   }
 
   public function setFirstName($first_name) {
-    $this->_customer_first_name = $first_name;
+    $this->_customer_first_name = $this->_setNullIfEmpty($first_name);
   }
   public function getFirstName() {
     return $this->_customer_first_name;
   }
 
   public function setLastName($last_name) {
-    $this->_customer_last_name = $last_name;
+    $this->_customer_last_name = $this->_setNullIfEmpty($last_name);
   }
   public function getLastName() {
     return $this->_customer_last_name;
   }
 
   public function setAddress($address) {
-    $this->_customer_address = $address;
+    $this->_customer_address = $this->_setNullIfEmpty($address);
   }
 
   public function getAddress() {
@@ -52,14 +52,14 @@ class Customer {
   }
 
   public function setCity($city) {
-    $this->_customer_city = $city;
+    $this->_customer_city = $this->_setNullIfEmpty($city);
   }
   public function getCity() {
     return $this->_customer_city;
   }
 
   public function setCountry($country) {
-    $this->_customer_country = $country;
+    $this->_customer_country = $this->_setNullIfEmpty($country);
   }
   public function getCountry() {
     return $this->_customer_country;
@@ -73,7 +73,7 @@ class Customer {
   }
 
   public function setZip($zip) {
-    $this->_customer_zip = $zip;
+    $this->_customer_zip = $this->_setNullIfEmpty($zip);
   }
   public function getZip() {
     return $this->_customer_zip;
@@ -91,6 +91,10 @@ class Customer {
   }
   public function getBirthDate() {
     return $this->_customer_birth_date;
+  }
+
+  private function _setNullIfEmpty(&$resource) {
+    return (strlen($resource) > 0) ? $resource : null;
   }
 }
 ?>

@@ -33,6 +33,7 @@ if ($log_level == 'DEBUG') {
 
 require_once(dirname(__FILE__) . '/beGateway/TestCase.php');
 require_once(dirname(__FILE__) . '/beGateway/MoneyTest.php');
+require_once(dirname(__FILE__) . '/beGateway/CustomerTest.php');
 require_once(dirname(__FILE__) . '/beGateway/AuthorizationTest.php');
 require_once(dirname(__FILE__) . '/beGateway/PaymentTest.php');
 require_once(dirname(__FILE__) . '/beGateway/CaptureTest.php');
