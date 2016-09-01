@@ -5,7 +5,14 @@ class Erip extends Base {
   protected $_params;
 
   public function __construct($params) {
-    $this->_params = $params;
+    $arDefault = array(
+      'order_id' => NULL,
+      'account_number' => NULL,
+      'service_no' => NULL,
+      'service_info' => NULL
+    );
+
+    $this->_params = array_merge($arDefault, $params);
   }
 
   public function getParamsArray(){

@@ -3,7 +3,7 @@
 ### 2.5.3
 
   * Add customer birth date
-  
+
 ### 2.5.2
 
   * Add `erip` payment method
