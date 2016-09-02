@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2.6.0
+
+  * Add `expired_at` parameter to `GetPaymentToken`
+
 ### 2.5.3
 
   * Add customer birth date

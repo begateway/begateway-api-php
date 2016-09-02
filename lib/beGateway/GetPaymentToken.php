@@ -17,12 +17,14 @@ class GetPaymentToken extends ApiAbstract {
   protected $_readonly;
   protected $_hidden;
   protected $_payment_methods;
+  protected $_expired_at;
 
   public function __construct() {
     $this->customer = new Customer();
     $this->money = new Money();
     $this->setPaymentTransactionType();
     $this->_language = Language::getDefaultLanguage();
+    $this->_expired_at = NULL;
     $this->_readonly = array();
     $this->_hidden = array();
     $this->_payment_methods = array();
@@ -50,6 +52,7 @@ class GetPaymentToken extends ApiAbstract {
           'fail_url' => $this->getFailUrl(),
           'cancel_url' => $this->getCancelUrl(),
           'language' => $this->getLanguage(),
+          'expired_at' => $this->getExpiryDate(),
           'customer_fields' => array(
             'read_only' => $this->getReadonlyFields(),
             'hidden' => $this->getHiddenFields()
@@ -150,6 +153,21 @@ class GetPaymentToken extends ApiAbstract {
 
   public function getLanguage() {
     return $this->_language;
+  }
+
+  # date when payment expires for payment
+  # date is in ISO8601 format
+  public function setExpiryDate($date) {
+    $iso8601 = NULL;
+
+    if ($date != NULL)
+      $iso8601 = date(DATE_ISO8601, strtotime($date));
+
+    $this->_expired_at = $iso8601;
+  }
+
+  public function getExpiryDate() {
+    return $this->_expired_at;
   }
 
   public function getReadonlyFields() {

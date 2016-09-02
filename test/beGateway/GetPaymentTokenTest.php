@@ -17,6 +17,18 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertEqual($auth->getTrackingId(), $tracking_id);
   }
 
+  public function test_setExpiryDate() {
+    $auth = $this->getTestObjectInstance();
+    $date = '2020-12-30 23:21:46';
+    $date_iso8601 = date(DATE_ISO8601, strtotime($date));
+    $auth->setExpiryDate($date);
+    $this->assertEqual($auth->getExpiryDate(), $date_iso8601);
+
+    $date = NULL;
+    $auth->setExpiryDate($date);
+    $this->assertEqual($auth->getExpiryDate(), NULL);
+  }
+
   public function test_setUrls() {
 
     $auth = $this->getTestObjectInstance();
@@ -92,6 +104,7 @@ class GetPaymentTokenTest extends TestCase {
           'fail_url' => 'http://www.example.com/f',
           'notification_url' => 'http://www.example.com/n',
           'language' => 'zh',
+          'expired_at' => '2030-12-31T00:21:46+0300',
           'customer_fields' => array(
             'hidden' => array(),
             'read_only' => array(),
@@ -156,6 +169,7 @@ class GetPaymentTokenTest extends TestCase {
           'fail_url' => 'http://www.example.com/f',
           'notification_url' => 'http://www.example.com/n',
           'language' => 'zh',
+          'expired_at' => '2030-12-31T00:21:46+0300',
           'customer_fields' => array(
             'hidden' => array(),
             'read_only' => array(),
@@ -275,6 +289,7 @@ class GetPaymentTokenTest extends TestCase {
     $transaction->setDeclineUrl($url . '/d' );
     $transaction->setFailUrl($url . '/f' );
     $transaction->setLanguage('zh');
+    $transaction->setExpiryDate('2030-12-31T00:21:46+0300');
 
     $transaction->customer->setFirstName('John');
     $transaction->customer->setLastName('Doe');
