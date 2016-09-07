@@ -43,7 +43,8 @@ class GetPaymentToken extends ApiAbstract {
           'amount' => $this->money->getCents(),
           'currency' => $this->money->getCurrency(),
           'description' => $this->getDescription(),
-          'tracking_id' => $this->getTrackingId()
+          'tracking_id' => $this->getTrackingId(),
+          'expired_at' => $this->getExpiryDate()
         ),
         'settings' => array(
           'notification_url' => $this->getNotificationUrl(),
@@ -52,7 +53,6 @@ class GetPaymentToken extends ApiAbstract {
           'fail_url' => $this->getFailUrl(),
           'cancel_url' => $this->getCancelUrl(),
           'language' => $this->getLanguage(),
-          'expired_at' => $this->getExpiryDate(),
           'customer_fields' => array(
             'read_only' => $this->getReadonlyFields(),
             'hidden' => $this->getHiddenFields()
