@@ -42,5 +42,6 @@ if (!class_exists('\beGateway\Settings')) {
   require_once (__DIR__ . '/beGateway/PaymentMethod/Base.php');
   require_once (__DIR__ . '/beGateway/PaymentMethod/Erip.php');
   require_once (__DIR__ . '/beGateway/PaymentMethod/CreditCard.php');
+  require_once (__DIR__ . '/beGateway/PaymentMethod/Emexvoucher.php');
 }
 ?>

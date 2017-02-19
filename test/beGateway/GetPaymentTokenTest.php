@@ -41,7 +41,6 @@ class GetPaymentTokenTest extends TestCase {
     $auth->setDeclineUrl($url . '/d' );
     $auth->setFailUrl($url . '/f' );
 
-
     $this->assertEqual($auth->getNotificationUrl(), $url . '/n' );
     $this->assertEqual($auth->getCancelUrl(), $url . '/c' );
     $this->assertEqual($auth->getSuccessUrl(), $url . '/s' );
@@ -121,9 +120,6 @@ class GetPaymentTokenTest extends TestCase {
           'address' => 'Demo str 12',
           'phone' => '',
           'birth_date' => ''
-        ),
-        'payment_method' => array(
-          'types' => array('credit_card')
         )
       )
     );
@@ -196,6 +192,68 @@ class GetPaymentTokenTest extends TestCase {
             'service_info' => array('Test payment')
           ),
           'credit_card' => array()
+        )
+      )
+    );
+
+    $reflection = new \ReflectionClass( 'beGateway\GetPaymentToken');
+    $method = $reflection->getMethod('_buildRequestMessage');
+    $method->setAccessible(true);
+
+    $request = $method->invoke($auth, '_buildRequestMessage');
+
+    $this->assertEqual($arr, $request);
+  }
+
+  public function test_buildRequestMessageWithEmexvoucher() {
+    $auth = $this->getTestObject();
+    $auth->money->setAmount(100);
+    $auth->money->setCurrency('USD');
+    $emexvoucher = new PaymentMethod\Emexvoucher();
+    $cc = new PaymentMethod\CreditCard();
+
+    $auth->addPaymentMethod($emexvoucher);
+    $auth->addPaymentMethod($cc);
+
+    $arr = array(
+      'checkout' => array(
+        'version' => 2,
+        'transaction_type' => 'payment',
+        'order' => array(
+          'amount' => 10000,
+          'currency' => 'USD',
+          'description' => 'test',
+          'tracking_id' => 'my_custom_variable',
+          'expired_at' => '2030-12-31T00:21:46+0300'
+        ),
+        'settings' => array(
+          'success_url' => 'http://www.example.com/s',
+          'cancel_url' => 'http://www.example.com/c',
+          'decline_url' => 'http://www.example.com/d',
+          'fail_url' => 'http://www.example.com/f',
+          'notification_url' => 'http://www.example.com/n',
+          'language' => 'zh',
+          'customer_fields' => array(
+            'hidden' => array(),
+            'read_only' => array(),
+          ),
+        ),
+        'customer' => array(
+          'email' => 'john@example.com',
+          'first_name' => 'John',
+          'last_name' => 'Doe',
+          'country' => 'LV',
+          'city' => 'Riga',
+          'state' => '',
+          'zip' => 'LV-1082',
+          'address' => 'Demo str 12',
+          'phone' => '',
+          'birth_date' => null
+        ),
+        'payment_method' => array(
+          'types' => array('emexvoucher', 'credit_card'),
+          'credit_card' => array(),
+          'emexvoucher' => array()
         )
       )
     );
