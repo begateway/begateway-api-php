@@ -17,11 +17,11 @@ $erip = new \beGateway\PaymentMethod\Erip(array(
 $transaction->addPaymentMethod($cc);
 $transaction->addPaymentMethod($erip);
 
-$amount = rand(100, 10000);
+$amount = rand(100, 1000);
 
 $transaction->money->setAmount($amount);
 $transaction->money->setCurrency('BYN');
-$transaction->setDescription('test');
+$transaction->setDescription('Тестовая оплата');
 $transaction->setTrackingId('my_custom_variable');
 $transaction->setLanguage('ru');
 $transaction->setNotificationUrl('http://www.example.com/notify');

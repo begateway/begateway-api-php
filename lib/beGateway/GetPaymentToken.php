@@ -73,7 +73,10 @@ class GetPaymentToken extends ApiAbstract {
       )
     );
 
-    $request['checkout']['payment_method'] = $this->_getPaymentMethods();
+    $payment_methods = $this->_getPaymentMethods();
+    if ($payment_methods != NULL)
+      $request['checkout']['payment_method'] = $payment_methods;
+
     Logger::getInstance()->write($request, Logger::DEBUG, get_class() . '::' . __FUNCTION__);
 
     return $request;
@@ -273,7 +276,7 @@ class GetPaymentToken extends ApiAbstract {
         $arResult[$pm->getName()] = $pm->getParamsArray();
       }
     } else {
-      $arResult['types'] = array('credit_card');
+      $arResult = NULL;
     }
 
     return $arResult;
