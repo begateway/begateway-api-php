@@ -2,19 +2,16 @@
 namespace beGateway;
 
 class Webhook extends Response {
-  protected $_json_in = 'php://input';
+
+  protected $_json_source = 'php://input';
 
   public function __construct() {
-    $this->decodeReceivedJson();
+    parent::__construct(file_get_contents($this->_json_source));
   }
 
   public function isAuthorized() {
     return $this->_getShopIdFromAuthorization() == Settings::$shopId
            && $this->_getShopKeyFromAuthorization() == Settings::$shopKey;
-  }
-
-  public function decodeReceivedJson() {
-    $this->_response = json_decode(file_get_contents($this->_json_in));
   }
 
   private function _getShopIdFromAuthorization() {

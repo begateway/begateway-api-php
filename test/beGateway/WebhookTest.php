@@ -39,7 +39,6 @@ class WebhookTest extends TestCase {
     $this->assertEqual($w->getPaymentMethod(), 'credit_card');
   }
 
-
   public function test_RequestIsValidAndItIsFailed() {
     $w = $this->getTestObjectInstance();
 
@@ -53,7 +52,6 @@ class WebhookTest extends TestCase {
     $this->assertEqual($w->getMessage(), 'Payment was declined');
     $this->assertNotNull($w->getUid());
     $this->assertEqual($w->getStatus(), 'failed');
-
   }
 
   public function test_RequestIsValidAndItIsTest() {
