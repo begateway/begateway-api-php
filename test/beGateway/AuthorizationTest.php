@@ -112,6 +112,9 @@ class AuthorizationTest extends TestCase {
     $this->assertNotNull($response->getUid());
     $this->assertEqual($response->getStatus(), 'successful');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
+
+    $arResponse = $response->getResponseArray();
+    $this->assertEqual($cents, $arResponse['transaction']['amount']);
   }
 
   public function test_incompleteAuthorization() {
@@ -133,6 +136,9 @@ class AuthorizationTest extends TestCase {
     $this->assertTrue(preg_match('/process/', $response->getResponse()->transaction->redirect_url));
     $this->assertEqual($response->getStatus(), 'incomplete');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
+
+    $arResponse = $response->getResponseArray();
+    $this->assertEqual($cents, $arResponse['transaction']['amount']);
   }
 
   public function test_failedAuthorization() {
@@ -152,6 +158,9 @@ class AuthorizationTest extends TestCase {
     $this->assertNotNull($response->getUid());
     $this->assertEqual($response->getStatus(), 'failed');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
+
+    $arResponse = $response->getResponseArray();
+    $this->assertEqual($cents, $arResponse['transaction']['amount']);
   }
 
   public function test_errorAuthorization() {
