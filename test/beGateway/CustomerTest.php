@@ -53,6 +53,16 @@ class CustomerTest extends TestCase {
     $this->assertEqual($customer->getZip(), NULL);
   }
 
+  public function test_set_get_Email() {
+    $customer = $this->getTestObject();
+
+    $customer->setEmail('test@example.com');
+    $this->assertEqual($customer->getEmail(), 'test@example.com');
+
+    $customer->setEmail('');
+    $this->assertEqual($customer->getEmail(), NULL);
+  }
+
   protected function getTestObject() {
     return new Customer();
   }

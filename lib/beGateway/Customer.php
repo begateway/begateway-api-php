@@ -16,14 +16,14 @@ class Customer {
   protected $_customer_birth_date = NULL;
 
   public function setIP($ip) {
-    $this->_customer_ip = $ip;
+    $this->_customer_ip = $this->_setNullIfEmpty($ip);
   }
   public function getIP() {
     return $this->_customer_ip;
   }
 
   public function setEmail($email) {
-    $this->_customer_email = $email;
+    $this->_customer_email = $this->_setNullIfEmpty($email);
   }
   public function getEmail() {
     return $this->_customer_email;
@@ -66,7 +66,7 @@ class Customer {
   }
 
   public function setState($state) {
-    $this->_customer_state = $state;
+    $this->_customer_state = $this->_setNullIfEmpty($state);
   }
   public function getState() {
     return (in_array($this->_customer_country, array( 'US', 'CA'))) ? $this->_customer_state : null;
@@ -80,14 +80,14 @@ class Customer {
   }
 
   public function setPhone($phone) {
-    $this->_customer_phone = $phone;
+    $this->_customer_phone = $this->_setNullIfEmpty($phone);
   }
   public function getPhone() {
     return $this->_customer_phone;
   }
 
   public function setBirthDate($birthdate) {
-    $this->_customer_birth_date = $birthdate;
+    $this->_customer_birth_date = $this->_setNullIfEmpty($birthdate);
   }
   public function getBirthDate() {
     return $this->_customer_birth_date;
