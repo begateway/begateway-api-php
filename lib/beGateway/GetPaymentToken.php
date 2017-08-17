@@ -142,6 +142,10 @@ class GetPaymentToken extends ApiAbstract {
     $this->_transaction_type = 'payment';
   }
 
+  public function setTokenizationTransactionType() {
+    $this->_transaction_type = 'tokenization';
+  }
+
   public function getTransactionType() {
     return $this->_transaction_type;
   }
