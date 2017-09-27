@@ -87,7 +87,7 @@ $transaction->setAddressHidden();
 $response = $transaction->submit();
 
 if ($response->isSuccess() ) {
-  header("Location: " . \beGateway\Settings::$checkoutBase . "/checkout?token=" . $response->getToken() );
+  header("Location: " . $response->getRedirectUrl() );
 }
 ```
 
@@ -155,4 +155,3 @@ To run tests
 ```bash
 php -f ./test/beGateway.php
 ```
-
