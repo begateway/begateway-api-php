@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class CardToken extends ApiAbstract {
   public $card;

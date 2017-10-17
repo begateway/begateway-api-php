@@ -1,13 +1,13 @@
 <?php
-require_once __DIR__ . '/../lib/beGateway.php';
+require_once __DIR__ . '/../lib/BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
+\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \beGateway\GetPaymentToken;
+$transaction = new \BeGateway\GetPaymentToken;
 
-$cc = new \beGateway\PaymentMethod\CreditCard;
-$erip = new \beGateway\PaymentMethod\Erip(array(
+$cc = new \BeGateway\PaymentMethod\CreditCard;
+$erip = new \BeGateway\PaymentMethod\Erip(array(
   'order_id' => 1234,
   'account_number' => '1234',
   'service_no' => '99999999',

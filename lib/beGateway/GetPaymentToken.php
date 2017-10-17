@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class GetPaymentToken extends ApiAbstract {
   public static $version = 2;

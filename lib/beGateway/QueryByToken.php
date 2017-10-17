@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class QueryByToken extends ApiAbstract {
   protected $_token;

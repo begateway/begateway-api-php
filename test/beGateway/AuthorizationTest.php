@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class AuthorizationTest extends TestCase {
 
@@ -75,7 +75,7 @@ class AuthorizationTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'beGateway\Authorization');
+    $reflection = new \ReflectionClass( 'BeGateway\Authorization');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -88,7 +88,7 @@ class AuthorizationTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\Authorization');
+    $reflection = new \ReflectionClass('BeGateway\Authorization');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');

@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class QueryByTrackingIdTest extends TestCase {
 
@@ -16,7 +16,7 @@ class QueryByTrackingIdTest extends TestCase {
     $q = $this->getTestObjectInstance();
     $q->setTrackingId('1234');
 
-    $reflection = new \ReflectionClass('beGateway\QueryByTrackingId');
+    $reflection = new \ReflectionClass('BeGateway\QueryByTrackingId');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');

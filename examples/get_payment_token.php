@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../lib/beGateway.php';
+require_once __DIR__ . '/../lib/BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
+\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \beGateway\GetPaymentToken;
+$transaction = new \BeGateway\GetPaymentToken;
 
 $amount = rand(100, 10000);
 

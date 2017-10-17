@@ -1,7 +1,7 @@
 <?php
-namespace beGateway\PaymentMethod;
+namespace BeGateway\PaymentMethod;
 
-class CreditCardHalvaTest extends \beGateway\TestCase {
+class CreditCardHalvaTest extends \BeGateway\TestCase {
 
   public function test_getName() {
     $cc = $this->getTestObject();

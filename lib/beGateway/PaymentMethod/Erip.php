@@ -1,5 +1,5 @@
 <?php
-namespace beGateway\PaymentMethod;
+namespace BeGateway\PaymentMethod;
 
 class Erip extends Base {
   protected $_params;

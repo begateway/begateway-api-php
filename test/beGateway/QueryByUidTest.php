@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class QueryByUidTest extends TestCase {
 
@@ -16,7 +16,7 @@ class QueryByUidTest extends TestCase {
     $q = $this->getTestObjectInstance();
     $q->setUid('1234');
 
-    $reflection = new \ReflectionClass('beGateway\QueryByUid');
+    $reflection = new \ReflectionClass('BeGateway\QueryByUid');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');

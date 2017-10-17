@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class Authorization extends ApiAbstract {
   public $customer;
