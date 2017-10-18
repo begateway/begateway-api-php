@@ -303,6 +303,14 @@ class GetPaymentToken extends ApiAbstract {
     $this->_visible = array_diff($this->_visible, array('country'));
   }
 
+  public function setEmailVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'email');
+  }
+
+  public function unsetEmailVisible() {
+    $this->_visible = array_diff($this->_visible, array('email'));
+  }
+
   public function setBirthDateVisible() {
     $this->_visible = self::_searchAndAdd($this->_visible, 'birth_date');
   }
