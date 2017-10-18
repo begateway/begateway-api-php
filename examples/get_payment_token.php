@@ -28,7 +28,6 @@ $transaction->customer->setZip('LV-1082');
 $transaction->customer->setIp('127.0.0.1');
 $transaction->customer->setEmail('john@example.com');
 $transaction->customer->setBirthDate('1970-01-12');
-$transaction->setAddressHidden();
 // set transaction type. Default - payment
 // $transaction->setPaymentTransactionType();
 // $transaction->setAuthorizationTransactionType();

@@ -82,7 +82,6 @@ $transaction->customer->setCity('Riga');
 $transaction->customer->setZip('LV-1082');
 $transaction->customer->setIp('127.0.0.1');
 $transaction->customer->setEmail('john@example.com');
-$transaction->setAddressHidden();
 
 $response = $transaction->submit();
 

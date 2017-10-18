@@ -34,7 +34,6 @@ $transaction->setCancelUrl('http://www.example.com/cancel');
 $transaction->setExpiryDate(date("Y-m-d", 3*24*3600 + time()) . "T00:00:00+03:00");
 
 $transaction->customer->setEmail('john@example.com');
-$transaction->setAddressHidden();
 
 $response = $transaction->submit();
 
