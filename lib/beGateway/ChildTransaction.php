@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 abstract class ChildTransaction extends ApiAbstract {
   protected $_parent_uid;

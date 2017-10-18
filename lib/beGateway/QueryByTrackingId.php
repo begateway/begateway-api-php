@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class QueryByTrackingId extends ApiAbstract {
   protected $_tracking_id;

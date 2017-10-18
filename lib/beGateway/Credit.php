@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class Credit extends ApiAbstract {
   public $card;

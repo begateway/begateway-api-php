@@ -4,45 +4,45 @@
 
 // This snippet (and some of the curl code) due to the Facebook SDK.
 if (!function_exists('curl_init')) {
-  throw new Exception('beGateway needs the CURL PHP extension.');
+  throw new Exception('BeGateway needs the CURL PHP extension.');
 }
 if (!function_exists('json_decode')) {
-  throw new Exception('beGateway needs the JSON PHP extension.');
+  throw new Exception('BeGateway needs the JSON PHP extension.');
 }
 if (!function_exists('mb_detect_encoding')) {
-  throw new Exception('beGateway needs the Multibyte String PHP extension.');
+  throw new Exception('BeGateway needs the Multibyte String PHP extension.');
 }
 
-if (!class_exists('\beGateway\Settings')) {
-  require_once (__DIR__ . '/beGateway/Settings.php');
-  require_once (__DIR__ . '/beGateway/Logger.php');
-  require_once (__DIR__ . '/beGateway/Language.php');
-  require_once (__DIR__ . '/beGateway/Customer.php');
-  require_once (__DIR__ . '/beGateway/Card.php');
-  require_once (__DIR__ . '/beGateway/Money.php');
-  require_once (__DIR__ . '/beGateway/ResponseBase.php');
-  require_once (__DIR__ . '/beGateway/Response.php');
-  require_once (__DIR__ . '/beGateway/ResponseCheckout.php');
-  require_once (__DIR__ . '/beGateway/ResponseCardToken.php');
-  require_once (__DIR__ . '/beGateway/ApiAbstract.php');
-  require_once (__DIR__ . '/beGateway/ChildTransaction.php');
-  require_once (__DIR__ . '/beGateway/GatewayTransport.php');
-  require_once (__DIR__ . '/beGateway/Authorization.php');
-  require_once (__DIR__ . '/beGateway/Payment.php');
-  require_once (__DIR__ . '/beGateway/Capture.php');
-  require_once (__DIR__ . '/beGateway/Void.php');
-  require_once (__DIR__ . '/beGateway/Refund.php');
-  require_once (__DIR__ . '/beGateway/Credit.php');
-  require_once (__DIR__ . '/beGateway/QueryByUid.php');
-  require_once (__DIR__ . '/beGateway/QueryByTrackingId.php');
-  require_once (__DIR__ . '/beGateway/QueryByToken.php');
-  require_once (__DIR__ . '/beGateway/GetPaymentToken.php');
-  require_once (__DIR__ . '/beGateway/Webhook.php');
-  require_once (__DIR__ . '/beGateway/CardToken.php');
-  require_once (__DIR__ . '/beGateway/PaymentMethod/Base.php');
-  require_once (__DIR__ . '/beGateway/PaymentMethod/Erip.php');
-  require_once (__DIR__ . '/beGateway/PaymentMethod/CreditCard.php');
-  require_once (__DIR__ . '/beGateway/PaymentMethod/CreditCardHalva.php');
-  require_once (__DIR__ . '/beGateway/PaymentMethod/Emexvoucher.php');
+if (!class_exists('\BeGateway\Settings')) {
+  require_once (__DIR__ . '/BeGateway/Settings.php');
+  require_once (__DIR__ . '/BeGateway/Logger.php');
+  require_once (__DIR__ . '/BeGateway/Language.php');
+  require_once (__DIR__ . '/BeGateway/Customer.php');
+  require_once (__DIR__ . '/BeGateway/Card.php');
+  require_once (__DIR__ . '/BeGateway/Money.php');
+  require_once (__DIR__ . '/BeGateway/ResponseBase.php');
+  require_once (__DIR__ . '/BeGateway/Response.php');
+  require_once (__DIR__ . '/BeGateway/ResponseCheckout.php');
+  require_once (__DIR__ . '/BeGateway/ResponseCardToken.php');
+  require_once (__DIR__ . '/BeGateway/ApiAbstract.php');
+  require_once (__DIR__ . '/BeGateway/ChildTransaction.php');
+  require_once (__DIR__ . '/BeGateway/GatewayTransport.php');
+  require_once (__DIR__ . '/BeGateway/Authorization.php');
+  require_once (__DIR__ . '/BeGateway/Payment.php');
+  require_once (__DIR__ . '/BeGateway/Capture.php');
+  require_once (__DIR__ . '/BeGateway/Void.php');
+  require_once (__DIR__ . '/BeGateway/Refund.php');
+  require_once (__DIR__ . '/BeGateway/Credit.php');
+  require_once (__DIR__ . '/BeGateway/QueryByUid.php');
+  require_once (__DIR__ . '/BeGateway/QueryByTrackingId.php');
+  require_once (__DIR__ . '/BeGateway/QueryByToken.php');
+  require_once (__DIR__ . '/BeGateway/GetPaymentToken.php');
+  require_once (__DIR__ . '/BeGateway/Webhook.php');
+  require_once (__DIR__ . '/BeGateway/CardToken.php');
+  require_once (__DIR__ . '/BeGateway/PaymentMethod/Base.php');
+  require_once (__DIR__ . '/BeGateway/PaymentMethod/Erip.php');
+  require_once (__DIR__ . '/BeGateway/PaymentMethod/CreditCard.php');
+  require_once (__DIR__ . '/BeGateway/PaymentMethod/CreditCardHalva.php');
+  require_once (__DIR__ . '/BeGateway/PaymentMethod/Emexvoucher.php');
 }
 ?>

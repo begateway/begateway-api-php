@@ -1,8 +1,8 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class GetPaymentToken extends ApiAbstract {
-  public static $version = 2;
+  public static $version = '2.1';
 
   public $customer;
   public $money;
@@ -15,7 +15,7 @@ class GetPaymentToken extends ApiAbstract {
   protected $_notification_url;
   protected $_transaction_type;
   protected $_readonly;
-  protected $_hidden;
+  protected $_visible;
   protected $_payment_methods;
   protected $_expired_at;
 
@@ -26,7 +26,7 @@ class GetPaymentToken extends ApiAbstract {
     $this->_language = Language::getDefaultLanguage();
     $this->_expired_at = NULL;
     $this->_readonly = array();
-    $this->_hidden = array();
+    $this->_visible = array();
     $this->_payment_methods = array();
   }
 
@@ -55,7 +55,7 @@ class GetPaymentToken extends ApiAbstract {
           'language' => $this->getLanguage(),
           'customer_fields' => array(
             'read_only' => $this->getReadonlyFields(),
-            'hidden' => $this->getHiddenFields()
+            'visible' => $this->getVisibleFields()
           )
         ),
         'customer' => array(
@@ -180,8 +180,8 @@ class GetPaymentToken extends ApiAbstract {
   public function getReadonlyFields() {
     return $this->_readonly;
   }
-  public function getHiddenFields() {
-    return $this->_hidden;
+  public function getVisibleFields() {
+    return $this->_visible;
   }
 
   public function setFirstNameReadonly(){
@@ -239,20 +239,84 @@ class GetPaymentToken extends ApiAbstract {
     $this->_readonly = array_diff($this->_readonly, array('country'));
   }
 
-  public function setPhoneHidden() {
-    $this->_hidden = self::_searchAndAdd($this->_hidden, 'phone');
+  public function setPhoneVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'phone');
   }
 
-  public function unsetPhoneHidden() {
-    $this->_hidden = array_diff($this->_hidden, array('phone'));
+  public function unsetPhoneVisible() {
+    $this->_visible = array_diff($this->_visible, array('phone'));
   }
 
-  public function setAddressHidden() {
-    $this->_hidden = self::_searchAndAdd($this->_hidden, 'address');
+  public function setAddressVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'address');
   }
 
-  public function unsetAddressHidden() {
-    $this->_hidden = array_diff($this->_hidden, array('address'));
+  public function unsetAddressVisible() {
+    $this->_visible = array_diff($this->_visible, array('address'));
+  }
+
+  public function setFirstNameVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'first_name');
+  }
+
+  public function unsetFirstNameVisible() {
+    $this->_visible = array_diff($this->_visible, array('first_name'));
+  }
+
+  public function setLastNameVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'last_name');
+  }
+
+  public function unsetLastNameVisible() {
+    $this->_visible = array_diff($this->_visible, array('last_name'));
+  }
+
+  public function setCityVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'city');
+  }
+
+  public function unsetCityVisible() {
+    $this->_visible = array_diff($this->_visible, array('city'));
+  }
+
+  public function setStateVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'state');
+  }
+
+  public function unsetStateVisible() {
+    $this->_visible = array_diff($this->_visible, array('state'));
+  }
+
+  public function setZipVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'zip');
+  }
+
+  public function unsetZipVisible() {
+    $this->_visible = array_diff($this->_visible, array('zip'));
+  }
+
+  public function setCountryVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'country');
+  }
+
+  public function unsetCountryVisible() {
+    $this->_visible = array_diff($this->_visible, array('country'));
+  }
+
+  public function setEmailVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'email');
+  }
+
+  public function unsetEmailVisible() {
+    $this->_visible = array_diff($this->_visible, array('email'));
+  }
+
+  public function setBirthDateVisible() {
+    $this->_visible = self::_searchAndAdd($this->_visible, 'birth_date');
+  }
+
+  public function unsetBirthDateVisible() {
+    $this->_visible = array_diff($this->_visible, array('birth_date'));
   }
 
   public function addPaymentMethod($method) {

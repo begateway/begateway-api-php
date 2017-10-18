@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../lib/beGateway.php';
+require_once __DIR__ . '/../lib/BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
+\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \beGateway\Authorization;
+$transaction = new \BeGateway\Authorization;
 
 $amount = rand(100, 10000);
 
@@ -38,7 +38,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Capture transaction " . $response->getUid() . PHP_EOL);
 
-  $capture = new \beGateway\Capture;
+  $capture = new \BeGateway\Capture;
   $capture->setParentUid($response->getUid());
   $capture->money->setAmount($transaction->money->getAmount());
 

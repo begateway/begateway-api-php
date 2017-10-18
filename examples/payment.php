@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../lib/beGateway.php';
+require_once __DIR__ . '/../lib/BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
+\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \beGateway\Payment;
+$transaction = new \BeGateway\Payment;
 
 $amount = rand(100, 10000);
 
@@ -27,7 +27,6 @@ $transaction->customer->setCity('Riga');
 $transaction->customer->setZip('LV-1082');
 $transaction->customer->setIp('127.0.0.1');
 $transaction->customer->setEmail('john@example.com');
-
 
 $response = $transaction->submit();
 

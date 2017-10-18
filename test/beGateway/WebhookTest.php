@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class WebhookTest extends TestCase {
 
@@ -27,7 +27,7 @@ class WebhookTest extends TestCase {
   public function test_RequestIsValidAndItIsSuccess() {
     $w = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\Webhook');
+    $reflection = new \ReflectionClass('BeGateway\Webhook');
     $property = $reflection->getProperty('_response');
     $property->setAccessible(true);
     $property->setValue($w,json_decode($this->webhookMessage()));
@@ -42,7 +42,7 @@ class WebhookTest extends TestCase {
   public function test_RequestIsValidAndItIsFailed() {
     $w = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\Webhook');
+    $reflection = new \ReflectionClass('BeGateway\Webhook');
     $property = $reflection->getProperty('_response');
     $property->setAccessible(true);
     $property->setValue($w,json_decode($this->webhookMessage('failed')));
@@ -57,7 +57,7 @@ class WebhookTest extends TestCase {
   public function test_RequestIsValidAndItIsTest() {
     $w = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\Webhook');
+    $reflection = new \ReflectionClass('BeGateway\Webhook');
     $property = $reflection->getProperty('_response');
     $property->setAccessible(true);
     $property->setValue($w,json_decode($this->webhookMessage('failed', true)));
@@ -74,7 +74,7 @@ class WebhookTest extends TestCase {
   public function test_NotValidRequestReceived() {
     $w = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\Webhook');
+    $reflection = new \ReflectionClass('BeGateway\Webhook');
     $property = $reflection->getProperty('_response');
     $property->setAccessible(true);
     $property->setValue($w,json_decode(''));

@@ -1,5 +1,5 @@
 <?php
-namespace beGateway\PaymentMethod;
+namespace BeGateway\PaymentMethod;
 
 class Emexvoucher extends Base {
 }

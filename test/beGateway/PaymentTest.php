@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class PaymentTest extends TestCase {
 
@@ -51,7 +51,7 @@ class PaymentTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\Payment');
+    $reflection = new \ReflectionClass('BeGateway\Payment');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
@@ -100,7 +100,7 @@ class PaymentTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'beGateway\Payment');
+    $reflection = new \ReflectionClass( 'BeGateway\Payment');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 

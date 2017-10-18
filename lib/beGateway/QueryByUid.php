@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class QueryByUid extends ApiAbstract {
   protected $_uid;

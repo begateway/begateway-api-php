@@ -1,7 +1,7 @@
 <?php
-namespace beGateway\PaymentMethod;
+namespace BeGateway\PaymentMethod;
 
-class EripTest extends \beGateway\TestCase {
+class EripTest extends \BeGateway\TestCase {
 
   public function test_getName() {
     $erip = $this->getTestObject();

@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../lib/beGateway.php';
+require_once __DIR__ . '/../lib/BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::DEBUG);
+\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \beGateway\Payment;
+$transaction = new \BeGateway\Payment;
 
 $amount = rand(100, 10000);
 
@@ -38,7 +38,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Query by UID " . $response->getUid() . PHP_EOL);
 
-  $query = new \beGateway\QueryByUid;
+  $query = new \BeGateway\QueryByUid;
   $query->setUid($response->getUid());
 
   $query_response = $query->submit();

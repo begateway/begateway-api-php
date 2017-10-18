@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 abstract class ApiAbstract {
   protected abstract function _buildRequestMessage();

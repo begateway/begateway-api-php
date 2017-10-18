@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class GetPaymentTokenTest extends TestCase {
 
@@ -65,16 +65,16 @@ class GetPaymentTokenTest extends TestCase {
 
   }
 
-  public function test_hidden() {
+  public function test_visible() {
     $auth = $this->getTestObjectInstance();
-    $auth->setPhoneHidden();
-    $auth->setAddressHidden();
+    $auth->setPhoneVisible();
+    $auth->setAddressVisible();
 
-    $this->assertEqual(array_diff($auth->getHiddenFields(), array( 'phone', 'address' )), array() );
+    $this->assertEqual(array_diff($auth->getVisibleFields(), array( 'phone', 'address' )), array() );
 
-    $auth->unsetAddressHidden();
+    $auth->unsetAddressVisible();
 
-    $this->assertEqual(array_diff($auth->getHiddenFields(), array( 'phone' )), array() );
+    $this->assertEqual(array_diff($auth->getVisibleFields(), array( 'phone' )), array() );
   }
 
   public function test_transaction_type() {
@@ -88,7 +88,7 @@ class GetPaymentTokenTest extends TestCase {
     $auth = $this->getTestObject();
     $arr = array(
       'checkout' => array(
-        'version' => 2,
+        'version' => "2.1",
         'transaction_type' => 'payment',
         'order' => array(
           'amount' => 1233,
@@ -105,7 +105,7 @@ class GetPaymentTokenTest extends TestCase {
           'notification_url' => 'http://www.example.com/n',
           'language' => 'zh',
           'customer_fields' => array(
-            'hidden' => array(),
+            'visible' => array(),
             'read_only' => array(),
           ),
         ),
@@ -124,7 +124,7 @@ class GetPaymentTokenTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'beGateway\GetPaymentToken');
+    $reflection = new \ReflectionClass( 'BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -150,7 +150,7 @@ class GetPaymentTokenTest extends TestCase {
 
     $arr = array(
       'checkout' => array(
-        'version' => 2,
+        'version' => "2.1",
         'transaction_type' => 'payment',
         'order' => array(
           'amount' => 10000,
@@ -167,7 +167,7 @@ class GetPaymentTokenTest extends TestCase {
           'notification_url' => 'http://www.example.com/n',
           'language' => 'zh',
           'customer_fields' => array(
-            'hidden' => array(),
+            'visible' => array(),
             'read_only' => array(),
           ),
         ),
@@ -196,7 +196,7 @@ class GetPaymentTokenTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'beGateway\GetPaymentToken');
+    $reflection = new \ReflectionClass( 'BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -217,7 +217,7 @@ class GetPaymentTokenTest extends TestCase {
 
     $arr = array(
       'checkout' => array(
-        'version' => 2,
+        'version' => "2.1",
         'transaction_type' => 'payment',
         'order' => array(
           'amount' => 10000,
@@ -234,7 +234,7 @@ class GetPaymentTokenTest extends TestCase {
           'notification_url' => 'http://www.example.com/n',
           'language' => 'zh',
           'customer_fields' => array(
-            'hidden' => array(),
+            'visible' => array(),
             'read_only' => array(),
           ),
         ),
@@ -258,7 +258,7 @@ class GetPaymentTokenTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'beGateway\GetPaymentToken');
+    $reflection = new \ReflectionClass( 'BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -271,7 +271,7 @@ class GetPaymentTokenTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\GetPaymentToken');
+    $reflection = new \ReflectionClass('BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
@@ -308,9 +308,9 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertTrue($response->isSuccess());
     $this->assertNotNull($response->getToken());
     $this->assertNotNull($response->getRedirectUrl());
-    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/v2/checkout?token=' . $response->getToken(),
+    $this->assertEqual(\BeGateway\Settings::$checkoutBase . '/v2/checkout?token=' . $response->getToken(),
                        $response->getRedirectUrl());
-    $this->assertEqual(\beGateway\Settings::$checkoutBase . '/v2/checkout',
+    $this->assertEqual(\BeGateway\Settings::$checkoutBase . '/v2/checkout',
                        $response->getRedirectUrlScriptName());
   }
 

@@ -1,4 +1,4 @@
-# beGateway payment system API integration library
+# BeGateway payment system API integration library
 
 [![Build Status Master](https://travis-ci.org/beGateway/begateway-api-php.svg?branch=master)](https://travis-ci.org/beGateway/begateway-api-php)
 
@@ -44,10 +44,10 @@ You have to setup values of variables as follows:
 This data you will receive from your payment processor.
 
 ```php
-\beGateway\Settings::$shopId  = 361;
-\beGateway\Settings::$shopKey = 'b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d';
-\beGateway\Settings::$gatewayBase = 'https://demo-gateway.begateway.com';
-\beGateway\Settings::$checkoutBase = 'https://checkout.begateway.com';
+\BeGateway\Settings::$shopId  = 361;
+\BeGateway\Settings::$shopKey = 'b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d';
+\BeGateway\Settings::$gatewayBase = 'https://demo-gateway.begateway.com';
+\BeGateway\Settings::$checkoutBase = 'https://checkout.begateway.com';
 ```
 
 ### Hosted payment page
@@ -55,13 +55,13 @@ This data you will receive from your payment processor.
 Simple usage looks like:
 
 ```php
-require_once __DIR__ . 'PATH_TO_INSTALLED_LIBRARY/lib/beGateway.php';
-\beGateway\Settings::$shopId  = 361;
-\beGateway\Settings::$shopKey = 'b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d';
+require_once __DIR__ . 'PATH_TO_INSTALLED_LIBRARY/lib/BeGateway.php';
+\BeGateway\Settings::$shopId  = 361;
+\BeGateway\Settings::$shopKey = 'b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d';
 
-\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::INFO);
+\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::INFO);
 
-$transaction = new \beGateway\GetPaymentToken;
+$transaction = new \BeGateway\GetPaymentToken;
 
 $transaction->money->setAmount(1.00);
 $transaction->money->setCurrency('EUR');
@@ -96,13 +96,13 @@ if ($response->isSuccess() ) {
 Simple usage looks like:
 
 ```php
-require_once __DIR__ . 'PATH_TO_INSTALLED_LIBRARY/lib/beGateway.php';
-\beGateway\Settings::$shopId  = 361;
-\beGateway\Settings::$shopKey = 'b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d';
+require_once __DIR__ . 'PATH_TO_INSTALLED_LIBRARY/lib/BeGateway.php';
+\BeGateway\Settings::$shopId  = 361;
+\BeGateway\Settings::$shopKey = 'b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d';
 
-\beGateway\Logger::getInstance()->setLogLevel(\beGateway\Logger::INFO);
+\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::INFO);
 
-$transaction = new \beGateway\Payment;
+$transaction = new \BeGateway\Payment;
 
 $transaction->money->setAmount(1.00);
 $transaction->money->setCurrency('EUR');
@@ -153,5 +153,5 @@ Visit https://doc.begateway.com for up-to-date documentation.
 To run tests
 
 ```bash
-php -f ./test/beGateway.php
+php -f ./test/BeGateway.php
 ```

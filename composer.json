@@ -1,6 +1,6 @@
 {
     "name": "begateway/begateway-api-php",
-    "description" : "beGateway PHP API library",
+    "description" : "BeGateway PHP API library",
     "keywords": [
       "bepaid",
       "begateway",
@@ -9,7 +9,7 @@
     ],
     "license" : "MIT",
     "authors": [
-      { "name" : "beGateway",
+      { "name" : "BeGateway",
         "email": "admin@begateway.com"
       }
     ],
@@ -20,6 +20,6 @@
         "ext-mbstring": "*"
     },
     "autoload": {
-     "psr-4": { "beGateway\\" : "lib/beGateway" }
+     "psr-4": { "BeGateway\\" : "lib/BeGateway" }
     }
 }

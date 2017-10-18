@@ -1,7 +1,7 @@
 <?php
-namespace beGateway\PaymentMethod;
+namespace BeGateway\PaymentMethod;
 
-class EmexvoucherTest extends \beGateway\TestCase {
+class EmexvoucherTest extends \BeGateway\TestCase {
 
   public function test_getName() {
     $emexvoucher = $this->getTestObject();

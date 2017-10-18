@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.0.0
+
+  * Fix class naming
+  * Use 2.1 version of payment page
+
 ### 2.6.0
 
   * Add `expired_at` parameter to `GetPaymentToken`

@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class CaptureTest extends TestCase {
 
@@ -21,7 +21,7 @@ class CaptureTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'beGateway\Capture' );
+    $reflection = new \ReflectionClass( 'BeGateway\Capture' );
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -34,7 +34,7 @@ class CaptureTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('beGateway\Capture');
+    $reflection = new \ReflectionClass('BeGateway\Capture');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');

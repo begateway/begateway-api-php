@@ -1,5 +1,5 @@
 <?php
-namespace beGateway;
+namespace BeGateway;
 
 class QueryByTokenTest extends TestCase {
 
@@ -16,7 +16,7 @@ class QueryByTokenTest extends TestCase {
     $q = $this->getTestObjectInstance();
     $q->setToken('1234');
 
-    $reflection = new \ReflectionClass('beGateway\QueryByToken');
+    $reflection = new \ReflectionClass('BeGateway\QueryByToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');

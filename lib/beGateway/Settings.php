@@ -1,6 +1,6 @@
 <?php
 
-namespace beGateway;
+namespace BeGateway;
 
 class Settings {
   public static $shopId;
