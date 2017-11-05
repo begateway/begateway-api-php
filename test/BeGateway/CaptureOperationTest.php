@@ -1,7 +1,7 @@
 <?php
 namespace BeGateway;
 
-class VoidTest extends TestCase {
+class CaptureOperationTest extends TestCase {
 
   public function test_setParentUid() {
     $transaction = $this->getTestObjectInstance();
@@ -21,7 +21,7 @@ class VoidTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'BeGateway\Void' );
+    $reflection = new \ReflectionClass( 'BeGateway\CaptureOperation' );
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -34,16 +34,16 @@ class VoidTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('BeGateway\Void');
+    $reflection = new \ReflectionClass('BeGateway\CaptureOperation');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
-    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/voids');
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/captures');
 
   }
 
-  public function test_successVoidRequest() {
+  public function test_successCapture() {
 
     $amount = rand(0,10000);
 
@@ -64,7 +64,7 @@ class VoidTest extends TestCase {
 
   }
 
-  public function test_errorVoidRequest() {
+  public function test_errorCapture() {
     $amount = rand(0,10000);
 
     $parent = $this->runParentTransaction($amount);
@@ -85,7 +85,7 @@ class VoidTest extends TestCase {
   protected function runParentTransaction($amount = 10.00 ) {
     self::authorizeFromEnv();
 
-    $transaction = new Authorization();
+    $transaction = new AuthorizationOperation();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');
@@ -124,7 +124,7 @@ class VoidTest extends TestCase {
   protected function getTestObjectInstance() {
     self::authorizeFromEnv();
 
-    return new Void();
+    return new CaptureOperation();
   }
 }
 ?>

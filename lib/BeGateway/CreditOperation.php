@@ -1,7 +1,7 @@
 <?php
 namespace BeGateway;
 
-class Credit extends ApiAbstract {
+class CreditOperation extends ApiAbstract {
   public $card;
   public $money;
   protected $_description;

@@ -1,7 +1,7 @@
 <?php
 namespace BeGateway;
 
-class RefundTest extends TestCase {
+class RefundOperationTest extends TestCase {
 
   public function test_setParentUid() {
     $transaction = $this->getTestObjectInstance();
@@ -29,7 +29,7 @@ class RefundTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'BeGateway\Refund' );
+    $reflection = new \ReflectionClass( 'BeGateway\RefundOperation' );
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -42,7 +42,7 @@ class RefundTest extends TestCase {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('BeGateway\Refund');
+    $reflection = new \ReflectionClass('BeGateway\RefundOperation');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
@@ -94,7 +94,7 @@ class RefundTest extends TestCase {
   protected function runParentTransaction($amount = 10.00 ) {
     self::authorizeFromEnv();
 
-    $transaction = new Payment();
+    $transaction = new PaymentOperation();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');
@@ -134,7 +134,7 @@ class RefundTest extends TestCase {
   protected function getTestObjectInstance() {
     self::authorizeFromEnv();
 
-    return new Refund();
+    return new RefundOperation();
   }
 }
 ?>
