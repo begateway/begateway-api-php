@@ -25,6 +25,7 @@ abstract class ApiAbstract {
 
   protected function _getTransactionType() {
     list($module,$klass) = explode('\\', get_class($this));
+    $klass = str_replace('Operation', '', $klass);
     $klass = strtolower($klass) . 's';
     return $klass;
   }

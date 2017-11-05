@@ -61,7 +61,7 @@ class QueryByTrackingIdTest extends TestCase {
   protected function runParentTransaction($amount = 10.00, $tracking_id = '12345' ) {
     self::authorizeFromEnv();
 
-    $transaction = new Payment();
+    $transaction = new PaymentOperation();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');

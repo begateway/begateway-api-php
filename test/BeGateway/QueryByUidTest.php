@@ -57,7 +57,7 @@ class QueryByUidTest extends TestCase {
   protected function runParentTransaction($amount = 10.00 ) {
     self::authorizeFromEnv();
 
-    $transaction = new Payment();
+    $transaction = new PaymentOperation();
 
     $transaction->money->setAmount($amount);
     $transaction->money->setCurrency('EUR');

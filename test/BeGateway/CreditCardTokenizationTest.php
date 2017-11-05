@@ -134,7 +134,7 @@ class CreditCardTokenizationTest extends TestCase {
   protected function getAuthorizationTestObjectInstance($threed = false) {
     self::authorizeFromEnv($threed);
 
-    return new Authorization();
+    return new AuthorizationOperation();
   }
 
 

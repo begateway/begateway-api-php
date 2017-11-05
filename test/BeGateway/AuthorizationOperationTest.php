@@ -1,7 +1,7 @@
 <?php
 namespace BeGateway;
 
-class PaymentTest extends TestCase {
+class AuthorizationOperationTest extends TestCase {
 
   public function test_setDescription() {
 
@@ -15,49 +15,24 @@ class PaymentTest extends TestCase {
   }
 
   public function test_setTrackingId() {
-
     $auth = $this->getTestObjectInstance();
-
     $tracking_id = 'Test tracking_id';
-
     $auth->setTrackingId($tracking_id);
     $this->assertEqual($auth->getTrackingId(), $tracking_id);
   }
 
   public function test_setNotificationUrl() {
-
     $auth = $this->getTestObjectInstance();
-
     $url = 'http://www.example.com';
-
     $auth->setNotificationUrl($url);
-
     $this->assertEqual($auth->getNotificationUrl(), $url);
   }
 
   public function test_setReturnUrl() {
-
     $auth = $this->getTestObjectInstance();
-
     $url = 'http://www.example.com';
-
     $auth->setReturnUrl($url);
-
     $this->assertEqual($auth->getReturnUrl(), $url);
-
-  }
-
-  public function test_endpoint() {
-
-    $auth = $this->getTestObjectInstance();
-
-    $reflection = new \ReflectionClass('BeGateway\Payment');
-    $method = $reflection->getMethod('_endpoint');
-    $method->setAccessible(true);
-    $url = $method->invoke($auth, '_endpoint');
-
-    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/payments');
-
   }
 
   public function test_buildRequestMessage() {
@@ -70,7 +45,7 @@ class PaymentTest extends TestCase {
         'tracking_id' => 'my_custom_variable',
         'notification_url' => '',
         'return_url' => '',
-        'language' => 'en',
+        'language' => 'de',
         'credit_card' => array(
           'number' => '4200000000000000',
           'verification_value' => '123',
@@ -100,7 +75,7 @@ class PaymentTest extends TestCase {
       )
     );
 
-    $reflection = new \ReflectionClass( 'BeGateway\Payment');
+    $reflection = new \ReflectionClass( 'BeGateway\AuthorizationOperation');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -109,8 +84,19 @@ class PaymentTest extends TestCase {
     $this->assertEqual($arr, $request);
   }
 
+  public function test_endpoint() {
 
-  public function test_successPayment() {
+    $auth = $this->getTestObjectInstance();
+
+    $reflection = new \ReflectionClass('BeGateway\AuthorizationOperation');
+    $method = $reflection->getMethod('_endpoint');
+    $method->setAccessible(true);
+    $url = $method->invoke($auth, '_endpoint');
+
+    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/authorizations');
+  }
+
+  public function test_successAuthorization() {
     $auth = $this->getTestObject();
 
     $amount = rand(0,10000) / 100;
@@ -127,9 +113,11 @@ class PaymentTest extends TestCase {
     $this->assertEqual($response->getStatus(), 'successful');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
 
+    $arResponse = $response->getResponseArray();
+    $this->assertEqual($cents, $arResponse['transaction']['amount']);
   }
 
-  public function test_incompletePayment() {
+  public function test_incompleteAuthorization() {
     $auth = $this->getTestObject(true);
 
     $amount = rand(0,10000) / 100;
@@ -149,9 +137,11 @@ class PaymentTest extends TestCase {
     $this->assertEqual($response->getStatus(), 'incomplete');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
 
+    $arResponse = $response->getResponseArray();
+    $this->assertEqual($cents, $arResponse['transaction']['amount']);
   }
 
-  public function test_failedPayment() {
+  public function test_failedAuthorization() {
     $auth = $this->getTestObject();
 
     $amount = rand(0,10000) / 100;
@@ -164,11 +154,31 @@ class PaymentTest extends TestCase {
 
     $this->assertTrue($response->isValid());
     $this->assertTrue($response->isFailed());
-    $this->assertEqual($response->getMessage(), 'Payment was declined');
+    $this->assertEqual($response->getMessage(), 'Authorization was declined');
     $this->assertNotNull($response->getUid());
     $this->assertEqual($response->getStatus(), 'failed');
     $this->assertEqual($cents, $response->getResponse()->transaction->amount);
 
+    $arResponse = $response->getResponseArray();
+    $this->assertEqual($cents, $arResponse['transaction']['amount']);
+  }
+
+  public function test_errorAuthorization() {
+
+    $auth = $this->getTestObject();
+
+    $amount = rand(0,10000) / 100;
+
+    $auth->money->setAmount($amount);
+    $cents = $auth->money->getCents();
+    $auth->card->setCardExpYear(10);
+
+    $response = $auth->submit();
+
+    $this->assertTrue($response->isValid());
+    $this->assertTrue($response->isError());
+    $this->assertEqual($response->getMessage(), 'Exp year Invalid. Format should be: yyyy. Date is expired.');
+    $this->assertEqual($response->getStatus(), 'error');
   }
 
   protected function getTestObject($threed = false) {
@@ -179,6 +189,7 @@ class PaymentTest extends TestCase {
     $transaction->money->setCurrency('EUR');
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
+    $transaction->setLanguage('de');
 
     $transaction->card->setCardNumber('4200000000000000');
     $transaction->card->setCardHolder('John Doe');
@@ -199,10 +210,10 @@ class PaymentTest extends TestCase {
     return $transaction;
   }
 
-  protected function getTestObjectInstance($threed = false) {
-    self::authorizeFromEnv($threed);
+  protected function getTestObjectInstance($threeds = false) {
+    self::authorizeFromEnv($threeds);
 
-    return new Payment();
+    return new AuthorizationOperation();
   }
 }
 ?>

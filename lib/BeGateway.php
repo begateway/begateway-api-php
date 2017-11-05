@@ -27,12 +27,12 @@ if (!class_exists('\BeGateway\Settings')) {
   require_once (__DIR__ . '/BeGateway/ApiAbstract.php');
   require_once (__DIR__ . '/BeGateway/ChildTransaction.php');
   require_once (__DIR__ . '/BeGateway/GatewayTransport.php');
-  require_once (__DIR__ . '/BeGateway/Authorization.php');
-  require_once (__DIR__ . '/BeGateway/Payment.php');
-  require_once (__DIR__ . '/BeGateway/Capture.php');
-  require_once (__DIR__ . '/BeGateway/Void.php');
-  require_once (__DIR__ . '/BeGateway/Refund.php');
-  require_once (__DIR__ . '/BeGateway/Credit.php');
+  require_once (__DIR__ . '/BeGateway/AuthorizationOperation.php');
+  require_once (__DIR__ . '/BeGateway/PaymentOperation.php');
+  require_once (__DIR__ . '/BeGateway/CaptureOperation.php');
+  require_once (__DIR__ . '/BeGateway/VoidOperation.php');
+  require_once (__DIR__ . '/BeGateway/RefundOperation.php');
+  require_once (__DIR__ . '/BeGateway/CreditOperation.php');
   require_once (__DIR__ . '/BeGateway/QueryByUid.php');
   require_once (__DIR__ . '/BeGateway/QueryByTrackingId.php');
   require_once (__DIR__ . '/BeGateway/QueryByToken.php');

@@ -57,7 +57,7 @@ class GatewayTransportExceptionTest extends TestCase {
   protected function getTestObjectInstance($threed = false) {
     self::authorizeFromEnv($threed);
 
-    return new Authorization();
+    return new AuthorizationOperation();
   }
 
 

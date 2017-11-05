@@ -1,7 +1,7 @@
 <?php
 namespace BeGateway;
 
-class Authorization extends ApiAbstract {
+class AuthorizationOperation extends ApiAbstract {
   public $customer;
   public $card;
   public $money;
