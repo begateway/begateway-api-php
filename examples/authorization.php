@@ -4,7 +4,7 @@ require_once __DIR__ . '/test_shop_data.php';
 
 \BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \BeGateway\Authorization;
+$transaction = new \BeGateway\AuthorizationOperation;
 
 $amount = rand(100, 10000);
 

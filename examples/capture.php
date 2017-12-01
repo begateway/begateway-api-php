@@ -4,7 +4,7 @@ require_once __DIR__ . '/test_shop_data.php';
 
 \BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \BeGateway\Authorization;
+$transaction = new \BeGateway\AuthorizationOperation;
 
 $amount = rand(100, 10000);
 
@@ -38,7 +38,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Capture transaction " . $response->getUid() . PHP_EOL);
 
-  $capture = new \BeGateway\Capture;
+  $capture = new \BeGateway\CaptureOperation;
   $capture->setParentUid($response->getUid());
   $capture->money->setAmount($transaction->money->getAmount());
 

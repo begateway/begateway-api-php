@@ -4,7 +4,7 @@ require_once __DIR__ . '/test_shop_data.php';
 
 \BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \BeGateway\Payment;
+$transaction = new \BeGateway\PaymentOperation;
 
 $amount = rand(100, 10000);
 
@@ -38,7 +38,7 @@ if ($response->isSuccess() ) {
   print("Transaction UID: " . $response->getUid() . PHP_EOL);
   print("Trying to Credit to card " . $transaction->card->getCardNumber() . PHP_EOL);
 
-  $credit = new \BeGateway\Credit;
+  $credit = new \BeGateway\CreditOperation;
 
   $amount = rand(100, 10000);
 
