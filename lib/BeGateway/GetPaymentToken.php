@@ -41,6 +41,7 @@ class GetPaymentToken extends ApiAbstract {
       'checkout' => array(
         'version' => self::$version,
         'transaction_type' => $this->getTransactionType(),
+        'test' => $this->getTestMode(),
         'order' => array(
           'amount' => $this->money->getCents(),
           'currency' => $this->money->getCurrency(),

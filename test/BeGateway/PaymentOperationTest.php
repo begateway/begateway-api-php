@@ -60,6 +60,15 @@ class PaymentOperationTest extends TestCase {
 
   }
 
+  public function test_setTestMode() {
+    $auth = $this->getTestObjectInstance();
+    $this->assertFalse($auth->getTestMode());
+    $auth->setTestMode(true);
+    $this->assertTrue($auth->getTestMode());
+    $auth->setTestMode(false);
+    $this->assertFalse($auth->getTestMode());
+  }
+
   public function test_buildRequestMessage() {
     $auth = $this->getTestObject();
     $arr = array(
@@ -71,10 +80,11 @@ class PaymentOperationTest extends TestCase {
         'notification_url' => '',
         'return_url' => '',
         'language' => 'en',
+        'test' => true,
         'credit_card' => array(
           'number' => '4200000000000000',
           'verification_value' => '123',
-          'holder' => 'John Doe',
+          'holder' => 'BEGATEWAY',
           'exp_month' => '01',
           'exp_year' => '2030',
           'token' => '',
@@ -104,6 +114,12 @@ class PaymentOperationTest extends TestCase {
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
+    $request = $method->invoke($auth, '_buildRequestMessage');
+
+    $this->assertEqual($arr, $request);
+
+    $arr['request']['test'] = false;
+    $auth->setTestMode(false);
     $request = $method->invoke($auth, '_buildRequestMessage');
 
     $this->assertEqual($arr, $request);
@@ -153,6 +169,7 @@ class PaymentOperationTest extends TestCase {
 
   public function test_failedPayment() {
     $auth = $this->getTestObject();
+    $auth->card->setCardNumber('4005550000000019');
 
     $amount = rand(0,10000) / 100;
 
@@ -179,9 +196,10 @@ class PaymentOperationTest extends TestCase {
     $transaction->money->setCurrency('EUR');
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
+    $transaction->setTestMode(true);
 
     $transaction->card->setCardNumber('4200000000000000');
-    $transaction->card->setCardHolder('John Doe');
+    $transaction->card->setCardHolder('BEGATEWAY');
     $transaction->card->setCardExpMonth(1);
     $transaction->card->setCardExpYear(2030);
     $transaction->card->setCardCvc('123');

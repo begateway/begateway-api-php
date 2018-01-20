@@ -66,6 +66,7 @@ class AuthorizationOperation extends ApiAbstract {
         'notification_url' => $this->getNotificationUrl(),
         'return_url' => $this->getReturnUrl(),
         'language' => $this->getLanguage(),
+        'test' => $this->getTestMode(),
         'credit_card' => array(
           'number' => $this->card->getCardNumber(),
           'verification_value' => $this->card->getCardCvc(),

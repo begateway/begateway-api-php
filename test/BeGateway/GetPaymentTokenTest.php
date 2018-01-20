@@ -84,12 +84,22 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertEqual($auth->getTransactionType(), 'authorization');
   }
 
+  public function test_setTestMode() {
+    $auth = $this->getTestObjectInstance();
+    $this->assertFalse($auth->getTestMode());
+    $auth->setTestMode(true);
+    $this->assertTrue($auth->getTestMode());
+    $auth->setTestMode(false);
+    $this->assertFalse($auth->getTestMode());
+  }
+
   public function test_buildRequestMessage() {
     $auth = $this->getTestObject();
     $arr = array(
       'checkout' => array(
         'version' => "2.1",
         'transaction_type' => 'payment',
+        'test' => true,
         'order' => array(
           'amount' => 1233,
           'currency' => 'EUR',
@@ -131,6 +141,12 @@ class GetPaymentTokenTest extends TestCase {
     $request = $method->invoke($auth, '_buildRequestMessage');
 
     $this->assertEqual($arr, $request);
+
+    $arr['checkout']['test'] = false;
+    $auth->setTestMode(false);
+    $request = $method->invoke($auth, '_buildRequestMessage');
+
+    $this->assertEqual($arr, $request);
   }
 
   public function test_buildRequestMessageWithErip() {
@@ -152,6 +168,7 @@ class GetPaymentTokenTest extends TestCase {
       'checkout' => array(
         'version' => "2.1",
         'transaction_type' => 'payment',
+        'test' => true,
         'order' => array(
           'amount' => 10000,
           'currency' => 'BYN',
@@ -219,6 +236,7 @@ class GetPaymentTokenTest extends TestCase {
       'checkout' => array(
         'version' => "2.1",
         'transaction_type' => 'payment',
+        'test' => true,
         'order' => array(
           'amount' => 10000,
           'currency' => 'USD',
@@ -348,6 +366,7 @@ class GetPaymentTokenTest extends TestCase {
     $transaction->setFailUrl($url . '/f' );
     $transaction->setLanguage('zh');
     $transaction->setExpiryDate('2030-12-31T00:21:46+0300');
+    $transaction->setTestMode(true);
 
     $transaction->customer->setFirstName('John');
     $transaction->customer->setLastName('Doe');

@@ -35,6 +35,15 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($auth->getReturnUrl(), $url);
   }
 
+  public function test_setTestMode() {
+    $auth = $this->getTestObjectInstance();
+    $this->assertFalse($auth->getTestMode());
+    $auth->setTestMode(true);
+    $this->assertTrue($auth->getTestMode());
+    $auth->setTestMode(false);
+    $this->assertFalse($auth->getTestMode());
+  }
+
   public function test_buildRequestMessage() {
     $auth = $this->getTestObject();
     $arr = array(
@@ -46,10 +55,11 @@ class AuthorizationOperationTest extends TestCase {
         'notification_url' => '',
         'return_url' => '',
         'language' => 'de',
+        'test' => true,
         'credit_card' => array(
           'number' => '4200000000000000',
           'verification_value' => '123',
-          'holder' => 'John Doe',
+          'holder' => 'BEGATEWAY',
           'exp_month' => '01',
           'exp_year' => '2030',
           'token' => '',
@@ -79,6 +89,12 @@ class AuthorizationOperationTest extends TestCase {
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
+    $request = $method->invoke($auth, '_buildRequestMessage');
+
+    $this->assertEqual($arr, $request);
+
+    $arr['request']['test'] = false;
+    $auth->setTestMode(false);
     $request = $method->invoke($auth, '_buildRequestMessage');
 
     $this->assertEqual($arr, $request);
@@ -143,6 +159,7 @@ class AuthorizationOperationTest extends TestCase {
 
   public function test_failedAuthorization() {
     $auth = $this->getTestObject();
+    $auth->card->setCardNumber('4005550000000019');
 
     $amount = rand(0,10000) / 100;
 
@@ -190,9 +207,10 @@ class AuthorizationOperationTest extends TestCase {
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
     $transaction->setLanguage('de');
+    $transaction->setTestMode(true);
 
     $transaction->card->setCardNumber('4200000000000000');
-    $transaction->card->setCardHolder('John Doe');
+    $transaction->card->setCardHolder('BEGATEWAY');
     $transaction->card->setCardExpMonth(1);
     $transaction->card->setCardExpYear(2030);
     $transaction->card->setCardCvc('123');
