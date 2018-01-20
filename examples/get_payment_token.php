@@ -6,13 +6,15 @@ require_once __DIR__ . '/test_shop_data.php';
 
 $transaction = new \BeGateway\GetPaymentToken;
 
-$amount = rand(100, 10000);
-
+$amount = rand(1, 100);
 $transaction->money->setAmount($amount);
 $transaction->money->setCurrency('EUR');
 $transaction->setDescription('test');
 $transaction->setTrackingId('my_custom_variable');
 $transaction->setLanguage('en');
+
+$transaction->setTestMode(true);
+
 $transaction->setNotificationUrl('http://www.example.com/notify');
 $transaction->setSuccessUrl('http://www.example.com/success');
 $transaction->setDeclineUrl('http://www.example.com/decline');
