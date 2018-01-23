@@ -28,6 +28,8 @@ class GetPaymentToken extends ApiAbstract {
     $this->_readonly = array();
     $this->_visible = array();
     $this->_payment_methods = array();
+    $this->_testmode = false;
+	
   }
 
   protected function _endpoint() {
@@ -36,6 +38,7 @@ class GetPaymentToken extends ApiAbstract {
 
   protected function _buildRequestMessage() {
     $request = array(
+	  'test' => $this->getTestMode(),
       'checkout' => array(
         'version' => self::$version,
         'transaction_type' => $this->getTransactionType(),
@@ -89,10 +92,19 @@ class GetPaymentToken extends ApiAbstract {
   public function setDescription($description) {
     $this->_description = $description;
   }
+  
   public function getDescription() {
     return $this->_description;
   }
 
+  public function setTestMode($testmode) {
+    $this->_testmode = $testmode == true ? 'true' : 'false';
+  }
+  
+  public function getTestMode() {
+    return $this->_testmode;
+  }
+  
   public function setTrackingId($tracking_id) {
     $this->_tracking_id = $tracking_id;
   }
