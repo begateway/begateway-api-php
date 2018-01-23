@@ -35,7 +35,7 @@ if (!class_exists('\BeGateway\Settings')) {
   require_once (__DIR__ . '/BeGateway/CreditOperation.php');
   require_once (__DIR__ . '/BeGateway/QueryByUid.php');
   require_once (__DIR__ . '/BeGateway/QueryByTrackingId.php');
-  require_once (__DIR__ . '/BeGateway/QueryByToken.php');
+  require_once (__DIR__ . '/BeGateway/QueryByPaymentToken.php');
   require_once (__DIR__ . '/BeGateway/GetPaymentToken.php');
   require_once (__DIR__ . '/BeGateway/Webhook.php');
   require_once (__DIR__ . '/BeGateway/CardToken.php');

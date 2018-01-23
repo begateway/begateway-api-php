@@ -21,7 +21,7 @@ class QueryByTrackingIdTest extends TestCase {
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');
 
-    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/tracking_id/1234');
+    $this->assertEqual($url, Settings::$gatewayBase . '/v2/transactions/tracking_id/1234');
 
   }
 
@@ -38,11 +38,14 @@ class QueryByTrackingIdTest extends TestCase {
     $response = $q->submit();
 
     $this->assertTrue($response->isValid());
-    $this->assertTrue($response->isSuccess());
-    $this->assertNotNull($response->getUid());
-    $this->assertEqual($response->getResponse()->transaction->amount, $amount*100);
-    $this->assertEqual($response->getResponse()->transaction->tracking_id, $tracking_id);
-    $this->assertEqual($parent->getUid(), $response->getUid());
+
+    $arTrx = $response->getResponse()->transactions;
+
+    $this->assertEqual(sizeof($arTrx), 1);
+    $this->assertNotNull($arTrx[0]->uid);
+    $this->assertEqual($arTrx[0]->amount, $amount*100);
+    $this->assertEqual($arTrx[0]->tracking_id, $tracking_id);
+    $this->assertEqual($parent->getUid(), $arTrx[0]->uid);
 
   }
 
@@ -55,7 +58,8 @@ class QueryByTrackingIdTest extends TestCase {
 
     $this->assertTrue($response->isValid());
 
-    $this->assertEqual($response->getMessage(), 'Record not found');
+    $arTrx = $response->getResponse()->transactions;
+    $this->assertEqual(sizeof($arTrx), 0);
   }
 
   protected function runParentTransaction($amount = 10.00, $tracking_id = '12345' ) {
@@ -67,6 +71,7 @@ class QueryByTrackingIdTest extends TestCase {
     $transaction->money->setCurrency('EUR');
     $transaction->setDescription('test');
     $transaction->setTrackingId($tracking_id);
+    $transaction->setTestMode(true);
 
     $transaction->card->setCardNumber('4200000000000000');
     $transaction->card->setCardHolder('John Doe');
