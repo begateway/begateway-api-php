@@ -9,12 +9,14 @@ class AuthorizationOperation extends ApiAbstract {
   protected $_tracking_id;
   protected $_notification_url;
   protected $_return_url;
+  protected $_test_mode;
 
   public function __construct() {
     $this->customer = new Customer();
     $this->money = new Money();
     $this->card = new Card();
     $this->_language = Language::getDefaultLanguage();
+    $this->_test_mode = false;
   }
 
   public function setDescription($description) {
@@ -41,8 +43,17 @@ class AuthorizationOperation extends ApiAbstract {
   public function setReturnUrl($return_url) {
     $this->_return_url = $return_url;
   }
+
   public function getReturnUrl() {
     return $this->_return_url;
+  }
+
+  public function setTestMode($mode = true) {
+    $this->_test_mode = $mode;
+  }
+
+  public function getTestMode() {
+    return $this->_test_mode;
   }
 
   protected function _buildRequestMessage() {
@@ -55,6 +66,7 @@ class AuthorizationOperation extends ApiAbstract {
         'notification_url' => $this->getNotificationUrl(),
         'return_url' => $this->getReturnUrl(),
         'language' => $this->getLanguage(),
+        'test' => $this->getTestMode(),
         'credit_card' => array(
           'number' => $this->card->getCardNumber(),
           'verification_value' => $this->card->getCardCvc(),

@@ -24,6 +24,9 @@ $transaction->money->setCurrency('BYN');
 $transaction->setDescription('Тестовая оплата');
 $transaction->setTrackingId('my_custom_variable');
 $transaction->setLanguage('ru');
+
+$transaction->setTestMode(true);
+
 $transaction->setNotificationUrl('http://www.example.com/notify');
 $transaction->setSuccessUrl('http://www.example.com/success');
 $transaction->setDeclineUrl('http://www.example.com/decline');

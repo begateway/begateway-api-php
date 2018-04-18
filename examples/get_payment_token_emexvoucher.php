@@ -10,13 +10,13 @@ $voucher = new \BeGateway\PaymentMethod\Emexvoucher;
 
 $transaction->addPaymentMethod($voucher);
 
-$amount = rand(100, 1000);
+$amount = rand(1, 100);
 
 $transaction->money->setAmount($amount);
 $transaction->money->setCurrency('EUR');
 $transaction->setDescription('Test payment');
 $transaction->setTrackingId('my_custom_variable');
-$transaction->setLanguage('ru');
+$transaction->setLanguage('en');
 $transaction->setNotificationUrl('http://www.example.com/notify');
 $transaction->setSuccessUrl('http://www.example.com/success');
 $transaction->setDeclineUrl('http://www.example.com/decline');

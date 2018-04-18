@@ -1,7 +1,7 @@
 <?php
 namespace BeGateway;
 
-class QueryByTokenTest extends TestCase {
+class QueryByPaymentTokenTest extends TestCase {
 
   public function test_setToken() {
     $q = $this->getTestObjectInstance();
@@ -16,7 +16,7 @@ class QueryByTokenTest extends TestCase {
     $q = $this->getTestObjectInstance();
     $q->setToken('1234');
 
-    $reflection = new \ReflectionClass('BeGateway\QueryByToken');
+    $reflection = new \ReflectionClass('BeGateway\QueryByPaymentToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($q, '_endpoint');
@@ -86,7 +86,7 @@ class QueryByTokenTest extends TestCase {
   protected function getTestObjectInstance() {
     self::authorizeFromEnv();
 
-    return new QueryByToken();
+    return new QueryByPaymentToken();
   }
 }
 ?>

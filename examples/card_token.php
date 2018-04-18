@@ -16,9 +16,9 @@ if ($response->isSuccess()) {
   print("Card token: " . $response->card->getCardToken() . PHP_EOL);
   print("Trying to make a payment by the token and with CVC 123" . PHP_EOL);
 
-  $transaction = new \BeGateway\Payment;
+  $transaction = new \BeGateway\PaymentOperation;
 
-  $amount = rand(100, 10000);
+  $amount = rand(1, 100);
 
   $transaction->money->setAmount($amount);
   $transaction->money->setCurrency('EUR');
@@ -27,6 +27,8 @@ if ($response->isSuccess()) {
 
   $transaction->card->setCardCvc('123');
   $transaction->card->setCardToken($response->card->getCardToken());
+
+  $transaction->setTestMode(true);
 
   $transaction->customer->setFirstName('John');
   $transaction->customer->setLastName('Doe');

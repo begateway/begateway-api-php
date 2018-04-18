@@ -43,7 +43,7 @@ require_once(dirname(__FILE__) . '/BeGateway/CreditOperationTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/GetPaymentTokenTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/QueryByUidTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/QueryByTrackingIdTest.php');
-require_once(dirname(__FILE__) . '/BeGateway/QueryByTokenTest.php');
+require_once(dirname(__FILE__) . '/BeGateway/QueryByPaymentTokenTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/WebhookTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/GatewayExceptionTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/CreditCardTokenizationTest.php');

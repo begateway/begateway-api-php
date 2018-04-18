@@ -4,17 +4,19 @@ require_once __DIR__ . '/test_shop_data.php';
 
 \BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
 
-$transaction = new \BeGateway\Payment;
+$transaction = new \BeGateway\PaymentOperation;
 
-$amount = rand(100, 10000);
+$amount = rand(1, 100);
 
 $transaction->money->setAmount($amount);
 $transaction->money->setCurrency('EUR');
 $transaction->setDescription('test');
 $transaction->setTrackingId('my_custom_variable');
 
+$transaction->setTestMode(true);
+
 $transaction->card->setCardNumber('4200000000000000');
-$transaction->card->setCardHolder('John Doe');
+$transaction->card->setCardHolder('JOHN DOE');
 $transaction->card->setCardExpMonth(1);
 $transaction->card->setCardExpYear(2030);
 $transaction->card->setCardCvc('123');

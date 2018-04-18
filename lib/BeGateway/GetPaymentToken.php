@@ -18,6 +18,7 @@ class GetPaymentToken extends ApiAbstract {
   protected $_visible;
   protected $_payment_methods;
   protected $_expired_at;
+  protected $_test_mode;
 
   public function __construct() {
     $this->customer = new Customer();
@@ -28,6 +29,7 @@ class GetPaymentToken extends ApiAbstract {
     $this->_readonly = array();
     $this->_visible = array();
     $this->_payment_methods = array();
+    $this->_test_mode = false;
   }
 
   protected function _endpoint() {
@@ -39,6 +41,7 @@ class GetPaymentToken extends ApiAbstract {
       'checkout' => array(
         'version' => self::$version,
         'transaction_type' => $this->getTransactionType(),
+        'test' => $this->getTestMode(),
         'order' => array(
           'amount' => $this->money->getCents(),
           'currency' => $this->money->getCurrency(),
@@ -321,6 +324,14 @@ class GetPaymentToken extends ApiAbstract {
 
   public function addPaymentMethod($method) {
     $this->_payment_methods[] = $method;
+  }
+
+  public function setTestMode($mode = true) {
+    $this->_test_mode = $mode;
+  }
+
+  public function getTestMode() {
+    return $this->_test_mode;
   }
 
   private function _searchAndAdd($array, $value) {
