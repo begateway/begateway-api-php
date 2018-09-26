@@ -5,6 +5,7 @@ class AuthorizationOperation extends ApiAbstract {
   public $customer;
   public $card;
   public $money;
+  public $additional_data;
   protected $_description;
   protected $_tracking_id;
   protected $_notification_url;
@@ -15,6 +16,7 @@ class AuthorizationOperation extends ApiAbstract {
     $this->customer = new Customer();
     $this->money = new Money();
     $this->card = new Card();
+    $this->additional_data = new AdditionalData();
     $this->_language = Language::getDefaultLanguage();
     $this->_test_mode = false;
   }
@@ -90,7 +92,11 @@ class AuthorizationOperation extends ApiAbstract {
           'zip' => $this->customer->getZip(),
           'address' => $this->customer->getAddress(),
           'phone' => $this->customer->getPhone()
-        )
+        ),
+        'additional_data' => array(
+          'receipt_text' => $this->additional_data->getReceipt(),
+          'contract' => $this->additional_data->getContract(),
+        ),
       )
     );
 
