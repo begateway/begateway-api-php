@@ -6,6 +6,7 @@ class GetPaymentToken extends ApiAbstract {
 
   public $customer;
   public $money;
+  public $additional_data;
   protected $_description;
   protected $_tracking_id;
   protected $_success_url;
@@ -23,6 +24,7 @@ class GetPaymentToken extends ApiAbstract {
   public function __construct() {
     $this->customer = new Customer();
     $this->money = new Money();
+    $this->additional_data = new AdditionalData();
     $this->setPaymentTransactionType();
     $this->_language = Language::getDefaultLanguage();
     $this->_expired_at = NULL;
@@ -47,7 +49,11 @@ class GetPaymentToken extends ApiAbstract {
           'currency' => $this->money->getCurrency(),
           'description' => $this->getDescription(),
           'tracking_id' => $this->getTrackingId(),
-          'expired_at' => $this->getExpiryDate()
+          'expired_at' => $this->getExpiryDate(),
+          'additional_data' => array(
+            'receipt_text' => $this->additional_data->getReceipt(),
+            'contract' => $this->additional_data->getContract(),
+          )
         ),
         'settings' => array(
           'notification_url' => $this->getNotificationUrl(),

@@ -17,7 +17,10 @@ class GatewayTransport {
           curl_setopt($process, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-type: application/json'));
           curl_setopt($process, CURLOPT_POST, 1);
           curl_setopt($process, CURLOPT_POSTFIELDS, $json);
+        } else {
+          curl_setopt($process, CURLOPT_HTTPHEADER, array('Accept: application/json'));
         }
+
         curl_setopt($process, CURLOPT_URL, $host);
         curl_setopt($process, CURLOPT_USERPWD, Settings::$shopId . ":" . Settings::$shopKey);
         curl_setopt($process, CURLOPT_TIMEOUT, 30);

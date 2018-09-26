@@ -27,6 +27,7 @@ if (!class_exists('\BeGateway\Settings')) {
   require_once (__DIR__ . '/BeGateway/ApiAbstract.php');
   require_once (__DIR__ . '/BeGateway/ChildTransaction.php');
   require_once (__DIR__ . '/BeGateway/GatewayTransport.php');
+  require_once (__DIR__ . '/BeGateway/AdditionalData.php');
   require_once (__DIR__ . '/BeGateway/AuthorizationOperation.php');
   require_once (__DIR__ . '/BeGateway/PaymentOperation.php');
   require_once (__DIR__ . '/BeGateway/CaptureOperation.php');

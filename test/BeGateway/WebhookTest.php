@@ -3,23 +3,42 @@ namespace BeGateway;
 
 class WebhookTest extends TestCase {
 
-  public function test_WebhookIsSentWithCorrectCredentials() {
+  public function test_WebhookIsSentWithCorrectCredentialsWhenHttpAuthorization() {
     $w = $this->getTestObjectInstance();
     $s = Settings::$shopId;
     $k = Settings::$shopKey;
 
-    $_SERVER['PHP_AUTH_USER'] = $s;
-    $_SERVER['PHP_AUTH_PW'] = $k;
+    $_SERVER['HTTP_AUTHORIZATION'] = 'Basic ' . base64_encode($s . ':' . $k);
+    $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = null;
 
     $this->assertTrue($w->isAuthorized());
   }
-  public function test_WebhookIsSentWithIncorrectCredentials() {
-    $w = $this->getTestObjectInstance();
-    $s = '123';
-    $k = '123';
 
-    $_SERVER['PHP_AUTH_USER'] = $s;
-    $_SERVER['PHP_AUTH_PW'] = $k;
+  public function test_WebhookIsSentWithCorrectCredentialsWhenRedirectHttpAuthorization() {
+    $w = $this->getTestObjectInstance();
+    $s = Settings::$shopId;
+    $k = Settings::$shopKey;
+
+    $_SERVER['HTTP_AUTHORIZATION'] = null;
+    $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = 'Basic ' . base64_encode($s . ':' . $k);;
+
+    $this->assertTrue($w->isAuthorized());
+  }
+
+  public function test_WebhookIsSentWithIncorrectCredentialsWhenHttpAuthorization() {
+    $_SERVER['HTTP_AUTHORIZATION'] = 'Basic QWxhZGRpbjpPcGVuU2VzYW1l';
+    $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = null;
+
+    $w = $this->getTestObjectInstance();
+
+    $this->assertFalse($w->isAuthorized());
+  }
+
+  public function test_WebhookIsSentWithIncorrectCredentialsWhenRedirectHttpAuthorization() {
+    $_SERVER['HTTP_AUTHORIZATION'] = null;
+    $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = 'Basic QWxhZGRpbjpPcGVuU2VzYW1l';
+
+    $w = $this->getTestObjectInstance();
 
     $this->assertFalse($w->isAuthorized());
   }

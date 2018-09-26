@@ -106,6 +106,11 @@ class PaymentOperationTest extends TestCase {
           'zip' => 'LV-1082',
           'address' => 'Demo str 12',
           'phone' => ''
+        ),
+        
+        'additional_data' => array(
+            'receipt_text' => array(),
+            'contract' => array(),
         )
       )
     );
