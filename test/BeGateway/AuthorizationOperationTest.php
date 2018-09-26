@@ -82,8 +82,8 @@ class AuthorizationOperationTest extends TestCase {
           'address' => 'Demo str 12',
           'phone' => ''
         ),
-
-        'additional_address' => array(
+        
+        'additional_data' => array(
             'receipt_text' => array(),
             'contract' => array(),
         )

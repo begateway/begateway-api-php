@@ -105,7 +105,11 @@ class GetPaymentTokenTest extends TestCase {
           'currency' => 'EUR',
           'description' => 'test',
           'tracking_id' => 'my_custom_variable',
-          'expired_at' => '2030-12-31T00:21:46+0300',
+          'expired_at' => '2030-12-30T21:21:46+0000',
+          'additional_data' => array(
+              'receipt_text' => array(),
+              'contract' => array(),
+          )
         ),
         'settings' => array(
           'success_url' => 'http://www.example.com/s',
@@ -174,7 +178,11 @@ class GetPaymentTokenTest extends TestCase {
           'currency' => 'BYN',
           'description' => 'test',
           'tracking_id' => 'my_custom_variable',
-          'expired_at' => '2030-12-31T00:21:46+0300'
+          'expired_at' => '2030-12-30T21:21:46+0000',
+          'additional_data' => array(
+              'receipt_text' => array(),
+              'contract' => array(),
+          )
         ),
         'settings' => array(
           'success_url' => 'http://www.example.com/s',
@@ -242,7 +250,11 @@ class GetPaymentTokenTest extends TestCase {
           'currency' => 'USD',
           'description' => 'test',
           'tracking_id' => 'my_custom_variable',
-          'expired_at' => '2030-12-31T00:21:46+0300'
+          'expired_at' => '2030-12-30T21:21:46+0000',
+          'additional_data' => array(
+              'receipt_text' => array(),
+              'contract' => array(),
+          )
         ),
         'settings' => array(
           'success_url' => 'http://www.example.com/s',
