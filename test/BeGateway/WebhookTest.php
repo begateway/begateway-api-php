@@ -3,15 +3,40 @@ namespace BeGateway;
 
 class WebhookTest extends TestCase {
 
+  public function test_WebhookIsSentWithCorrectCredentials() {
+    $w = $this->getTestObjectInstance();
+    $s = Settings::$shopId;
+    $k = Settings::$shopKey;
+
+    $_SERVER['PHP_AUTH_USER'] = $s;
+    $_SERVER['PHP_AUTH_PW'] = $k;
+
+    $this->assertTrue($w->isAuthorized());
+
+    $this->_clearAuthData();
+  }
+
+  public function test_WebhookIsSentWithIncorrectCredentials() {
+    $w = $this->getTestObjectInstance();
+
+    $_SERVER['PHP_AUTH_USER'] = '123';
+    $_SERVER['PHP_AUTH_PW'] = '321';
+
+    $this->assertFalse($w->isAuthorized());
+
+    $this->_clearAuthData();
+  }
+
   public function test_WebhookIsSentWithCorrectCredentialsWhenHttpAuthorization() {
     $w = $this->getTestObjectInstance();
     $s = Settings::$shopId;
     $k = Settings::$shopKey;
 
     $_SERVER['HTTP_AUTHORIZATION'] = 'Basic ' . base64_encode($s . ':' . $k);
-    $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = null;
 
     $this->assertTrue($w->isAuthorized());
+
+    $this->_clearAuthData();
   }
 
   public function test_WebhookIsSentWithCorrectCredentialsWhenRedirectHttpAuthorization() {
@@ -19,28 +44,31 @@ class WebhookTest extends TestCase {
     $s = Settings::$shopId;
     $k = Settings::$shopKey;
 
-    $_SERVER['HTTP_AUTHORIZATION'] = null;
     $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = 'Basic ' . base64_encode($s . ':' . $k);;
 
     $this->assertTrue($w->isAuthorized());
+
+    $this->_clearAuthData();
   }
 
   public function test_WebhookIsSentWithIncorrectCredentialsWhenHttpAuthorization() {
     $_SERVER['HTTP_AUTHORIZATION'] = 'Basic QWxhZGRpbjpPcGVuU2VzYW1l';
-    $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = null;
 
     $w = $this->getTestObjectInstance();
 
     $this->assertFalse($w->isAuthorized());
+
+    $this->_clearAuthData();
   }
 
   public function test_WebhookIsSentWithIncorrectCredentialsWhenRedirectHttpAuthorization() {
-    $_SERVER['HTTP_AUTHORIZATION'] = null;
     $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = 'Basic QWxhZGRpbjpPcGVuU2VzYW1l';
 
     $w = $this->getTestObjectInstance();
 
     $this->assertFalse($w->isAuthorized());
+
+    $this->_clearAuthData();
   }
 
   public function test_RequestIsValidAndItIsSuccess() {
@@ -105,6 +133,13 @@ class WebhookTest extends TestCase {
     self::authorizeFromEnv();
 
     return new Webhook();
+  }
+
+  private function _clearAuthData() {
+    unset($_SERVER['PHP_AUTH_USER']);
+    unset($_SERVER['PHP_AUTH_PW']);
+    unset($_SERVER['HTTP_AUTHORIZATION']);
+    unset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']);
   }
 
   private function webhookMessage($status = 'successful', $test = true ) {

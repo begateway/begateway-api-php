@@ -20,7 +20,11 @@ class Webhook extends Response {
   private function process_auth_data() {
     $token = null;
 
-    if (isset($_SERVER['HTTP_AUTHORIZATION']) && !is_null($_SERVER['HTTP_AUTHORIZATION'])) {
+
+    if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+      $this->_id  = $_SERVER['PHP_AUTH_USER'];
+      $this->_key = $_SERVER['PHP_AUTH_PW'];
+    } elseif (isset($_SERVER['HTTP_AUTHORIZATION']) && !is_null($_SERVER['HTTP_AUTHORIZATION'])) {
         $token = $_SERVER['HTTP_AUTHORIZATION'];
     } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) && !is_null($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         $token = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
