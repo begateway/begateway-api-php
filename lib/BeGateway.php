@@ -18,6 +18,7 @@ if (!class_exists('\BeGateway\Settings')) {
   require_once (__DIR__ . '/BeGateway/Logger.php');
   require_once (__DIR__ . '/BeGateway/Language.php');
   require_once (__DIR__ . '/BeGateway/Customer.php');
+  require_once (__DIR__ . '/BeGateway/AdditionalData.php');
   require_once (__DIR__ . '/BeGateway/Card.php');
   require_once (__DIR__ . '/BeGateway/Money.php');
   require_once (__DIR__ . '/BeGateway/ResponseBase.php');
