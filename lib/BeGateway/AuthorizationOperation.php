@@ -69,7 +69,7 @@ class AuthorizationOperation extends ApiAbstract {
         'return_url' => $this->getReturnUrl(),
         'language' => $this->getLanguage(),
         'test' => $this->getTestMode(),
-        'credit_card' => array(
+        ($this->card->isEncrypted() ? 'encrypted_credit_card' : 'credit_card') => array(
           'number' => $this->card->getCardNumber(),
           'verification_value' => $this->card->getCardCvc(),
           'holder' => $this->card->getCardHolder(),
@@ -96,6 +96,7 @@ class AuthorizationOperation extends ApiAbstract {
         'additional_data' => array(
           'receipt_text' => $this->additional_data->getReceipt(),
           'contract' => $this->additional_data->getContract(),
+          'meta' => $this->additional_data->getMeta()
         )
       )
     );

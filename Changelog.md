@@ -1,5 +1,10 @@
 ## Changelog
 
+### 4.1.9
+
+  * Add `setMeta`/`getMeta` to `AdditionalData` class to save own data
+  * Add `setEncryption` to pass encrypted card data section
+
 ### 3.0.0
 
   * Fix class naming

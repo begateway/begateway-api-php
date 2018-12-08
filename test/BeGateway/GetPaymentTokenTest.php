@@ -109,6 +109,7 @@ class GetPaymentTokenTest extends TestCase {
           'additional_data' => array(
               'receipt_text' => array(),
               'contract' => array(),
+              'meta' => array()
           )
         ),
         'settings' => array(
@@ -182,6 +183,7 @@ class GetPaymentTokenTest extends TestCase {
           'additional_data' => array(
               'receipt_text' => array(),
               'contract' => array(),
+              'meta' => array()
           )
         ),
         'settings' => array(
@@ -234,10 +236,10 @@ class GetPaymentTokenTest extends TestCase {
     $auth = $this->getTestObject();
     $auth->money->setAmount(100);
     $auth->money->setCurrency('USD');
-    $emexvoucher = new PaymentMethod\Emexvoucher();
+    $erip = new PaymentMethod\Erip(['account_number'=>12345]);
     $cc = new PaymentMethod\CreditCard();
 
-    $auth->addPaymentMethod($emexvoucher);
+    $auth->addPaymentMethod($erip);
     $auth->addPaymentMethod($cc);
 
     $arr = array(
@@ -254,6 +256,7 @@ class GetPaymentTokenTest extends TestCase {
           'additional_data' => array(
               'receipt_text' => array(),
               'contract' => array(),
+              'meta' => array()
           )
         ),
         'settings' => array(
@@ -281,9 +284,13 @@ class GetPaymentTokenTest extends TestCase {
           'birth_date' => null
         ),
         'payment_method' => array(
-          'types' => array('emexvoucher', 'credit_card'),
+          'types' => array('erip', 'credit_card'),
           'credit_card' => array(),
-          'emexvoucher' => array()
+          'erip' => array(
+            'order_id' => NULL,
+            'account_number' => 12345,
+            'service_no' => NULL
+          )
         )
       )
     );
@@ -398,4 +405,3 @@ class GetPaymentTokenTest extends TestCase {
     return new GetPaymentToken();
   }
 }
-?>

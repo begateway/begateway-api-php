@@ -107,10 +107,11 @@ class PaymentOperationTest extends TestCase {
           'address' => 'Demo str 12',
           'phone' => ''
         ),
-        
+
         'additional_data' => array(
             'receipt_text' => array(),
             'contract' => array(),
+            'meta' => array()
         )
       )
     );
@@ -125,6 +126,15 @@ class PaymentOperationTest extends TestCase {
 
     $arr['request']['test'] = false;
     $auth->setTestMode(false);
+    $request = $method->invoke($auth, '_buildRequestMessage');
+
+    $this->assertEqual($arr, $request);
+
+    // test encrypted credit card
+    $arr['request']['encrypted_credit_card'] = $arr['request']['credit_card'];
+    unset($arr['request']['credit_card']);
+
+    $auth->card->setEncryption(true);
     $request = $method->invoke($auth, '_buildRequestMessage');
 
     $this->assertEqual($arr, $request);
