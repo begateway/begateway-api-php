@@ -53,6 +53,7 @@ class GetPaymentToken extends ApiAbstract {
           'additional_data' => array(
             'receipt_text' => $this->additional_data->getReceipt(),
             'contract' => $this->additional_data->getContract(),
+            'meta' => $this->additional_data->getMeta()
           )
         ),
         'settings' => array(

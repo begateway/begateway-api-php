@@ -12,7 +12,7 @@ class Card {
   protected $_brand;
   protected $_card_token = null;
   protected $_card_skip_threed_secure = false;
-
+  protected $_is_encrypted = false;
 
   public function setCardNumber($number) {
     $this->_card_number = $number;
@@ -81,5 +81,12 @@ class Card {
   public function getLast_4() {
     return $this->_last_4;
   }
+
+  public function setEncryption($mode) {
+    $this->_is_encrypted = $mode;
+  }
+
+  public function isEncrypted() {
+    return $this->_is_encrypted;
+  }
 }
-?>
