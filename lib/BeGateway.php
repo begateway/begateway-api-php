@@ -25,6 +25,8 @@ if (!class_exists('\BeGateway\Settings')) {
   require_once (__DIR__ . '/BeGateway/Response.php');
   require_once (__DIR__ . '/BeGateway/ResponseCheckout.php');
   require_once (__DIR__ . '/BeGateway/ResponseCardToken.php');
+  require_once (__DIR__ . '/BeGateway/ResponseApi.php');
+  require_once (__DIR__ . '/BeGateway/ResponseApiProduct.php');
   require_once (__DIR__ . '/BeGateway/ApiAbstract.php');
   require_once (__DIR__ . '/BeGateway/ChildTransaction.php');
   require_once (__DIR__ . '/BeGateway/GatewayTransport.php');
@@ -41,6 +43,7 @@ if (!class_exists('\BeGateway\Settings')) {
   require_once (__DIR__ . '/BeGateway/GetPaymentToken.php');
   require_once (__DIR__ . '/BeGateway/Webhook.php');
   require_once (__DIR__ . '/BeGateway/CardToken.php');
+  require_once (__DIR__ . '/BeGateway/Product.php');
   require_once (__DIR__ . '/BeGateway/PaymentMethod/Base.php');
   require_once (__DIR__ . '/BeGateway/PaymentMethod/Erip.php');
   require_once (__DIR__ . '/BeGateway/PaymentMethod/CreditCard.php');

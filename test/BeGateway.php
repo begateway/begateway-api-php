@@ -47,7 +47,7 @@ require_once(dirname(__FILE__) . '/BeGateway/QueryByPaymentTokenTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/WebhookTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/GatewayExceptionTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/CreditCardTokenizationTest.php');
+require_once(dirname(__FILE__) . '/BeGateway/ProductTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/PaymentMethod/CreditCardTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/PaymentMethod/CreditCardHalvaTest.php');
 require_once(dirname(__FILE__) . '/BeGateway/PaymentMethod/EripTest.php');
-?>
