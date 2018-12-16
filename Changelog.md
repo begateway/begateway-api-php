@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.1.10
+
+  * Add `Product` API
+
 ### 4.1.9
 
   * Add `setMeta`/`getMeta` to `AdditionalData` class to save own data
