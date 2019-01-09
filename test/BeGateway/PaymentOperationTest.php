@@ -86,11 +86,8 @@ class PaymentOperationTest extends TestCase {
           'verification_value' => '123',
           'holder' => 'BEGATEWAY',
           'exp_month' => '01',
-          'exp_year' => '2030',
-          'token' => '',
-          'skip_three_d_secure_verification' => '',
+          'exp_year' => '2030'
         ),
-
         'customer' => array(
           'ip' => '127.0.0.1',
           'email' => 'john@example.com',
@@ -130,16 +127,88 @@ class PaymentOperationTest extends TestCase {
 
     $this->assertEqual($arr, $request);
 
-    // test encrypted credit card
-    $arr['request']['encrypted_credit_card'] = $arr['request']['credit_card'];
-    unset($arr['request']['credit_card']);
+    $arr['request']['credit_card'] = array(
+      'token' => '12345',
+      'skip_three_d_secure_verification' => true
+    );
 
-    $auth->card->setEncryption(true);
+    $auth->card->setCardNumber(null);
+    $auth->card->setCardHolder(null);
+    $auth->card->setCardExpMonth(null);
+    $auth->card->setCardExpYear(null);
+    $auth->card->setCardCvc(null);
+    $auth->card->setCardToken('12345');
+    $auth->card->setSkip3D(true);
+
+
     $request = $method->invoke($auth, '_buildRequestMessage');
 
     $this->assertEqual($arr, $request);
   }
 
+  public function test_buildRequestMessageWithEncryptedCard() {
+    $auth = $this->getTestObject();
+    $arr = array(
+      'request' => array(
+        'amount' => 1233,
+        'currency' => 'EUR',
+        'description' => 'test',
+        'tracking_id' => 'my_custom_variable',
+        'notification_url' => '',
+        'return_url' => '',
+        'language' => 'en',
+        'test' => true,
+        'credit_card' => array(
+          'token' => 'dddddd',
+          'skip_three_d_secure_verification' => true,
+        ),
+        'encrypted_credit_card' => array(
+          'number' => '$begatewaycsejs_1_0_0$AAAAAA',
+          'verification_value' => '$begatewaycsejs_1_0_0$BBBBBB',
+          'holder' => '$begatewaycsejs_1_0_0$BEGATEWAY',
+          'exp_month' => '$begatewaycsejs_1_0_0$01',
+          'exp_year' => '$begatewaycsejs_1_0_0$2030'
+        ),
+        'customer' => array(
+          'ip' => '127.0.0.1',
+          'email' => 'john@example.com',
+          'birth_date' => '1970-01-01'
+        ),
+        'billing_address' => array(
+          'first_name' => 'John',
+          'last_name' => 'Doe',
+          'country' => 'LV',
+          'city' => 'Riga',
+          'state' => '',
+          'zip' => 'LV-1082',
+          'address' => 'Demo str 12',
+          'phone' => ''
+        ),
+
+        'additional_data' => array(
+            'receipt_text' => array(),
+            'contract' => array(),
+            'meta' => array()
+        )
+      )
+    );
+
+    $auth->card->setCardNumber('$begatewaycsejs_1_0_0$AAAAAA');
+    $auth->card->setCardHolder('$begatewaycsejs_1_0_0$BEGATEWAY');
+    $auth->card->setCardExpMonth('$begatewaycsejs_1_0_0$01');
+    $auth->card->setCardExpYear('$begatewaycsejs_1_0_0$2030');
+    $auth->card->setCardCvc('$begatewaycsejs_1_0_0$BBBBBB');
+    $auth->card->setCardToken('dddddd');
+    $auth->card->setSkip3D(true);
+
+    $reflection = new \ReflectionClass( 'BeGateway\AuthorizationOperation');
+    $method = $reflection->getMethod('_buildRequestMessage');
+    $method->setAccessible(true);
+
+    $request = $method->invoke($auth, '_buildRequestMessage');
+
+    $this->assertEqual($arr, $request);
+  }
 
   public function test_successPayment() {
     $auth = $this->getTestObject();

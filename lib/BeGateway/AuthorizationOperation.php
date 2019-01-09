@@ -58,6 +58,39 @@ class AuthorizationOperation extends ApiAbstract {
     return $this->_test_mode;
   }
 
+  protected function _buildCard() {
+    $encrypted_card = array();
+    $card = array(
+      'number' => $this->card->getCardNumber(),
+      'verification_value' => $this->card->getCardCvc(),
+      'holder' => $this->card->getCardHolder(),
+      'exp_month' => $this->card->getCardExpMonth(),
+      'exp_year' => $this->card->getCardExpYear(),
+      'token' => $this->card->getCardToken(),
+      'skip_three_d_secure_verification' => $this->card->getSkip3D()
+    );
+
+    $card = array_filter($card);
+
+    foreach ($card as $k => $v) {
+      if (strpos($v, '$begatewaycse') !== false) {
+        $encrypted_card[$k] = $v;
+        unset($card[$k]);
+      }
+    }
+
+    $response = array();
+
+    if (count($card) > 0) {
+      $response['credit_card'] = $card;
+    }
+    if (count($encrypted_card) > 0) {
+      $response['encrypted_credit_card'] = $encrypted_card;
+    }
+
+    return $response;
+  }
+
   protected function _buildRequestMessage() {
     $request = array(
       'request' => array(
@@ -69,15 +102,6 @@ class AuthorizationOperation extends ApiAbstract {
         'return_url' => $this->getReturnUrl(),
         'language' => $this->getLanguage(),
         'test' => $this->getTestMode(),
-        ($this->card->isEncrypted() ? 'encrypted_credit_card' : 'credit_card') => array(
-          'number' => $this->card->getCardNumber(),
-          'verification_value' => $this->card->getCardCvc(),
-          'holder' => $this->card->getCardHolder(),
-          'exp_month' => $this->card->getCardExpMonth(),
-          'exp_year' => $this->card->getCardExpYear(),
-          'token' => $this->card->getCardToken(),
-          'skip_three_d_secure_verification' => $this->card->getSkip3D(),
-        ),
         'customer' => array(
           'ip' => $this->customer->getIP(),
           'email' => $this->customer->getEmail(),
@@ -101,10 +125,10 @@ class AuthorizationOperation extends ApiAbstract {
       )
     );
 
+    $request['request'] = array_merge($request['request'], $this->_buildCard());
+
     Logger::getInstance()->write($request, Logger::DEBUG, get_class() . '::' . __FUNCTION__);
 
     return $request;
   }
-
 }
-?>

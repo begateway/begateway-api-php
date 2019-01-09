@@ -29,7 +29,11 @@ class Card {
   }
 
   public function setCardExpMonth($exp_month) {
-    $this->_card_exp_month = sprintf('%02d', $exp_month);
+    if (preg_match('/^\d+/', $exp_month) == 1) {
+      $this->_card_exp_month = sprintf('%02d', $exp_month);
+    } else {
+      $this->_card_exp_month = $exp_month;
+    }
   }
   public function getCardExpMonth() {
     return $this->_card_exp_month;
@@ -80,13 +84,5 @@ class Card {
   }
   public function getLast_4() {
     return $this->_last_4;
-  }
-
-  public function setEncryption($mode) {
-    $this->_is_encrypted = $mode;
-  }
-
-  public function isEncrypted() {
-    return $this->_is_encrypted;
   }
 }
