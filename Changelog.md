@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.2.1
+
+  * Add `ka` locale
+  
 ### 4.1.10
 
   * Add `Product` API
