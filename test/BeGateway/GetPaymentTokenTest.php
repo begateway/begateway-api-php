@@ -93,12 +93,19 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertFalse($auth->getTestMode());
   }
 
+  public function test_setAttempts() {
+    $auth = $this->getTestObjectInstance();
+    $auth->setAttempts(10);
+    $this->assertEqual($auth->getAttempts(), 10);
+  }
+
   public function test_buildRequestMessage() {
     $auth = $this->getTestObject();
     $arr = array(
       'checkout' => array(
         'version' => "2.1",
         'transaction_type' => 'payment',
+        'attempts' => 5,
         'test' => true,
         'order' => array(
           'amount' => 1233,
@@ -173,6 +180,7 @@ class GetPaymentTokenTest extends TestCase {
       'checkout' => array(
         'version' => "2.1",
         'transaction_type' => 'payment',
+        'attempts' => 5,
         'test' => true,
         'order' => array(
           'amount' => 10000,
@@ -247,6 +255,7 @@ class GetPaymentTokenTest extends TestCase {
         'version' => "2.1",
         'transaction_type' => 'payment',
         'test' => true,
+        'attempts' => 5,
         'order' => array(
           'amount' => 10000,
           'currency' => 'USD',
@@ -376,6 +385,7 @@ class GetPaymentTokenTest extends TestCase {
     $transaction->money->setAmount(12.33);
     $transaction->money->setCurrency('EUR');
     $transaction->setPaymentTransactionType();
+    $transaction->setAttempts(5);
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
     $transaction->setNotificationUrl($url . '/n' );

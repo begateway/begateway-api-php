@@ -20,6 +20,7 @@ class GetPaymentToken extends ApiAbstract {
   protected $_payment_methods;
   protected $_expired_at;
   protected $_test_mode;
+  protected $_attempts;
 
   public function __construct() {
     $this->customer = new Customer();
@@ -32,6 +33,7 @@ class GetPaymentToken extends ApiAbstract {
     $this->_visible = array();
     $this->_payment_methods = array();
     $this->_test_mode = false;
+    $this->_attempts = NULL;
   }
 
   protected function _endpoint() {
@@ -43,6 +45,7 @@ class GetPaymentToken extends ApiAbstract {
       'checkout' => array(
         'version' => self::$version,
         'transaction_type' => $this->getTransactionType(),
+        'attempts' => $this->getAttempts(),
         'test' => $this->getTestMode(),
         'order' => array(
           'amount' => $this->money->getCents(),
@@ -339,6 +342,14 @@ class GetPaymentToken extends ApiAbstract {
 
   public function getTestMode() {
     return $this->_test_mode;
+  }
+
+  public function setAttempts($attempts) {
+    $this->_attempts = $attempts;
+  }
+
+  public function getAttempts() {
+    return $this->_attempts;
   }
 
   private function _searchAndAdd($array, $value) {
