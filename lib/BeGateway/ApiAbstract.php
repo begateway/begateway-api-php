@@ -4,6 +4,8 @@ namespace BeGateway;
 abstract class ApiAbstract {
   protected abstract function _buildRequestMessage();
   protected $_language;
+  protected $_timeout_connect = 10;
+  protected $_timeout_read    = 30;
 
   public function submit() {
     try {
@@ -16,7 +18,9 @@ abstract class ApiAbstract {
   }
 
   protected function _remoteRequest() {
-    return GatewayTransport::submit( Settings::$shopId, Settings::$shopKey , $this->_endpoint(), $this->_buildRequestMessage() );
+    return GatewayTransport::submit(Settings::$shopId, Settings::$shopKey,
+                                    $this->_endpoint(), $this->_buildRequestMessage(),
+                                    $this->_timeout_read, $this->_timeout_connect );
   }
 
   protected function _endpoint() {
@@ -39,6 +43,14 @@ abstract class ApiAbstract {
 
   public function getLanguage() {
     return $this->_language;
+  }
+
+  public function setConnectTimeout($timeout) {
+    $this->_timeout_connect = $timeout;
+  }
+
+  public function setTimeout($timeout) {
+    $this->_timeout_read = $timeout;
   }
 }
 ?>

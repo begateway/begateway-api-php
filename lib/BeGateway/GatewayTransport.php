@@ -3,7 +3,7 @@ namespace BeGateway;
 
 class GatewayTransport {
 
-    public static function submit($shop_id, $shop_key, $host, $t_request) {
+    public static function submit($shop_id, $shop_key, $host, $t_request, $curl_timeout = 30, $curl_connect_timeout = 10) {
 
         $process = curl_init($host);
         $json = json_encode($t_request);
@@ -23,9 +23,10 @@ class GatewayTransport {
 
         curl_setopt($process, CURLOPT_URL, $host);
         curl_setopt($process, CURLOPT_USERPWD, Settings::$shopId . ":" . Settings::$shopKey);
-        curl_setopt($process, CURLOPT_TIMEOUT, 30);
+        curl_setopt($process, CURLOPT_CONNECTTIMEOUT, $curl_connect_timeout);
+        curl_setopt($process, CURLOPT_TIMEOUT, $curl_timeout);
         curl_setopt($process, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($process, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($process, CURLOPT_SSL_VERIFYPEER, true);
         $response = curl_exec($process);
         $error = curl_error($process);
         curl_close($process);
