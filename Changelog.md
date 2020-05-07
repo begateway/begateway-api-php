@@ -4,6 +4,7 @@
 
   * Add `attempts` to get a payment token
   * Add connect and read cURL timeouts
+  * Add `be` locale
 
 ### 4.2.1
 

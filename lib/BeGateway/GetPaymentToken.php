@@ -86,6 +86,10 @@ class GetPaymentToken extends ApiAbstract {
       )
     );
 
+    if (is_null($this->getAttempts())) {
+      unset($request['checkout']['attempts']);
+    }
+
     $payment_methods = $this->_getPaymentMethods();
     if ($payment_methods != NULL)
       $request['checkout']['payment_method'] = $payment_methods;
