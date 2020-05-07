@@ -1,9 +1,15 @@
 ## Changelog
 
+### 4.3.0
+
+  * Add `attempts` to get a payment token
+  * Add connect and read cURL timeouts
+  * Add `be` locale
+
 ### 4.2.1
 
   * Add `ka` locale
-  
+
 ### 4.1.10
 
   * Add `Product` API
