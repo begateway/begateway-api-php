@@ -2,7 +2,6 @@
 namespace BeGateway;
 
 class GetPaymentToken extends ApiAbstract {
-  public static $version = '2.1';
 
   public $customer;
   public $money;
@@ -21,6 +20,7 @@ class GetPaymentToken extends ApiAbstract {
   protected $_expired_at;
   protected $_test_mode;
   protected $_attempts;
+  protected $_headers = array('X-Api-Version: 2');
 
   public function __construct() {
     $this->customer = new Customer();
@@ -43,7 +43,6 @@ class GetPaymentToken extends ApiAbstract {
   protected function _buildRequestMessage() {
     $request = array(
       'checkout' => array(
-        'version' => self::$version,
         'transaction_type' => $this->getTransactionType(),
         'attempts' => $this->getAttempts(),
         'test' => $this->getTestMode(),

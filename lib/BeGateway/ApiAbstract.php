@@ -6,6 +6,7 @@ abstract class ApiAbstract {
   protected $_language;
   protected $_timeout_connect = 10;
   protected $_timeout_read    = 30;
+  protected $_headers         = array();
 
   public function submit() {
     try {
@@ -20,6 +21,7 @@ abstract class ApiAbstract {
   protected function _remoteRequest() {
     return GatewayTransport::submit(Settings::$shopId, Settings::$shopKey,
                                     $this->_endpoint(), $this->_buildRequestMessage(),
+                                    $this->_headers,
                                     $this->_timeout_read, $this->_timeout_connect );
   }
 
@@ -51,6 +53,10 @@ abstract class ApiAbstract {
 
   public function setTimeout($timeout) {
     $this->_timeout_read = $timeout;
+  }
+
+  public function setRequestHeaders($headers) {
+    $this->_headers = $headers;
   }
 }
 ?>

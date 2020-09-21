@@ -103,7 +103,6 @@ class GetPaymentTokenTest extends TestCase {
     $auth = $this->getTestObject();
     $arr = array(
       'checkout' => array(
-        'version' => "2.1",
         'transaction_type' => 'payment',
         'attempts' => 5,
         'test' => true,
@@ -178,7 +177,6 @@ class GetPaymentTokenTest extends TestCase {
 
     $arr = array(
       'checkout' => array(
-        'version' => "2.1",
         'transaction_type' => 'payment',
         'attempts' => 5,
         'test' => true,
@@ -252,7 +250,6 @@ class GetPaymentTokenTest extends TestCase {
 
     $arr = array(
       'checkout' => array(
-        'version' => "2.1",
         'transaction_type' => 'payment',
         'test' => true,
         'attempts' => 5,
@@ -354,9 +351,9 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertTrue($response->isSuccess());
     $this->assertNotNull($response->getToken());
     $this->assertNotNull($response->getRedirectUrl());
-    $this->assertEqual(\BeGateway\Settings::$checkoutBase . '/v2/checkout?token=' . $response->getToken(),
+    $this->assertEqual(\BeGateway\Settings::$checkoutBase . '/widget/hpp.html?token=' . $response->getToken(),
                        $response->getRedirectUrl());
-    $this->assertEqual(\BeGateway\Settings::$checkoutBase . '/v2/checkout',
+    $this->assertEqual(\BeGateway\Settings::$checkoutBase . '/widget/hpp.html',
                        $response->getRedirectUrlScriptName());
   }
 

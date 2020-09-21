@@ -1,5 +1,11 @@
 ## Changelog
 
+### 4.4.0
+
+  * Add headers setup in cURL requests
+  * Add `X-Api-Version: 2` header to request payment tokens
+  * Remove `version` param in payment token requests
+
 ### 4.3.0
 
   * Add `attempts` to get a payment token
