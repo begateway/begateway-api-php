@@ -225,7 +225,7 @@ class AuthorizationOperationTest extends TestCase {
     $amount = rand(0,10000) / 100;
 
     $auth->money->setAmount($amount);
-    $auth->card->setCardNumber('4012001037141112');
+    $auth->card->setCardNumber('4012000000003010');
     $cents = $auth->money->getCents();
 
     $response = $auth->submit();
@@ -274,7 +274,7 @@ class AuthorizationOperationTest extends TestCase {
 
     $auth->money->setAmount($amount);
     $cents = $auth->money->getCents();
-    $auth->card->setCardExpYear(10);
+    $auth->card->setCardExpYear(2010);
 
     $response = $auth->submit();
 
