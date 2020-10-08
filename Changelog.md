@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.4.1
+
+  * `QueryByUid` sends requests to multiple endpoints to lookup a transaction by uid
+
 ### 4.4.0
 
   * Add headers setup in cURL requests
