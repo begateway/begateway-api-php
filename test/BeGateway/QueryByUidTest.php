@@ -12,17 +12,19 @@ class QueryByUidTest extends TestCase {
   }
 
   public function test_endpoint() {
-
     $q = $this->getTestObjectInstance();
     $q->setUid('1234');
 
     $reflection = new \ReflectionClass('BeGateway\QueryByUid');
-    $method = $reflection->getMethod('_endpoint');
+    $method = $reflection->getMethod('_endpoints');
     $method->setAccessible(true);
-    $url = $method->invoke($q, '_endpoint');
+    $url = $method->invoke($q, '_endpoints');
 
-    $this->assertEqual($url, Settings::$gatewayBase . '/transactions/1234');
-
+    $this->assertEqual($url, array(
+      Settings::$apiBase . '/beyag/payments/1234',
+      Settings::$apiBase . '/beyag/transactions/1234',
+      Settings::$gatewayBase . '/transactions/1234'
+    ));
   }
 
   public function test_queryRequest() {

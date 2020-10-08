@@ -75,7 +75,7 @@ class Response extends ResponseBase {
 
         return $this->getResponse()->transaction->message;
 
-      }elseif (is_object($this->getResponse()->response)) {
+      }elseif (isset($this->getResponse()->response)) {
 
         return $this->getResponse()->response->message;
 
