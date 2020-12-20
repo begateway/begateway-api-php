@@ -12,6 +12,17 @@ class Webhook extends Response {
   }
 
   public function isAuthorized() {
+    if (isset($_SERVER['CONTENT_SIGNATURE']) && !is_null(Settings::$shopPubKey)) {
+      $signature  = base64_decode($_SERVER['CONTENT_SIGNATURE']);
+      $public_key = str_replace(array("\r\n", "\n"), '', Settings::$shopPubKey);
+      $public_key = chunk_split($public_key, 64);
+      $public_key = "-----BEGIN PUBLIC KEY-----\n" . $public_key . "-----END PUBLIC KEY-----";
+      $key = openssl_pkey_get_public($public_key);
+      if ($key) {
+        return openssl_verify($this->getRawResponse(), $signature, $key, OPENSSL_ALGO_SHA256) == 1;
+      }
+    }
+
     $this->process_auth_data();
     return $this->_id == Settings::$shopId
            && $this->_key == Settings::$shopKey;

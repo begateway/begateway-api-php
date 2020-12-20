@@ -5,10 +5,10 @@ class TestCase extends \UnitTestCase {
 
   const SHOP_ID = 361;
   const SHOP_KEY = 'b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d';
-  const SHOP_PUB_KEY = 'cc803ec0-6038-4fe6-abf0-a514d5e89d6f';
+  const SHOP_PUB_KEY = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArO7bNKtnJgCn0PJVn2X7QmhjGQ2GNNw412D+NMP4y3Qs69y6i5T/zJBQAHwGKLwAxyGmQ2mMpPZCk4pT9HSIHwHiUVtvdZ/78CX1IQJON/Xf22kMULhquwDZcy3Cp8P4PBBaQZVvm7v1FwaxswyLD6WTWjksRgSH/cAhQzgq6WC4jvfWuFtn9AchPf872zqRHjYfjgageX3uwo9vBRQyXaEZr9dFR+18rUDeeEzOEmEP+kp6/Pvt3ZlhPyYm/wt4/fkk9Miokg/yUPnk3MDU81oSuxAw8EHYjLfF59SWQpQObxMaJR68vVKH32Ombct2ZGyzM7L5Tz3+rkk7C4z9oQIDAQAB';
   const SHOP_ID_3D = 362;
   const SHOP_KEY_3D = '9ad8ad735945919845b9a1996af72d886ab43d3375502256dbf8dd16bca59a4e';
-  const SHOP_PUB_KEY_3D = 'ee7257d4-dcff-41bf-a95f-fe0ff79bf64f';
+  const SHOP_PUB_KEY_3D = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxbrIzCgdcrI6hhXHjnQCxG8YPbHnTSFEnD195yg+w9IbHtIrOnRH+bQ+Ex+3GUTI9tARluyrShaZ4D+AxbMInyPGKrHx25kLzHJtfw0gpIPMhauLot2Qnn6DFzhwsF3couExlqq53+HV3CQAJlFd+uPWijDh6HhL/ljxXb7FCfTo/UxeNYDQwQIV6DXA/Y10/tx0eFeGzi4oJ+zstbbMMD4tBUL/GJ8CViqgyoqhXyP6/5yirNa4jvf9o+2LV4rm/7NjZfkDptkmd7DUJO9LqFdpT20wHoSz26FYRs3LYTCk1Abqjw9NYCqz1ADEkakRgGKacu/7JeQEovCAWOVRrwIDAQAB';
 
   public static function authorizeFromEnv($threeds = false) {
     $shop_id = null;

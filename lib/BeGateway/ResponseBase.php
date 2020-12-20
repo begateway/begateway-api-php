@@ -4,11 +4,13 @@ namespace BeGateway;
 abstract class ResponseBase {
 
   protected $_response;
+  protected $_raw_response;
   protected $_responseArray;
 
   public function __construct($message){
     $this->_response = json_decode($message);
     $this->_responseArray = json_decode($message, true);
+    $this->_raw_response = $message;
   }
   public abstract function isSuccess();
 
@@ -35,6 +37,10 @@ abstract class ResponseBase {
 
   public function getResponseArray() {
     return $this->_responseArray;
+  }
+
+  public function getRawResponse() {
+    return $this->_raw_response;
   }
 
 }
