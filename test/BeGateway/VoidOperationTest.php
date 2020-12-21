@@ -92,7 +92,7 @@ class VoidOperationTest extends TestCase {
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
 
-    $transaction->card->setCardNumber('4200000000000000');
+    $transaction->card->setCardNumber('9112300000000000');
     $transaction->card->setCardHolder('John Doe');
     $transaction->card->setCardExpMonth(1);
     $transaction->card->setCardExpYear(2030);

@@ -71,6 +71,48 @@ class WebhookTest extends TestCase {
     $this->_clearAuthData();
   }
 
+  public function test_WebhookIsSentWithCorrectCredentialsWhenContentSignature() {
+    $w = $this->getTestObjectInstance();
+    $keys = $this->_get_rsa_keys();
+
+    Settings::$shopPubKey = $keys['public_key'];
+
+    $json = $this->webhookMessage();
+    openssl_sign($json, $signature, $keys['private_key'], OPENSSL_ALGO_SHA256);
+
+    $_SERVER['CONTENT_SIGNATURE'] = base64_encode($signature);
+
+    $reflection = new \ReflectionClass('BeGateway\Webhook');
+    $property = $reflection->getProperty('_raw_response');
+    $property->setAccessible(true);
+    $property->setValue($w,$json);
+
+    $this->assertTrue($w->isAuthorized());
+
+    $this->_clearAuthData();
+  }
+
+  public function test_WebhookIsSentWithIncorrectCredentialsWhenContentSignature() {
+    $w = $this->getTestObjectInstance();
+    $keys = $this->_get_rsa_keys();
+
+    Settings::$shopPubKey = $keys['public_key'];
+
+    $json = $this->webhookMessage();
+    openssl_sign($json, $signature, $keys['private_key'], OPENSSL_ALGO_SHA256);
+
+    $_SERVER['CONTENT_SIGNATURE'] = base64_encode($signature);
+
+    $reflection = new \ReflectionClass('BeGateway\Webhook');
+    $property = $reflection->getProperty('_raw_response');
+    $property->setAccessible(true);
+    $property->setValue($w,$this->webhookMessage('failed'));
+
+    $this->assertFalse($w->isAuthorized());
+
+    $this->_clearAuthData();
+  }
+
   public function test_RequestIsValidAndItIsSuccess() {
     $w = $this->getTestObjectInstance();
 
@@ -140,6 +182,31 @@ class WebhookTest extends TestCase {
     unset($_SERVER['PHP_AUTH_PW']);
     unset($_SERVER['HTTP_AUTHORIZATION']);
     unset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']);
+    unset($_SERVER['CONTENT_SIGNATURE']);
+  }
+
+  private function _get_rsa_keys() {
+    $config = array(
+      "digest_alg" => "sha256",
+      "private_key_bits" => 2048,
+      "private_key_type" => OPENSSL_KEYTYPE_RSA,
+    );
+
+    $res = openssl_pkey_new($config);
+    openssl_pkey_export($res, $privKey);
+
+    $pubKey = openssl_pkey_get_details($res);
+    $pubKey = $pubKey["key"];
+    $pubKey = str_replace(
+      array('-----BEGIN PUBLIC KEY-----','-----END PUBLIC KEY-----', "\n"),
+      '',
+      $pubKey
+    );
+
+    return array(
+      'private_key' => $privKey,
+      'public_key'  => $pubKey
+    );
   }
 
   private function webhookMessage($status = 'successful', $test = true ) {

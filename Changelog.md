@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.4.2
+
+  * Webhook verifies callback JSON using shop RSA public key
+
 ### 4.4.1
 
   * `QueryByUid` sends requests to multiple endpoints to lookup a transaction by uid
