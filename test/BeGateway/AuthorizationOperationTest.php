@@ -280,7 +280,7 @@ class AuthorizationOperationTest extends TestCase {
 
     $this->assertTrue($response->isValid());
     $this->assertTrue($response->isError());
-    $this->assertEqual($response->getMessage(), 'Exp year Invalid. Format should be: yyyy. Date is expired.');
+    $this->assertPattern('/Date is expired/i', $response->getMessage());
     $this->assertEqual($response->getStatus(), 'error');
   }
 
