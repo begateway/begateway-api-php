@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.4.3
+
+  * Add fiscalization section
+
 ### 4.4.2
 
   * Webhook verifies callback JSON using shop RSA public key

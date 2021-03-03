@@ -87,9 +87,10 @@ class ProductTest extends TestCase {
       'immortal' => false,
       'expired_at' => '2030-12-30T21:21:46+0000',
       'additional_data' => array(
-          'receipt_text' => array(),
-          'contract' => array(),
-          'meta' => array()
+        'receipt_text' => array(),
+        'contract' => array(),
+        'meta' => array(),
+        'fiscalization' => array()
       ),
       'success_url' => 'http://www.example.com/s',
       'fail_url' => 'http://www.example.com/f',
