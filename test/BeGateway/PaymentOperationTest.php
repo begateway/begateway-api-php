@@ -106,9 +106,10 @@ class PaymentOperationTest extends TestCase {
         ),
 
         'additional_data' => array(
-            'receipt_text' => array(),
-            'contract' => array(),
-            'meta' => array()
+          'receipt_text' => array(),
+          'contract' => array(),
+          'meta' => array(),
+          'fiscalization' => array()
         )
       )
     );
@@ -186,9 +187,10 @@ class PaymentOperationTest extends TestCase {
         ),
 
         'additional_data' => array(
-            'receipt_text' => array(),
-            'contract' => array(),
-            'meta' => array()
+          'receipt_text' => array(),
+          'contract' => array(),
+          'meta' => array(),
+          'fiscalization' => array()
         )
       )
     );

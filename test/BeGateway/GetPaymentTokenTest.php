@@ -113,9 +113,10 @@ class GetPaymentTokenTest extends TestCase {
           'tracking_id' => 'my_custom_variable',
           'expired_at' => '2030-12-30T21:21:46+0000',
           'additional_data' => array(
-              'receipt_text' => array(),
-              'contract' => array(),
-              'meta' => array()
+            'receipt_text' => array(),
+            'contract' => array(),
+            'meta' => array(),
+            'fiscalization' => array()
           )
         ),
         'settings' => array(
@@ -187,9 +188,10 @@ class GetPaymentTokenTest extends TestCase {
           'tracking_id' => 'my_custom_variable',
           'expired_at' => '2030-12-30T21:21:46+0000',
           'additional_data' => array(
-              'receipt_text' => array(),
-              'contract' => array(),
-              'meta' => array()
+            'receipt_text' => array(),
+            'contract' => array(),
+            'meta' => array(),
+            'fiscalization' => array()
           )
         ),
         'settings' => array(
@@ -260,9 +262,10 @@ class GetPaymentTokenTest extends TestCase {
           'tracking_id' => 'my_custom_variable',
           'expired_at' => '2030-12-30T21:21:46+0000',
           'additional_data' => array(
-              'receipt_text' => array(),
-              'contract' => array(),
-              'meta' => array()
+            'receipt_text' => array(),
+            'contract' => array(),
+            'meta' => array(),
+            'fiscalization' => array()
           )
         ),
         'settings' => array(

@@ -5,6 +5,7 @@ class AdditionalData {
   protected $_receipt_text = array();
   protected $_contract = array();
   protected $_meta = array();
+  protected $_fiscalization = array();
 
   public function setReceipt($receipt) {
     $this->_receipt_text = $receipt;
@@ -26,5 +27,13 @@ class AdditionalData {
 
   public function getMeta() {
     return $this->_meta;
+  }
+
+  public function setFiscalization($fiscalization) {
+    $this->_fiscalization = $fiscalization;
+  }
+
+  public function getFiscalization() {
+    return $this->_fiscalization;
   }
 }

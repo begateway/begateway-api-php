@@ -80,11 +80,11 @@ class AuthorizationOperationTest extends TestCase {
           'address' => 'Demo str 12',
           'phone' => ''
         ),
-
         'additional_data' => array(
-            'receipt_text' => array(),
-            'contract' => array(),
-            'meta' => array()
+          'receipt_text' => array(),
+          'contract' => array(),
+          'meta' => array(),
+          'fiscalization' => array()
         )
       )
     );
@@ -115,7 +115,6 @@ class AuthorizationOperationTest extends TestCase {
     $auth->card->setCardCvc(null);
     $auth->card->setCardToken('12345');
     $auth->card->setSkip3D(true);
-
 
     $request = $method->invoke($auth, '_buildRequestMessage');
 
@@ -164,7 +163,8 @@ class AuthorizationOperationTest extends TestCase {
         'additional_data' => array(
             'receipt_text' => array(),
             'contract' => array(),
-            'meta' => array()
+            'meta' => array(),
+            'fiscalization' => array()
         )
       )
     );
