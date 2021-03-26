@@ -20,7 +20,8 @@ class GetPaymentToken extends ApiAbstract {
   protected $_expired_at;
   protected $_test_mode;
   protected $_attempts;
-  protected $_headers = array('X-Api-Version: 2');
+  protected $_version = '2.1';
+  protected $_headers = array();
 
   public function __construct() {
     $this->customer = new Customer();
@@ -46,6 +47,7 @@ class GetPaymentToken extends ApiAbstract {
         'transaction_type' => $this->getTransactionType(),
         'attempts' => $this->getAttempts(),
         'test' => $this->getTestMode(),
+        'version' => $this->getVersion(),
         'order' => array(
           'amount' => $this->money->getCents(),
           'currency' => $this->money->getCurrency(),
@@ -354,6 +356,14 @@ class GetPaymentToken extends ApiAbstract {
 
   public function getAttempts() {
     return $this->_attempts;
+  }
+  
+  public function setVersion($version) {
+    $this->_version = $version;
+  }
+
+  public function getVersion() {
+    return $this->_version;
   }
 
   private function _searchAndAdd($array, $value) {
