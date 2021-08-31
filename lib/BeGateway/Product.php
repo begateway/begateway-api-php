@@ -51,7 +51,9 @@ class Product extends ApiAbstract {
         'receipt_text' => $this->additional_data->getReceipt(),
         'contract'     => $this->additional_data->getContract(),
         'meta'         => $this->additional_data->getMeta(),
-        'fiscalization'=> $this->additional_data->getFiscalization()
+        'fiscalization' => $this->additional_data->getFiscalization(),
+        'platform_data' => $this->additional_data->getPlatformData(),
+        'integration_data' => $this->additional_data->getIntegrationData()
       )
     );
 

@@ -80,7 +80,7 @@ class WebhookTest extends TestCase {
     $json = $this->webhookMessage();
     openssl_sign($json, $signature, $keys['private_key'], OPENSSL_ALGO_SHA256);
 
-    $_SERVER['CONTENT_SIGNATURE'] = base64_encode($signature);
+    $_SERVER['HTTP_CONTENT_SIGNATURE'] = base64_encode($signature);
 
     $reflection = new \ReflectionClass('BeGateway\Webhook');
     $property = $reflection->getProperty('_raw_response');
@@ -101,7 +101,7 @@ class WebhookTest extends TestCase {
     $json = $this->webhookMessage();
     openssl_sign($json, $signature, $keys['private_key'], OPENSSL_ALGO_SHA256);
 
-    $_SERVER['CONTENT_SIGNATURE'] = base64_encode($signature);
+    $_SERVER['HTTP_CONTENT_SIGNATURE'] = base64_encode($signature);
 
     $reflection = new \ReflectionClass('BeGateway\Webhook');
     $property = $reflection->getProperty('_raw_response');
@@ -182,7 +182,7 @@ class WebhookTest extends TestCase {
     unset($_SERVER['PHP_AUTH_PW']);
     unset($_SERVER['HTTP_AUTHORIZATION']);
     unset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']);
-    unset($_SERVER['CONTENT_SIGNATURE']);
+    unset($_SERVER['HTTP_CONTENT_SIGNATURE']);
   }
 
   private function _get_rsa_keys() {

@@ -6,6 +6,8 @@ class AdditionalData {
   protected $_contract = array();
   protected $_meta = array();
   protected $_fiscalization = array();
+  protected $_platform_data = null;
+  protected $_integration_data = null;
 
   public function setReceipt($receipt) {
     $this->_receipt_text = $receipt;
@@ -35,5 +37,21 @@ class AdditionalData {
 
   public function getFiscalization() {
     return $this->_fiscalization;
+  }
+
+  public function setPlatformData($platform) {
+    $this->_platform_data = strval($platform);
+  }
+
+  public function getPlatformData() {
+    return $this->_platform_data;
+  }
+
+  public function setIntegrationData($module) {
+    $this->_integration_data = strval($module);
+  }
+
+  public function getIntegrationData() {
+    return $this->_integration_data;
   }
 }

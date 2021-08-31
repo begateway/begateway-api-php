@@ -12,8 +12,8 @@ class Webhook extends Response {
   }
 
   public function isAuthorized() {
-    if (isset($_SERVER['CONTENT_SIGNATURE']) && !is_null(Settings::$shopPubKey)) {
-      $signature  = base64_decode($_SERVER['CONTENT_SIGNATURE']);
+    if (isset($_SERVER['HTTP_CONTENT_SIGNATURE']) && !is_null(Settings::$shopPubKey)) {
+      $signature  = base64_decode($_SERVER['HTTP_CONTENT_SIGNATURE']);
       $public_key = str_replace(array("\r\n", "\n"), '', Settings::$shopPubKey);
       $public_key = chunk_split($public_key, 64);
       $public_key = "-----BEGIN PUBLIC KEY-----\n" . $public_key . "-----END PUBLIC KEY-----";
