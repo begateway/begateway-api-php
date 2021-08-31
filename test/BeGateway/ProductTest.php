@@ -90,7 +90,9 @@ class ProductTest extends TestCase {
         'receipt_text' => array(),
         'contract' => array(),
         'meta' => array(),
-        'fiscalization' => array()
+        'fiscalization' => array(),
+        'platform_data' => 'beGateway',
+        'integration_data' => '1.1.1'
       ),
       'success_url' => 'http://www.example.com/s',
       'fail_url' => 'http://www.example.com/f',
@@ -103,6 +105,9 @@ class ProductTest extends TestCase {
     $reflection = new \ReflectionClass( 'BeGateway\Product');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
+
+    $auth->additional_data->setPlatformData('beGateway');
+    $auth->additional_data->setIntegrationData('1.1.1');
 
     $request = $method->invoke($auth, '_buildRequestMessage');
     $this->assertEqual($arr, $request);

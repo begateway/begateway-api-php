@@ -116,7 +116,9 @@ class GetPaymentTokenTest extends TestCase {
             'receipt_text' => array(),
             'contract' => array(),
             'meta' => array(),
-            'fiscalization' => array()
+            'fiscalization' => array(),
+            'platform_data' => 'beGateway',
+            'integration_data' => '1.2.3'
           )
         ),
         'settings' => array(
@@ -149,6 +151,9 @@ class GetPaymentTokenTest extends TestCase {
     $reflection = new \ReflectionClass( 'BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
+
+    $auth->additional_data->setPlatformData('beGateway');
+    $auth->additional_data->setIntegrationData('1.2.3');
 
     $request = $method->invoke($auth, '_buildRequestMessage');
 
@@ -191,7 +196,9 @@ class GetPaymentTokenTest extends TestCase {
             'receipt_text' => array(),
             'contract' => array(),
             'meta' => array(),
-            'fiscalization' => array()
+            'fiscalization' => array(),
+            'platform_data' => null,
+            'integration_data' => null
           )
         ),
         'settings' => array(
@@ -240,7 +247,7 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertEqual($arr, $request);
   }
 
-  public function test_buildRequestMessageWithEmexvoucher() {
+  public function test_buildRequestMessageWithCreditCardAndErip() {
     $auth = $this->getTestObject();
     $auth->money->setAmount(100);
     $auth->money->setCurrency('USD');
@@ -265,7 +272,9 @@ class GetPaymentTokenTest extends TestCase {
             'receipt_text' => array(),
             'contract' => array(),
             'meta' => array(),
-            'fiscalization' => array()
+            'fiscalization' => array(),
+            'platform_data' => null,
+            'integration_data' => null
           )
         ),
         'settings' => array(

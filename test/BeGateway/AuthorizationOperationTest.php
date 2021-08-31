@@ -84,7 +84,9 @@ class AuthorizationOperationTest extends TestCase {
           'receipt_text' => array(),
           'contract' => array(),
           'meta' => array(),
-          'fiscalization' => array()
+          'fiscalization' => array(),
+          'platform_data' => null,
+          'integration_data' => null
         )
       )
     );
@@ -108,6 +110,9 @@ class AuthorizationOperationTest extends TestCase {
       'skip_three_d_secure_verification' => true
     );
 
+    $arr['request']['additional_data']['platform_data'] = 'beGateway';
+    $arr['request']['additional_data']['integration_data'] = '1.2.3';
+
     $auth->card->setCardNumber(null);
     $auth->card->setCardHolder(null);
     $auth->card->setCardExpMonth(null);
@@ -115,6 +120,8 @@ class AuthorizationOperationTest extends TestCase {
     $auth->card->setCardCvc(null);
     $auth->card->setCardToken('12345');
     $auth->card->setSkip3D(true);
+    $auth->additional_data->setPlatformData('beGateway');
+    $auth->additional_data->setIntegrationData('1.2.3');
 
     $request = $method->invoke($auth, '_buildRequestMessage');
 
@@ -164,7 +171,9 @@ class AuthorizationOperationTest extends TestCase {
             'receipt_text' => array(),
             'contract' => array(),
             'meta' => array(),
-            'fiscalization' => array()
+            'fiscalization' => array(),
+            'platform_data' => null,
+            'integration_data' => null
         )
       )
     );
