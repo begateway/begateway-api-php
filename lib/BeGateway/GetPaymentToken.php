@@ -1,4 +1,5 @@
 <?php
+
 namespace BeGateway;
 
 class GetPaymentToken extends ApiAbstract {
@@ -192,15 +193,44 @@ class GetPaymentToken extends ApiAbstract {
     $this->_expired_at = $iso8601;
   }
 
-  public function getExpiryDate() {
+  public function setExpiredAt($date)
+  {
+    $iso8601 = NULL;
+
+    if ($date != NULL) {
+      $iso8601 = date('c', strtotime($date));
+    }
+
+    $this->_expired_at = $iso8601;
+  }
+
+  public function getExpiredAt()
+  {
     return $this->_expired_at;
   }
 
-  public function getReadonlyFields() {
+  public function getExpiryDate()
+  {
+    return $this->_expired_at;
+  }
+
+  public function getReadonlyFields()
+  {
     return $this->_readonly;
   }
+
   public function getVisibleFields() {
     return $this->_visible;
+  }
+
+  public function setVisible(array $visible)
+  {
+    $this->_visible = $visible;
+  }
+
+  public function setReadonly(array $readonly)
+  {
+    $this->_readonly = $readonly;
   }
 
   public function setFirstNameReadonly(){
@@ -385,4 +415,3 @@ class GetPaymentToken extends ApiAbstract {
     return $arResult;
   }
 }
-?>
