@@ -1,4 +1,5 @@
 <?php
+
 namespace BeGateway;
 
 class Product extends ApiAbstract {
@@ -168,10 +169,16 @@ class Product extends ApiAbstract {
   public function setExpiryDate($date) {
     $iso8601 = NULL;
 
-    if ($date != NULL)
-      $iso8601 = date(DATE_ISO8601, strtotime($date));
+    if ($date != NULL) {
+      $iso8601 = date('c', strtotime($date));
+    }
 
     $this->_expired_at = $iso8601;
+  }
+
+  public function setVisible(array $visible)
+  {
+    $this->_visible = $visible;
   }
 
   public function getExpiryDate() {
