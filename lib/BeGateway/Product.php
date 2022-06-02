@@ -169,26 +169,11 @@ class Product extends ApiAbstract {
   public function setExpiryDate($date) {
     $iso8601 = NULL;
 
-    if ($date != NULL)
-      $iso8601 = date(DATE_ISO8601, strtotime($date));
-
-    $this->_expired_at = $iso8601;
-  }
-
-  public function setExpiredAt($date)
-  {
-    $iso8601 = NULL;
-
     if ($date != NULL) {
       $iso8601 = date('c', strtotime($date));
     }
 
     $this->_expired_at = $iso8601;
-  }
-
-  public function getExpiredAt()
-  {
-    return $this->_expired_at;
   }
 
   public function setVisible(array $visible)
