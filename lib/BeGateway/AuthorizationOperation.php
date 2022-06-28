@@ -23,6 +23,7 @@ class AuthorizationOperation extends ApiAbstract
     $this->additional_data = new AdditionalData();
     $this->_language = Language::getDefaultLanguage();
     $this->_test_mode = false;
+    $this->_duplicate_check = true;
   }
 
   public function setDescription($description)

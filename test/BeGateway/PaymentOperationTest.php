@@ -74,7 +74,7 @@ class PaymentOperationTest extends TestCase
   public function test_setDuplicateCheck()
   {
     $auth = $this->getTestObjectInstance();
-    $this->assertFalse($auth->getDuplicateCheck());
+    $this->assertTrue($auth->getDuplicateCheck());
     $auth->setDuplicateCheck(true);
     $this->assertTrue($auth->getDuplicateCheck());
     $auth->setDuplicateCheck(false);
