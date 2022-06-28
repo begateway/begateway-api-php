@@ -1,36 +1,42 @@
 <?php
+
 namespace BeGateway;
 
-class ProductTest extends TestCase {
+use ReflectionClass;
 
-  public function test_setDescription() {
+class ProductTest extends TestCase
+{
+  public function test_setDescription()
+  {
     $auth = $this->getTestObjectInstance();
     $description = 'Test description';
     $auth->setDescription($description);
     $this->assertEqual($auth->getDescription(), $description);
   }
 
-  public function test_setName() {
+  public function test_setName()
+  {
     $auth = $this->getTestObjectInstance();
     $name = 'Test name';
     $auth->setName($name);
     $this->assertEqual($auth->getName(), $name);
   }
 
-  public function test_setExpiryDate() {
+  public function test_setExpiryDate()
+  {
     $auth = $this->getTestObjectInstance();
     $date = '2020-12-30 23:21:46';
-    $date_iso8601 = date(DATE_ISO8601, strtotime($date));
+    $date_iso8601 = date('c', strtotime($date));
     $auth->setExpiryDate($date);
     $this->assertEqual($auth->getExpiryDate(), $date_iso8601);
 
-    $date = NULL;
+    $date = null;
     $auth->setExpiryDate($date);
-    $this->assertEqual($auth->getExpiryDate(), NULL);
+    $this->assertEqual($auth->getExpiryDate(), null);
   }
 
-  public function test_setUrls() {
-
+  public function test_setUrls()
+  {
     $auth = $this->getTestObjectInstance();
 
     $url = 'http://www.example.com';
@@ -46,26 +52,29 @@ class ProductTest extends TestCase {
     $this->assertEqual($auth->getFailUrl(), $url . '/f');
   }
 
-  public function test_visible() {
+  public function test_visible()
+  {
     $auth = $this->getTestObjectInstance();
     $auth->setPhoneVisible();
     $auth->setAddressVisible();
 
-    $this->assertEqual(array_diff($auth->getVisibleFields(), array( 'phone', 'address' )), array() );
+    $this->assertEqual(array_diff($auth->getVisibleFields(), ['phone', 'address']), []);
 
     $auth->unsetAddressVisible();
 
-    $this->assertEqual(array_diff($auth->getVisibleFields(), array( 'phone' )), array() );
+    $this->assertEqual(array_diff($auth->getVisibleFields(), ['phone']), []);
   }
 
-  public function test_transaction_type() {
+  public function test_transaction_type()
+  {
     $auth = $this->getTestObjectInstance();
     $auth->setAuthorizationTransactionType();
 
     $this->assertEqual($auth->getTransactionType(), 'authorization');
   }
 
-  public function test_setTestMode() {
+  public function test_setTestMode()
+  {
     $auth = $this->getTestObjectInstance();
     $this->assertFalse($auth->getTestMode());
     $auth->setTestMode(true);
@@ -74,9 +83,11 @@ class ProductTest extends TestCase {
     $this->assertFalse($auth->getTestMode());
   }
 
-  public function test_buildRequestMessage() {
+  public function test_buildRequestMessage()
+  {
     $auth = $this->getTestObject();
-    $arr = array(
+
+    $arr = [
       'transaction_type' => 'payment',
       'test' => true,
       'amount' => 1233,
@@ -85,24 +96,24 @@ class ProductTest extends TestCase {
       'description' => 'test',
       'infinite' => true,
       'immortal' => false,
-      'expired_at' => '2030-12-30T21:21:46+0000',
-      'additional_data' => array(
-        'receipt_text' => array(),
-        'contract' => array(),
-        'meta' => array(),
-        'fiscalization' => array(),
+      'expired_at' => '2030-12-30T21:21:46+00:00',
+      'additional_data' => [
+        'receipt_text' => [],
+        'contract' => [],
+        'meta' => [],
+        'fiscalization' => [],
         'platform_data' => 'beGateway',
         'integration_data' => '1.1.1'
-      ),
+      ],
       'success_url' => 'http://www.example.com/s',
       'fail_url' => 'http://www.example.com/f',
       'notification_url' => 'http://www.example.com/n',
       'return_url' => 'http://www.example.com/r',
       'language' => 'zh',
-      'visible' => array()
-    );
+      'visible' => []
+    ];
 
-    $reflection = new \ReflectionClass( 'BeGateway\Product');
+    $reflection = new ReflectionClass('BeGateway\Product');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -124,14 +135,13 @@ class ProductTest extends TestCase {
 
     $request = $method->invoke($auth, '_buildRequestMessage');
     $this->assertEqual($arr, $request);
-
   }
 
-  public function test_endpoint() {
-
+  public function test_endpoint()
+  {
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('BeGateway\Product');
+    $reflection = new ReflectionClass('BeGateway\Product');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
@@ -139,10 +149,11 @@ class ProductTest extends TestCase {
     $this->assertEqual($url, Settings::$apiBase . '/products');
   }
 
-  public function test_getPayLink() {
+  public function test_getPayLink()
+  {
     $auth = $this->getTestObject();
 
-    $amount = rand(0,10000) / 100;
+    $amount = rand(0, 10000) / 100;
 
     $auth->money->setAmount($amount);
 
@@ -152,16 +163,16 @@ class ProductTest extends TestCase {
     $this->assertTrue($response->isSuccess());
     $this->assertNotNull($response->getPayLink());
     $this->assertEqual(
-      \BeGateway\Settings::$checkoutBase .
-      '/v2/confirm_order/' . $response->getId() . '/' . \BeGateway\Settings::$shopId,
+      Settings::$checkoutBase . '/v2/confirm_order/' . $response->getId() . '/' . Settings::$shopId,
       $response->getPayLink()
     );
   }
 
-  public function test_getPayUrl() {
+  public function test_getPayUrl()
+  {
     $auth = $this->getTestObject();
 
-    $amount = rand(0,10000) / 100;
+    $amount = rand(0, 10000) / 100;
 
     $auth->money->setAmount($amount);
 
@@ -171,17 +182,14 @@ class ProductTest extends TestCase {
     $this->assertTrue($response->isSuccess());
     $this->assertNotNull($response->getPayUrl());
     $this->assertEqual(
-      \BeGateway\Settings::$apiBase .
-      '/products/' . $response->getId() . '/pay',
+      Settings::$apiBase . '/products/' . $response->getId() . '/pay',
       $response->getPayUrl()
     );
   }
 
-  public function test_errorTokenRequest() {
-
+  public function test_errorTokenRequest()
+  {
     $auth = $this->getTestObject();
-
-    $amount = rand(0,10000) / 100;
 
     $auth->money->setAmount(0);
     $auth->setDescription('');
@@ -190,11 +198,10 @@ class ProductTest extends TestCase {
 
     $this->assertTrue($response->isValid());
     $this->assertTrue($response->isError());
-
   }
 
-  protected function getTestObject() {
-
+  protected function getTestObject()
+  {
     $transaction = $this->getTestObjectInstance();
 
     $url = 'http://www.example.com';
@@ -215,7 +222,8 @@ class ProductTest extends TestCase {
     return $transaction;
   }
 
-  protected function getTestObjectInstance() {
+  protected function getTestObjectInstance()
+  {
     self::authorizeFromEnv();
 
     return new Product();

@@ -1,10 +1,13 @@
 <?php
+
 namespace BeGateway;
 
-class AuthorizationOperationTest extends TestCase {
+use ReflectionClass;
 
-  public function test_setDescription() {
-
+class AuthorizationOperationTest extends TestCase
+{
+  public function test_setDescription()
+  {
     $auth = $this->getTestObjectInstance();
 
     $description = 'Test description';
@@ -14,28 +17,32 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($auth->getDescription(), $description);
   }
 
-  public function test_setTrackingId() {
+  public function test_setTrackingId()
+  {
     $auth = $this->getTestObjectInstance();
     $tracking_id = 'Test tracking_id';
     $auth->setTrackingId($tracking_id);
     $this->assertEqual($auth->getTrackingId(), $tracking_id);
   }
 
-  public function test_setNotificationUrl() {
+  public function test_setNotificationUrl()
+  {
     $auth = $this->getTestObjectInstance();
     $url = 'http://www.example.com';
     $auth->setNotificationUrl($url);
     $this->assertEqual($auth->getNotificationUrl(), $url);
   }
 
-  public function test_setReturnUrl() {
+  public function test_setReturnUrl()
+  {
     $auth = $this->getTestObjectInstance();
     $url = 'http://www.example.com';
     $auth->setReturnUrl($url);
     $this->assertEqual($auth->getReturnUrl(), $url);
   }
 
-  public function test_setTestMode() {
+  public function test_setTestMode()
+  {
     $auth = $this->getTestObjectInstance();
     $this->assertFalse($auth->getTestMode());
     $auth->setTestMode(true);
@@ -44,10 +51,22 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertFalse($auth->getTestMode());
   }
 
-  public function test_buildRequestMessage() {
+  public function test_setDuplicateCheck()
+  {
+    $auth = $this->getTestObjectInstance();
+    $this->assertFalse($auth->getDuplicateCheck());
+    $auth->setDuplicateCheck(true);
+    $this->assertTrue($auth->getDuplicateCheck());
+    $auth->setDuplicateCheck(false);
+    $this->assertFalse($auth->getDuplicateCheck());
+  }
+
+  public function test_buildRequestMessage()
+  {
     $auth = $this->getTestObject();
-    $arr = array(
-      'request' => array(
+
+    $arr = [
+      'request' => [
         'amount' => 1233,
         'currency' => 'EUR',
         'description' => 'test',
@@ -56,21 +75,22 @@ class AuthorizationOperationTest extends TestCase {
         'return_url' => '',
         'language' => 'de',
         'test' => true,
-        'credit_card' => array(
+        'duplicate_check' => true,
+        'credit_card' => [
           'number' => '4200000000000000',
           'verification_value' => '123',
           'holder' => 'BEGATEWAY',
           'exp_month' => '01',
           'exp_year' => '2030'
-        ),
+        ],
 
-        'customer' => array(
+        'customer' => [
           'ip' => '127.0.0.1',
           'email' => 'john@example.com',
           'birth_date' => '1970-01-01'
-        ),
+        ],
 
-        'billing_address' => array(
+        'billing_address' => [
           'first_name' => 'John',
           'last_name' => 'Doe',
           'country' => 'LV',
@@ -79,19 +99,19 @@ class AuthorizationOperationTest extends TestCase {
           'zip' => 'LV-1082',
           'address' => 'Demo str 12',
           'phone' => ''
-        ),
-        'additional_data' => array(
-          'receipt_text' => array(),
-          'contract' => array(),
-          'meta' => array(),
-          'fiscalization' => array(),
+        ],
+        'additional_data' => [
+          'receipt_text' => [],
+          'contract' => [],
+          'meta' => [],
+          'fiscalization' => [],
           'platform_data' => null,
           'integration_data' => null
-        )
-      )
-    );
+        ],
+      ],
+    ];
 
-    $reflection = new \ReflectionClass( 'BeGateway\AuthorizationOperation');
+    $reflection = new ReflectionClass('BeGateway\AuthorizationOperation');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -128,10 +148,12 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($arr, $request);
   }
 
-  public function test_buildRequestMessageWithEncryptedCard() {
+  public function test_buildRequestMessageWithEncryptedCard()
+  {
     $auth = $this->getTestObject();
-    $arr = array(
-      'request' => array(
+
+    $arr = [
+      'request' => [
         'amount' => 1233,
         'currency' => 'EUR',
         'description' => 'test',
@@ -140,23 +162,24 @@ class AuthorizationOperationTest extends TestCase {
         'return_url' => '',
         'language' => 'de',
         'test' => true,
-        'credit_card' => array(
+        'duplicate_check' => true,
+        'credit_card' => [
           'token' => 'dddddd',
           'skip_three_d_secure_verification' => true,
-        ),
-        'encrypted_credit_card' => array(
+        ],
+        'encrypted_credit_card' => [
           'number' => '$begatewaycsejs_1_0_0$AAAAAA',
           'verification_value' => '$begatewaycsejs_1_0_0$BBBBBB',
           'holder' => '$begatewaycsejs_1_0_0$BEGATEWAY',
           'exp_month' => '$begatewaycsejs_1_0_0$01',
           'exp_year' => '$begatewaycsejs_1_0_0$2030'
-        ),
-        'customer' => array(
+        ],
+        'customer' => [
           'ip' => '127.0.0.1',
           'email' => 'john@example.com',
           'birth_date' => '1970-01-01'
-        ),
-        'billing_address' => array(
+        ],
+        'billing_address' => [
           'first_name' => 'John',
           'last_name' => 'Doe',
           'country' => 'LV',
@@ -165,18 +188,18 @@ class AuthorizationOperationTest extends TestCase {
           'zip' => 'LV-1082',
           'address' => 'Demo str 12',
           'phone' => ''
-        ),
+        ],
 
-        'additional_data' => array(
-            'receipt_text' => array(),
-            'contract' => array(),
-            'meta' => array(),
-            'fiscalization' => array(),
-            'platform_data' => null,
-            'integration_data' => null
-        )
-      )
-    );
+        'additional_data' => [
+          'receipt_text' => [],
+          'contract' => [],
+          'meta' => [],
+          'fiscalization' => [],
+          'platform_data' => null,
+          'integration_data' => null
+        ],
+      ],
+    ];
 
     $auth->card->setCardNumber('$begatewaycsejs_1_0_0$AAAAAA');
     $auth->card->setCardHolder('$begatewaycsejs_1_0_0$BEGATEWAY');
@@ -186,7 +209,7 @@ class AuthorizationOperationTest extends TestCase {
     $auth->card->setCardToken('dddddd');
     $auth->card->setSkip3D(true);
 
-    $reflection = new \ReflectionClass( 'BeGateway\AuthorizationOperation');
+    $reflection = new ReflectionClass('BeGateway\AuthorizationOperation');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -195,11 +218,12 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($arr, $request);
   }
 
-  public function test_endpoint() {
+  public function test_endpoint()
+  {
 
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('BeGateway\AuthorizationOperation');
+    $reflection = new ReflectionClass('BeGateway\AuthorizationOperation');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
@@ -207,10 +231,11 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($url, Settings::$gatewayBase . '/transactions/authorizations');
   }
 
-  public function test_successAuthorization() {
+  public function test_successAuthorization()
+  {
     $auth = $this->getTestObject();
 
-    $amount = rand(0,10000) / 100;
+    $amount = rand(0, 10000) / 100;
 
     $auth->money->setAmount($amount);
     $cents = $auth->money->getCents();
@@ -228,10 +253,11 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($cents, $arResponse['transaction']['amount']);
   }
 
-  public function test_incompleteAuthorization() {
+  public function test_incompleteAuthorization()
+  {
     $auth = $this->getTestObject(true);
 
-    $amount = rand(0,10000) / 100;
+    $amount = rand(0, 10000) / 100;
 
     $auth->money->setAmount($amount);
     $auth->card->setCardNumber('4012000000003010');
@@ -252,11 +278,12 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($cents, $arResponse['transaction']['amount']);
   }
 
-  public function test_failedAuthorization() {
+  public function test_failedAuthorization()
+  {
     $auth = $this->getTestObject();
     $auth->card->setCardNumber('4005550000000019');
 
-    $amount = rand(0,10000) / 100;
+    $amount = rand(0, 10000) / 100;
 
     $auth->money->setAmount($amount);
     $cents = $auth->money->getCents();
@@ -275,11 +302,12 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($cents, $arResponse['transaction']['amount']);
   }
 
-  public function test_errorAuthorization() {
+  public function test_errorAuthorization()
+  {
 
     $auth = $this->getTestObject();
 
-    $amount = rand(0,10000) / 100;
+    $amount = rand(0, 10000) / 100;
 
     $auth->money->setAmount($amount);
     $cents = $auth->money->getCents();
@@ -293,8 +321,8 @@ class AuthorizationOperationTest extends TestCase {
     $this->assertEqual($response->getStatus(), 'error');
   }
 
-  protected function getTestObject($threed = false) {
-
+  protected function getTestObject($threed = false)
+  {
     $transaction = $this->getTestObjectInstance($threed);
 
     $transaction->money->setAmount(12.33);
@@ -303,6 +331,7 @@ class AuthorizationOperationTest extends TestCase {
     $transaction->setTrackingId('my_custom_variable');
     $transaction->setLanguage('de');
     $transaction->setTestMode(true);
+    $transaction->setDuplicateCheck(true);
 
     $transaction->card->setCardNumber('4200000000000000');
     $transaction->card->setCardHolder('BEGATEWAY');
@@ -323,10 +352,10 @@ class AuthorizationOperationTest extends TestCase {
     return $transaction;
   }
 
-  protected function getTestObjectInstance($threeds = false) {
+  protected function getTestObjectInstance($threeds = false)
+  {
     self::authorizeFromEnv($threeds);
 
     return new AuthorizationOperation();
   }
 }
-?>
