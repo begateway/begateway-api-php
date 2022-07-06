@@ -1,55 +1,61 @@
 <?php
+
 namespace BeGateway;
 
-class GetPaymentTokenTest extends TestCase {
+use ReflectionClass;
 
-  public function test_setDescription() {
+class GetPaymentTokenTest extends TestCase
+{
+  public function test_setDescription()
+  {
     $auth = $this->getTestObjectInstance();
     $description = 'Test description';
     $auth->setDescription($description);
     $this->assertEqual($auth->getDescription(), $description);
   }
 
-  public function test_setTrackingId() {
+  public function test_setTrackingId()
+  {
     $auth = $this->getTestObjectInstance();
     $tracking_id = 'Test tracking_id';
     $auth->setTrackingId($tracking_id);
     $this->assertEqual($auth->getTrackingId(), $tracking_id);
   }
 
-  public function test_setExpiryDate() {
+  public function test_setExpiryDate()
+  {
     $auth = $this->getTestObjectInstance();
     $date = '2020-12-30 23:21:46';
-    $date_iso8601 = date(DATE_ISO8601, strtotime($date));
+    $date_iso8601 = date('c', strtotime($date));
     $auth->setExpiryDate($date);
     $this->assertEqual($auth->getExpiryDate(), $date_iso8601);
 
-    $date = NULL;
+    $date = null;
     $auth->setExpiryDate($date);
-    $this->assertEqual($auth->getExpiryDate(), NULL);
+    $this->assertEqual($auth->getExpiryDate(), null);
   }
 
-  public function test_setUrls() {
-
+  public function test_setUrls()
+  {
     $auth = $this->getTestObjectInstance();
 
     $url = 'http://www.example.com';
 
-    $auth->setNotificationUrl($url . '/n' );
-    $auth->setCancelUrl($url . '/c' );
-    $auth->setSuccessUrl($url . '/s' );
-    $auth->setDeclineUrl($url . '/d' );
-    $auth->setFailUrl($url . '/f' );
+    $auth->setNotificationUrl($url . '/n');
+    $auth->setCancelUrl($url . '/c');
+    $auth->setSuccessUrl($url . '/s');
+    $auth->setDeclineUrl($url . '/d');
+    $auth->setFailUrl($url . '/f');
 
-    $this->assertEqual($auth->getNotificationUrl(), $url . '/n' );
-    $this->assertEqual($auth->getCancelUrl(), $url . '/c' );
-    $this->assertEqual($auth->getSuccessUrl(), $url . '/s' );
-    $this->assertEqual($auth->getDeclineUrl(), $url . '/d' );
-    $this->assertEqual($auth->getFailUrl(), $url . '/f' );
-
+    $this->assertEqual($auth->getNotificationUrl(), $url . '/n');
+    $this->assertEqual($auth->getCancelUrl(), $url . '/c');
+    $this->assertEqual($auth->getSuccessUrl(), $url . '/s');
+    $this->assertEqual($auth->getDeclineUrl(), $url . '/d');
+    $this->assertEqual($auth->getFailUrl(), $url . '/f');
   }
 
-  public function test_readonly() {
+  public function test_readonly()
+  {
     $auth = $this->getTestObjectInstance();
 
     $auth->setFirstNameReadonly();
@@ -57,34 +63,36 @@ class GetPaymentTokenTest extends TestCase {
     $auth->setEmailReadonly();
     $auth->setCityReadonly();
 
-    $this->assertEqual(array_diff($auth->getReadOnlyFields(), array( 'first_name', 'last_name', 'email', 'city' )), array() );
+    $this->assertEqual(array_diff($auth->getReadOnlyFields(), ['first_name', 'last_name', 'email', 'city']), []);
 
     $auth->unsetFirstNameReadonly();
 
-    $this->assertEqual(array_diff($auth->getReadOnlyFields(), array( 'last_name', 'email', 'city' )), array() );
-
+    $this->assertEqual(array_diff($auth->getReadOnlyFields(), ['last_name', 'email', 'city']), []);
   }
 
-  public function test_visible() {
+  public function test_visible()
+  {
     $auth = $this->getTestObjectInstance();
     $auth->setPhoneVisible();
     $auth->setAddressVisible();
 
-    $this->assertEqual(array_diff($auth->getVisibleFields(), array( 'phone', 'address' )), array() );
+    $this->assertEqual(array_diff($auth->getVisibleFields(), ['phone', 'address']), []);
 
     $auth->unsetAddressVisible();
 
-    $this->assertEqual(array_diff($auth->getVisibleFields(), array( 'phone' )), array() );
+    $this->assertEqual(array_diff($auth->getVisibleFields(), ['phone']), []);
   }
 
-  public function test_transaction_type() {
+  public function test_transaction_type()
+  {
     $auth = $this->getTestObjectInstance();
     $auth->setAuthorizationTransactionType();
 
     $this->assertEqual($auth->getTransactionType(), 'authorization');
   }
 
-  public function test_setTestMode() {
+  public function test_setTestMode()
+  {
     $auth = $this->getTestObjectInstance();
     $this->assertFalse($auth->getTestMode());
     $auth->setTestMode(true);
@@ -93,47 +101,49 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertFalse($auth->getTestMode());
   }
 
-  public function test_setAttempts() {
+  public function test_setAttempts()
+  {
     $auth = $this->getTestObjectInstance();
     $auth->setAttempts(10);
     $this->assertEqual($auth->getAttempts(), 10);
   }
 
-  public function test_buildRequestMessage() {
+  public function test_buildRequestMessage()
+  {
     $auth = $this->getTestObject();
-    $arr = array(
-      'checkout' => array(
+    $arr = [
+      'checkout' => [
         'transaction_type' => 'payment',
         'attempts' => 5,
         'test' => true,
-        'order' => array(
+        'order' => [
           'amount' => 1233,
           'currency' => 'EUR',
           'description' => 'test',
           'tracking_id' => 'my_custom_variable',
-          'expired_at' => '2030-12-30T21:21:46+0000',
-          'additional_data' => array(
-            'receipt_text' => array(),
-            'contract' => array(),
-            'meta' => array(),
-            'fiscalization' => array(),
+          'expired_at' => '2030-12-30T21:21:46+00:00',
+          'additional_data' => [
+            'receipt_text' => [],
+            'contract' => [],
+            'meta' => [],
+            'fiscalization' => [],
             'platform_data' => 'beGateway',
             'integration_data' => '1.2.3'
-          )
-        ),
-        'settings' => array(
+          ]
+        ],
+        'settings' => [
           'success_url' => 'http://www.example.com/s',
           'cancel_url' => 'http://www.example.com/c',
           'decline_url' => 'http://www.example.com/d',
           'fail_url' => 'http://www.example.com/f',
           'notification_url' => 'http://www.example.com/n',
           'language' => 'zh',
-          'customer_fields' => array(
-            'visible' => array(),
-            'read_only' => array(),
-          ),
-        ),
-        'customer' => array(
+          'customer_fields' => [
+            'visible' => [],
+            'read_only' => [],
+          ],
+        ],
+        'customer' => [
           'email' => 'john@example.com',
           'first_name' => 'John',
           'last_name' => 'Doe',
@@ -144,11 +154,11 @@ class GetPaymentTokenTest extends TestCase {
           'address' => 'Demo str 12',
           'phone' => '',
           'birth_date' => ''
-        )
-      )
-    );
+        ]
+      ]
+    ];
 
-    $reflection = new \ReflectionClass( 'BeGateway\GetPaymentToken');
+    $reflection = new ReflectionClass('BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -166,54 +176,57 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertEqual($arr, $request);
   }
 
-  public function test_buildRequestMessageWithErip() {
+  public function test_buildRequestMessageWithErip()
+  {
     $auth = $this->getTestObject();
     $auth->money->setAmount(100);
     $auth->money->setCurrency('BYN');
-    $erip = new PaymentMethod\Erip(array(
+
+    $erip = new PaymentMethod\Erip([
       'account_number' => '1234',
       'service_no' => '99999999',
       'order_id' => 100001,
-      'service_info' => array('Test payment')
-    ));
+      'service_info' => ['Test payment']
+    ]);
+
     $cc = new PaymentMethod\CreditCard();
 
     $auth->addPaymentMethod($erip);
     $auth->addPaymentMethod($cc);
 
-    $arr = array(
-      'checkout' => array(
+    $arr = [
+      'checkout' => [
         'transaction_type' => 'payment',
         'attempts' => 5,
         'test' => true,
-        'order' => array(
+        'order' => [
           'amount' => 10000,
           'currency' => 'BYN',
           'description' => 'test',
           'tracking_id' => 'my_custom_variable',
-          'expired_at' => '2030-12-30T21:21:46+0000',
-          'additional_data' => array(
-            'receipt_text' => array(),
-            'contract' => array(),
-            'meta' => array(),
-            'fiscalization' => array(),
+          'expired_at' => '2030-12-30T21:21:46+00:00',
+          'additional_data' => [
+            'receipt_text' => [],
+            'contract' => [],
+            'meta' => [],
+            'fiscalization' => [],
             'platform_data' => null,
             'integration_data' => null
-          )
-        ),
-        'settings' => array(
+          ]
+        ],
+        'settings' => [
           'success_url' => 'http://www.example.com/s',
           'cancel_url' => 'http://www.example.com/c',
           'decline_url' => 'http://www.example.com/d',
           'fail_url' => 'http://www.example.com/f',
           'notification_url' => 'http://www.example.com/n',
           'language' => 'zh',
-          'customer_fields' => array(
-            'visible' => array(),
-            'read_only' => array(),
-          ),
-        ),
-        'customer' => array(
+          'customer_fields' => [
+            'visible' => [],
+            'read_only' => [],
+          ],
+        ],
+        'customer' => [
           'email' => 'john@example.com',
           'first_name' => 'John',
           'last_name' => 'Doe',
@@ -224,21 +237,21 @@ class GetPaymentTokenTest extends TestCase {
           'address' => 'Demo str 12',
           'phone' => '',
           'birth_date' => null
-        ),
-        'payment_method' => array(
-          'types' => array('erip', 'credit_card'),
-          'erip' => array(
+        ],
+        'payment_method' => [
+          'types' => ['erip', 'credit_card'],
+          'erip' => [
             'account_number' => '1234',
             'service_no' => '99999999',
             'order_id' => 100001,
-            'service_info' => array('Test payment')
-          ),
-          'credit_card' => array()
-        )
-      )
-    );
+            'service_info' => ['Test payment']
+          ],
+          'credit_card' => []
+        ]
+      ]
+    ];
 
-    $reflection = new \ReflectionClass( 'BeGateway\GetPaymentToken');
+    $reflection = new ReflectionClass('BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -247,49 +260,50 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertEqual($arr, $request);
   }
 
-  public function test_buildRequestMessageWithCreditCardAndErip() {
+  public function test_buildRequestMessageWithCreditCardAndErip()
+  {
     $auth = $this->getTestObject();
     $auth->money->setAmount(100);
     $auth->money->setCurrency('USD');
-    $erip = new PaymentMethod\Erip(['account_number'=>12345]);
+    $erip = new PaymentMethod\Erip(['account_number' => 12345]);
     $cc = new PaymentMethod\CreditCard();
 
     $auth->addPaymentMethod($erip);
     $auth->addPaymentMethod($cc);
 
-    $arr = array(
-      'checkout' => array(
+    $arr = [
+      'checkout' => [
         'transaction_type' => 'payment',
         'test' => true,
         'attempts' => 5,
-        'order' => array(
+        'order' => [
           'amount' => 10000,
           'currency' => 'USD',
           'description' => 'test',
           'tracking_id' => 'my_custom_variable',
-          'expired_at' => '2030-12-30T21:21:46+0000',
-          'additional_data' => array(
-            'receipt_text' => array(),
-            'contract' => array(),
-            'meta' => array(),
-            'fiscalization' => array(),
+          'expired_at' => '2030-12-30T21:21:46+00:00',
+          'additional_data' => [
+            'receipt_text' => [],
+            'contract' => [],
+            'meta' => [],
+            'fiscalization' => [],
             'platform_data' => null,
             'integration_data' => null
-          )
-        ),
-        'settings' => array(
+          ]
+        ],
+        'settings' => [
           'success_url' => 'http://www.example.com/s',
           'cancel_url' => 'http://www.example.com/c',
           'decline_url' => 'http://www.example.com/d',
           'fail_url' => 'http://www.example.com/f',
           'notification_url' => 'http://www.example.com/n',
           'language' => 'zh',
-          'customer_fields' => array(
-            'visible' => array(),
-            'read_only' => array(),
-          ),
-        ),
-        'customer' => array(
+          'customer_fields' => [
+            'visible' => [],
+            'read_only' => [],
+          ],
+        ],
+        'customer' => [
           'email' => 'john@example.com',
           'first_name' => 'John',
           'last_name' => 'Doe',
@@ -300,20 +314,20 @@ class GetPaymentTokenTest extends TestCase {
           'address' => 'Demo str 12',
           'phone' => '',
           'birth_date' => null
-        ),
-        'payment_method' => array(
-          'types' => array('erip', 'credit_card'),
-          'credit_card' => array(),
-          'erip' => array(
-            'order_id' => NULL,
+        ],
+        'payment_method' => [
+          'types' => ['erip', 'credit_card'],
+          'credit_card' => [],
+          'erip' => [
+            'order_id' => null,
             'account_number' => 12345,
-            'service_no' => NULL
-          )
-        )
-      )
-    );
+            'service_no' => null
+          ]
+        ]
+      ]
+    ];
 
-    $reflection = new \ReflectionClass( 'BeGateway\GetPaymentToken');
+    $reflection = new ReflectionClass('BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_buildRequestMessage');
     $method->setAccessible(true);
 
@@ -322,23 +336,23 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertEqual($arr, $request);
   }
 
-  public function test_endpoint() {
-
+  public function test_endpoint()
+  {
     $auth = $this->getTestObjectInstance();
 
-    $reflection = new \ReflectionClass('BeGateway\GetPaymentToken');
+    $reflection = new ReflectionClass('BeGateway\GetPaymentToken');
     $method = $reflection->getMethod('_endpoint');
     $method->setAccessible(true);
     $url = $method->invoke($auth, '_endpoint');
 
     $this->assertEqual($url, Settings::$checkoutBase . '/ctp/api/checkouts');
-
   }
 
-  public function test_successTokenRequest() {
+  public function test_successTokenRequest()
+  {
     $auth = $this->getTestObject();
 
-    $amount = rand(0,10000) / 100;
+    $amount = rand(0, 10000) / 100;
 
     $auth->money->setAmount($amount);
 
@@ -350,10 +364,11 @@ class GetPaymentTokenTest extends TestCase {
 
   }
 
-  public function test_redirectUrl() {
+  public function test_redirectUrl()
+  {
     $auth = $this->getTestObject();
 
-    $amount = rand(0,10000) / 100;
+    $amount = rand(0, 10000) / 100;
 
     $auth->money->setAmount($amount);
 
@@ -363,17 +378,20 @@ class GetPaymentTokenTest extends TestCase {
     $this->assertTrue($response->isSuccess());
     $this->assertNotNull($response->getToken());
     $this->assertNotNull($response->getRedirectUrl());
-    $this->assertEqual(\BeGateway\Settings::$checkoutBase . '/widget/hpp.html?token=' . $response->getToken(),
-                       $response->getRedirectUrl());
-    $this->assertEqual(\BeGateway\Settings::$checkoutBase . '/widget/hpp.html',
-                       $response->getRedirectUrlScriptName());
+    $this->assertEqual(
+      Settings::$checkoutBase . '/widget/hpp.html?token=' . $response->getToken(),
+      $response->getRedirectUrl()
+    );
+
+    $this->assertEqual(
+      Settings::$checkoutBase . '/widget/hpp.html',
+      $response->getRedirectUrlScriptName()
+    );
   }
 
-  public function test_errorTokenRequest() {
-
+  public function test_errorTokenRequest()
+  {
     $auth = $this->getTestObject();
-
-    $amount = rand(0,10000) / 100;
 
     $auth->money->setAmount(0);
     $auth->setDescription('');
@@ -382,10 +400,10 @@ class GetPaymentTokenTest extends TestCase {
 
     $this->assertTrue($response->isValid());
     $this->assertTrue($response->isError());
-
   }
 
-  protected function getTestObject() {
+  protected function getTestObject()
+  {
 
     $transaction = $this->getTestObjectInstance();
 
@@ -397,11 +415,11 @@ class GetPaymentTokenTest extends TestCase {
     $transaction->setAttempts(5);
     $transaction->setDescription('test');
     $transaction->setTrackingId('my_custom_variable');
-    $transaction->setNotificationUrl($url . '/n' );
-    $transaction->setCancelUrl($url . '/c' );
-    $transaction->setSuccessUrl($url . '/s' );
-    $transaction->setDeclineUrl($url . '/d' );
-    $transaction->setFailUrl($url . '/f' );
+    $transaction->setNotificationUrl($url . '/n');
+    $transaction->setCancelUrl($url . '/c');
+    $transaction->setSuccessUrl($url . '/s');
+    $transaction->setDeclineUrl($url . '/d');
+    $transaction->setFailUrl($url . '/f');
     $transaction->setLanguage('zh');
     $transaction->setExpiryDate('2030-12-31T00:21:46+0300');
     $transaction->setTestMode(true);
@@ -418,7 +436,8 @@ class GetPaymentTokenTest extends TestCase {
     return $transaction;
   }
 
-  protected function getTestObjectInstance() {
+  protected function getTestObjectInstance()
+  {
     self::authorizeFromEnv();
 
     return new GetPaymentToken();
