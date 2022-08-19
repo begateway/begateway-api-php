@@ -1,76 +1,81 @@
 <?php
 
-namespace BeGateway;
+declare(strict_types=1);
 
-class MoneyTest extends TestCase
+namespace Tests\BeGateway;
+
+use BeGateway\Money;
+use Tests\AbstractTestCase;
+
+class MoneyTest extends AbstractTestCase
 {
-    public function test_setAmount_with_decimals()
+    public function testSetAmountWithDecimals(): void
     {
         $money = $this->getTestObject();
 
         $money->setAmount(10.57);
         $money->setCurrency('EUR');
 
-        $this->assertEqual($money->getCents(), 1057);
-        $this->assertEqual($money->getAmount(), 10.57);
+        $this->assertEquals(1057, $money->getCents());
+        $this->assertEquals(10.57, $money->getAmount());
     }
 
-    public function test_setAmount_without_decimals()
+    public function testSetAmountWithoutDecimals(): void
     {
         $money = $this->getTestObject();
 
         $money->setAmount(2550);
         $money->setCurrency('BYR');
 
-        $this->assertEqual($money->getCents(), 2550);
-        $this->assertEqual($money->getAmount(), 2550);
+        $this->assertEquals(2550, $money->getCents());
+        $this->assertEquals(2550, $money->getAmount());
     }
 
-    public function test_setCents_with_decimals()
+    public function testSetCentsWithDecimals(): void
     {
         $money = $this->getTestObject();
 
         $money->setCents(1057);
         $money->setCurrency('EUR');
 
-        $this->assertEqual($money->getCents(), 1057);
-        $this->assertEqual($money->getAmount(), 10.57);
+        $this->assertEquals(1057, $money->getCents());
+        $this->assertEquals(10.57, $money->getAmount());
     }
 
-    public function test_setCents_without_decimals()
+    public function testSetCentsWithoutDecimals(): void
     {
         $money = $this->getTestObject();
 
         $money->setCents(2550);
         $money->setCurrency('JPY');
 
-        $this->assertEqual($money->getCents(), 2550);
-        $this->assertEqual($money->getAmount(), 2550);
+        $this->assertEquals(2550, $money->getCents());
+        $this->assertEquals(2550, $money->getAmount());
     }
 
-    public function test_set99Amount()
+    public function testSet99Amount(): void
     {
         $money = $this->getTestObject();
 
         $money->setAmount(20.99);
         $money->setCurrency('EUR');
 
-        $this->assertEqual($money->getCents(), 2099);
-        $this->assertEqual($money->getAmount(), 20.99);
+        $this->assertEquals(2099, $money->getCents());
+        $this->assertEquals(20.99, $money->getAmount());
     }
 
-    public function test_setRoundAmount()
+    public function testSetRoundAmount(): void
     {
         $money = $this->getTestObject();
 
         $money->setAmount(151.2);
         $money->setCurrency('EUR');
 
-        $this->assertEqual($money->getCents(), 15120);
-        $this->assertEqual($money->getAmount(), 151.20);
+        $this->assertEquals(15120, $money->getCents());
+        $this->assertEquals(151.20, $money->getAmount());
     }
 
-    protected function getTestObject()
+    private function getTestObject(): Money
     {
         return new Money();
     }

@@ -9,9 +9,9 @@ use BeGateway\CaptureOperation;
 use BeGateway\Response;
 use BeGateway\Settings;
 use ReflectionClass;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class CaptureOperationTest extends BaseTestCase
+class CaptureOperationTest extends AbstractTestCase
 {
     public function testSetParentUid(): void
     {
@@ -93,7 +93,7 @@ class CaptureOperationTest extends BaseTestCase
         $this->assertMatchesRegularExpression('/Amount can\'t be greater than/', $t_response->getMessage());
     }
 
-    protected function runParentTransaction($amount = 10.00): Response
+    private function runParentTransaction($amount = 10.00): Response
     {
         self::authorizeFromEnv();
 
@@ -106,7 +106,7 @@ class CaptureOperationTest extends BaseTestCase
 
         $transaction->card->setCardNumber('4200000000000000');
         $transaction->card->setCardHolder('John Doe');
-        $transaction->card->setCardExpMonth(1);
+        $transaction->card->setCardExpMonth('01');
         $transaction->card->setCardExpYear(2030);
         $transaction->card->setCardCvc('123');
 

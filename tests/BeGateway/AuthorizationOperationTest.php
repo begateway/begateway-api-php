@@ -7,9 +7,9 @@ namespace Tests\BeGateway;
 use BeGateway\AuthorizationOperation;
 use BeGateway\Settings;
 use ReflectionClass;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class AuthorizationOperationTest extends BaseTestCase
+class AuthorizationOperationTest extends AbstractTestCase
 {
     public function testSetDescription(): void
     {
@@ -291,7 +291,7 @@ class AuthorizationOperationTest extends BaseTestCase
 
         $auth->money->setAmount($amount);
         $cents = $auth->money->getCents();
-        $auth->card->setCardExpMonth(10);
+        $auth->card->setCardExpMonth('10');
 
         $response = $auth->submit();
 
@@ -338,7 +338,7 @@ class AuthorizationOperationTest extends BaseTestCase
 
         $transaction->card->setCardNumber('4200000000000000');
         $transaction->card->setCardHolder('BEGATEWAY');
-        $transaction->card->setCardExpMonth(1);
+        $transaction->card->setCardExpMonth('01');
         $transaction->card->setCardExpYear(2030);
         $transaction->card->setCardCvc('123');
 

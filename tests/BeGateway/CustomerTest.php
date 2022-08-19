@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\BeGateway;
 
 use BeGateway\Customer;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class CustomerTest extends BaseTestCase
+class CustomerTest extends AbstractTestCase
 {
     public function testSetGetFirstName(): void
     {

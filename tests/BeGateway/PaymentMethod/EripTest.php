@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\BeGateway\PaymentMethod;
 
 use BeGateway\PaymentMethod\Erip;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class EripTest extends BaseTestCase
+class EripTest extends AbstractTestCase
 {
     public function testGetName(): void
     {

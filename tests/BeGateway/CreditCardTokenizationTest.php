@@ -8,9 +8,9 @@ use BeGateway\AuthorizationOperation;
 use BeGateway\CardToken;
 use BeGateway\Settings;
 use ReflectionClass;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class CreditCardTokenizationTest extends BaseTestCase
+class CreditCardTokenizationTest extends AbstractTestCase
 {
     public function testBuildRequestMessage(): void
     {
@@ -64,7 +64,7 @@ class CreditCardTokenizationTest extends BaseTestCase
         $this->assertNotNull($response->card->getCardToken());
 
         // update token
-        $token->card->setCardExpMonth(1);
+        $token->card->setCardExpMonth('01');
         $token->card->setCardHolder('John Doe');
         $old_token = $response->card->getCardToken();
         $token->card->setCardToken($old_token);
@@ -100,19 +100,19 @@ class CreditCardTokenizationTest extends BaseTestCase
         $this->assertEquals($cents, $response3->getResponse()->transaction->amount);
     }
 
-    protected function getTestObject(bool $threed = false): CardToken
+    private function getTestObject(bool $threed = false): CardToken
     {
         $transaction = $this->getTestObjectInstance($threed);
 
         $transaction->card->setCardNumber('4200000000000000');
         $transaction->card->setCardHolder('John Smith');
-        $transaction->card->setCardExpMonth(2);
+        $transaction->card->setCardExpMonth('02');
         $transaction->card->setCardExpYear(2030);
 
         return $transaction;
     }
 
-    protected function getAuthorizationTestObject(bool $threed = false): AuthorizationOperation
+    private function getAuthorizationTestObject(bool $threed = false): AuthorizationOperation
     {
         $transaction = $this->getAuthorizationTestObjectInstance($threed);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeGateway;
 
 class AdditionalData
@@ -11,7 +13,7 @@ class AdditionalData
     protected $_platform_data = null;
     protected $_integration_data = null;
 
-    public function setReceipt($receipt)
+    public function setReceipt($receipt): void
     {
         $this->_receipt_text = $receipt;
     }
@@ -21,7 +23,7 @@ class AdditionalData
         return $this->_receipt_text;
     }
 
-    public function setContract($contract)
+    public function setContract($contract): void
     {
         $this->_contract = $contract;
     }
@@ -31,7 +33,7 @@ class AdditionalData
         return $this->_contract;
     }
 
-    public function setMeta($meta)
+    public function setMeta($meta): void
     {
         $this->_meta = $meta;
     }
@@ -41,7 +43,7 @@ class AdditionalData
         return $this->_meta;
     }
 
-    public function setFiscalization($fiscalization)
+    public function setFiscalization($fiscalization): void
     {
         $this->_fiscalization = $fiscalization;
     }
@@ -51,7 +53,7 @@ class AdditionalData
         return $this->_fiscalization;
     }
 
-    public function setPlatformData($platform)
+    public function setPlatformData($platform): void
     {
         $this->_platform_data = strval($platform);
     }
@@ -61,7 +63,7 @@ class AdditionalData
         return $this->_platform_data;
     }
 
-    public function setIntegrationData($module)
+    public function setIntegrationData($module): void
     {
         $this->_integration_data = strval($module);
     }

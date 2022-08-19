@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeGateway;
 
 class Card
@@ -36,9 +38,9 @@ class Card
         return $this->_card_holder;
     }
 
-    public function setCardExpMonth($exp_month)
+    public function setCardExpMonth(?string $exp_month): void
     {
-        if (isset($exp_month) && preg_match('/^\d+/', $exp_month) == 1) {
+        if (isset($exp_month) && preg_match('/^\d+/', $exp_month) == '1') {
             $this->_card_exp_month = sprintf('%02d', $exp_month);
         } else {
             $this->_card_exp_month = $exp_month;

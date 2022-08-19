@@ -1,36 +1,45 @@
 <?php
 
-namespace BeGateway;
+declare(strict_types=1);
 
-class QueryByPaymentTokenTest extends TestCase
+namespace Tests\BeGateway;
+
+use BeGateway\GetPaymentToken;
+use BeGateway\QueryByPaymentToken;
+use BeGateway\ResponseCheckout;
+use BeGateway\Settings;
+use ReflectionClass;
+use Tests\AbstractTestCase;
+
+class QueryByPaymentTokenTest extends AbstractTestCase
 {
-    public function test_setToken()
+    public function testSetToken(): void
     {
         $q = $this->getTestObjectInstance();
 
         $q->setToken('123456');
 
-        $this->assertEqual($q->getToken(), '123456');
+        $this->assertEquals('123456', $q->getToken());
     }
 
-    public function test_endpoint()
+    public function testEndpoint(): void
     {
         $q = $this->getTestObjectInstance();
         $q->setToken('1234');
 
-        $reflection = new \ReflectionClass('BeGateway\QueryByPaymentToken');
+        $reflection = new ReflectionClass('BeGateway\QueryByPaymentToken');
         $method = $reflection->getMethod('_endpoint');
         $method->setAccessible(true);
         $url = $method->invoke($q, '_endpoint');
 
-        $this->assertEqual($url, Settings::$checkoutBase . '/ctp/api/checkouts/1234');
+        $this->assertEquals($url, Settings::$checkoutBase . '/ctp/api/checkouts/1234');
     }
 
-    public function test_queryRequest()
+    public function testQueryRequest(): void
     {
         $amount = rand(0, 10000);
 
-        $parent = $this->runParentTransaction($amount);
+        $parent = $this->runParentTransaction((float) $amount);
 
         $q = $this->getTestObjectInstance();
 
@@ -42,7 +51,7 @@ class QueryByPaymentTokenTest extends TestCase
         $this->assertNotNull($response->getToken(), $parent->getToken());
     }
 
-    public function test_queryResponseForUnknownUid()
+    public function testQueryResponseForUnknownUid(): void
     {
         $q = $this->getTestObjectInstance();
 
@@ -52,10 +61,10 @@ class QueryByPaymentTokenTest extends TestCase
 
         $this->assertTrue($response->isValid());
 
-        $this->assertEqual($response->getMessage(), 'Record not found');
+        $this->assertEquals('Record not found', $response->getMessage());
     }
 
-    protected function runParentTransaction($amount = 10.00)
+    private function runParentTransaction(float $amount = 10.00): ResponseCheckout
     {
         self::authorizeFromEnv();
 
@@ -86,7 +95,7 @@ class QueryByPaymentTokenTest extends TestCase
         return $transaction->submit();
     }
 
-    protected function getTestObjectInstance()
+    private function getTestObjectInstance(): QueryByPaymentToken
     {
         self::authorizeFromEnv();
 

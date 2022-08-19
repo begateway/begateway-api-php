@@ -9,9 +9,9 @@ use BeGateway\PaymentOperation;
 use BeGateway\Response;
 use BeGateway\Settings;
 use ReflectionClass;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class CreditOperationTest extends BaseTestCase
+class CreditOperationTest extends AbstractTestCase
 {
     public function testSetDescription(): void
     {
@@ -111,7 +111,7 @@ class CreditOperationTest extends BaseTestCase
         $this->assertMatchesRegularExpression('|Token does not exist.|', $t_response->getMessage());
     }
 
-    protected function runParentTransaction(float $amount = 10.00): Response
+    private function runParentTransaction(float $amount = 10.00): Response
     {
         self::authorizeFromEnv();
 
@@ -124,7 +124,7 @@ class CreditOperationTest extends BaseTestCase
 
         $transaction->card->setCardNumber('4200000000000000');
         $transaction->card->setCardHolder('John Doe');
-        $transaction->card->setCardExpMonth(1);
+        $transaction->card->setCardExpMonth('01');
         $transaction->card->setCardExpYear(2030);
         $transaction->card->setCardCvc('123');
 
@@ -140,7 +140,7 @@ class CreditOperationTest extends BaseTestCase
         return $transaction->submit();
     }
 
-    protected function getTestObject(): CreditOperation
+    private function getTestObject(): CreditOperation
     {
         $transaction = $this->getTestObjectInstance();
 
@@ -153,7 +153,7 @@ class CreditOperationTest extends BaseTestCase
         return $transaction;
     }
 
-    protected function getTestObjectInstance(): CreditOperation
+    private function getTestObjectInstance(): CreditOperation
     {
         self::authorizeFromEnv();
 

@@ -6,9 +6,9 @@ namespace Tests\BeGateway;
 
 use BeGateway\AuthorizationOperation;
 use BeGateway\Settings;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class GatewayTransportExceptionTest extends BaseTestCase
+class GatewayTransportExceptionTest extends AbstractTestCase
 {
     protected function setUp(): void
     {
@@ -36,7 +36,7 @@ class GatewayTransportExceptionTest extends BaseTestCase
         $this->assertMatchesRegularExpression('|thedomaindoesntexist.begatewaynotexist.com|', $response->getMessage());
     }
 
-    protected function getTestObject(bool $threed = false): AuthorizationOperation
+    private function getTestObject(bool $threed = false): AuthorizationOperation
     {
         $transaction = $this->getTestObjectInstance($threed);
 
@@ -47,7 +47,7 @@ class GatewayTransportExceptionTest extends BaseTestCase
 
         $transaction->card->setCardNumber('4200000000000000');
         $transaction->card->setCardHolder('John Doe');
-        $transaction->card->setCardExpMonth(1);
+        $transaction->card->setCardExpMonth('01');
         $transaction->card->setCardExpYear(2030);
         $transaction->card->setCardCvc('123');
 
@@ -63,7 +63,7 @@ class GatewayTransportExceptionTest extends BaseTestCase
         return $transaction;
     }
 
-    protected function getTestObjectInstance(bool $threed = false): AuthorizationOperation
+    private function getTestObjectInstance(bool $threed = false): AuthorizationOperation
     {
         self::authorizeFromEnv($threed);
 

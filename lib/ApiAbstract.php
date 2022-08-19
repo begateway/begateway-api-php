@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeGateway;
 
 use Exception;
@@ -7,6 +9,7 @@ use Exception;
 abstract class ApiAbstract
 {
     abstract protected function _buildRequestMessage();
+
     protected $_language;
     protected $_timeout_connect = 10;
     protected $_timeout_read = 30;

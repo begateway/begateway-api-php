@@ -1,40 +1,49 @@
 <?php
 
-namespace BeGateway;
+declare(strict_types=1);
 
-class QueryByUidTest extends TestCase
+namespace Tests\BeGateway;
+
+use BeGateway\PaymentOperation;
+use BeGateway\QueryByUid;
+use BeGateway\Response;
+use BeGateway\Settings;
+use ReflectionClass;
+use Tests\AbstractTestCase;
+
+class QueryByUidTest extends AbstractTestCase
 {
-    public function test_setUid()
+    public function testSetUid(): void
     {
         $q = $this->getTestObjectInstance();
 
         $q->setUid('123456');
 
-        $this->assertEqual($q->getUid(), '123456');
+        $this->assertEquals('123456', $q->getUid());
     }
 
-    public function test_endpoint()
+    public function testEndpoint(): void
     {
         $q = $this->getTestObjectInstance();
         $q->setUid('1234');
 
-        $reflection = new \ReflectionClass('BeGateway\QueryByUid');
+        $reflection = new ReflectionClass('BeGateway\QueryByUid');
         $method = $reflection->getMethod('_endpoints');
         $method->setAccessible(true);
         $url = $method->invoke($q, '_endpoints');
 
-        $this->assertEqual($url, [
-          Settings::$apiBase . '/beyag/payments/1234',
-          Settings::$apiBase . '/beyag/transactions/1234',
-          Settings::$gatewayBase . '/transactions/1234',
+        $this->assertEquals($url, [
+            Settings::$apiBase . '/beyag/payments/1234',
+            Settings::$apiBase . '/beyag/transactions/1234',
+            Settings::$gatewayBase . '/transactions/1234',
         ]);
     }
 
-    public function test_queryRequest()
+    public function testQueryRequest(): void
     {
         $amount = rand(0, 10000);
 
-        $parent = $this->runParentTransaction($amount);
+        $parent = $this->runParentTransaction((float) $amount);
 
         $q = $this->getTestObjectInstance();
 
@@ -45,10 +54,10 @@ class QueryByUidTest extends TestCase
         $this->assertTrue($response->isValid());
         $this->assertTrue($response->isSuccess());
         $this->assertNotNull($response->getUid());
-        $this->assertEqual($parent->getUid(), $response->getUid());
+        $this->assertEquals($parent->getUid(), $response->getUid());
     }
 
-    public function test_queryResponseForUnknownUid()
+    public function testQueryResponseForUnknownUid(): void
     {
         $q = $this->getTestObjectInstance();
 
@@ -58,10 +67,10 @@ class QueryByUidTest extends TestCase
 
         $this->assertTrue($response->isValid());
 
-        $this->assertEqual($response->getMessage(), 'Record not found');
+        $this->assertEquals('Record not found', $response->getMessage());
     }
 
-    protected function runParentTransaction($amount = 10.00)
+    private function runParentTransaction(float $amount = 10.00): Response
     {
         self::authorizeFromEnv();
 
@@ -74,7 +83,7 @@ class QueryByUidTest extends TestCase
 
         $transaction->card->setCardNumber('4200000000000000');
         $transaction->card->setCardHolder('John Doe');
-        $transaction->card->setCardExpMonth(1);
+        $transaction->card->setCardExpMonth('01');
         $transaction->card->setCardExpYear(2030);
         $transaction->card->setCardCvc('123');
 
@@ -90,7 +99,7 @@ class QueryByUidTest extends TestCase
         return $transaction->submit();
     }
 
-    protected function getTestObjectInstance()
+    private function getTestObjectInstance(): QueryByUid
     {
         self::authorizeFromEnv();
 

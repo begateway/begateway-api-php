@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeGateway;
 
 class AuthorizationOperation extends ApiAbstract
@@ -71,7 +73,7 @@ class AuthorizationOperation extends ApiAbstract
         $this->_test_mode = $mode;
     }
 
-    public function getTestMode()
+    public function getTestMode(): bool
     {
         return $this->_test_mode;
     }
@@ -103,7 +105,7 @@ class AuthorizationOperation extends ApiAbstract
         $card = array_filter($card);
 
         foreach ($card as $k => $v) {
-            if (strpos($v, '$begatewaycse') !== false) {
+            if (strpos((string) $v, '$begatewaycse') !== false) {
                 $encrypted_card[$k] = $v;
 
                 unset($card[$k]);

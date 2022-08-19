@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\BeGateway\PaymentMethod;
 
 use BeGateway\PaymentMethod\CreditCard;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class CreditCardTest extends BaseTestCase
+class CreditCardTest extends AbstractTestCase
 {
     public function testGetName(): void
     {
