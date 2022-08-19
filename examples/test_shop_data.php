@@ -1,6 +1,6 @@
 <?php
 
-// Shop Id issued by your payment provider
+// Shop ID issued by your payment provider
 BeGateway\Settings::$shopId = 361;
 
 // Shop secret key issued by your payment provider
