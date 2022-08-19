@@ -1,76 +1,81 @@
 <?php
 
-namespace BeGateway;
+declare(strict_types=1);
 
-class CustomerTest extends TestCase
+namespace Tests\BeGateway;
+
+use BeGateway\Customer;
+use Tests\BaseTestCase;
+
+class CustomerTest extends BaseTestCase
 {
-    public function test_set_get_FirstName()
+    public function testSetGetFirstName(): void
     {
         $customer = $this->getTestObject();
 
         $customer->setFirstName('John');
-        $this->assertEqual($customer->getFirstName(), 'John');
+        $this->assertEquals('John', $customer->getFirstName());
 
         $customer->setFirstName('');
-        $this->assertEqual($customer->getFirstName(), null);
+        $this->assertEquals(null, $customer->getFirstName());
     }
 
-    public function test_set_get_LastName()
+    public function testSetGetLastName(): void
     {
         $customer = $this->getTestObject();
 
         $customer->setLastName('Doe');
-        $this->assertEqual($customer->getLastName(), 'Doe');
+        $this->assertEquals('Doe', $customer->getLastName());
 
         $customer->setLastName('');
-        $this->assertEqual($customer->getLastName(), null);
+        $this->assertEquals(null, $customer->getLastName());
     }
 
-    public function test_set_get_Address()
+    public function testSetGetAddress(): void
     {
         $customer = $this->getTestObject();
 
         $customer->setAddress('po box 123');
-        $this->assertEqual($customer->getAddress(), 'po box 123');
+        $this->assertEquals('po box 123', $customer->getAddress());
 
         $customer->setAddress('');
-        $this->assertEqual($customer->getAddress(), null);
+        $this->assertEquals(null, $customer->getAddress());
     }
 
-    public function test_set_get_Country()
+    public function testSetGetCountry(): void
     {
         $customer = $this->getTestObject();
 
         $customer->setCountry('LV');
-        $this->assertEqual($customer->getCountry(), 'LV');
+        $this->assertEquals('LV', $customer->getCountry());
 
         $customer->setCountry('');
-        $this->assertEqual($customer->getCountry(), null);
+        $this->assertEquals(null, $customer->getCountry());
     }
 
-    public function test_set_get_Zip()
+    public function testSetGetZip(): void
     {
         $customer = $this->getTestObject();
 
         $customer->setZip('LV1024');
-        $this->assertEqual($customer->getZip(), 'LV1024');
+        $this->assertEquals('LV1024', $customer->getZip());
 
         $customer->setZip('');
-        $this->assertEqual($customer->getZip(), null);
+        $this->assertEquals(null, $customer->getZip());
     }
 
-    public function test_set_get_Email()
+    public function testSetGetEmail(): void
     {
         $customer = $this->getTestObject();
 
         $customer->setEmail('test@example.com');
-        $this->assertEqual($customer->getEmail(), 'test@example.com');
+        $this->assertEquals('test@example.com', $customer->getEmail());
 
         $customer->setEmail('');
-        $this->assertEqual($customer->getEmail(), null);
+        $this->assertEquals(null, $customer->getEmail());
     }
 
-    protected function getTestObject()
+    private function getTestObject(): Customer
     {
         return new Customer();
     }
