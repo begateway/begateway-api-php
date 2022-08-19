@@ -129,7 +129,7 @@ $finder = Finder::create()
     ->in([
         __DIR__ . '/lib',
         __DIR__ . '/examples',
-        __DIR__ . '/test/BeGateway'
+        __DIR__ . '/tests/BeGateway'
     ])
     ->name('*.php')
     ->ignoreDotFiles(true)
