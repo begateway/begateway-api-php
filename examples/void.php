@@ -1,10 +1,11 @@
 <?php
+
 require_once __DIR__ . '/../lib/BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
+BeGateway\Logger::getInstance()->setLogLevel(BeGateway\Logger::DEBUG);
 
-$transaction = new \BeGateway\AuthorizationOperation;
+$transaction = new BeGateway\AuthorizationOperation;
 
 $amount = rand(1, 100);
 
@@ -32,24 +33,23 @@ $transaction->customer->setEmail('john@example.com');
 
 $response = $transaction->submit();
 
-print("Transaction message: " . $response->getMessage() . PHP_EOL);
-print("Transaction status: " . $response->getStatus(). PHP_EOL);
+echo 'Transaction message: ' . $response->getMessage() . PHP_EOL;
+echo 'Transaction status: ' . $response->getStatus() . PHP_EOL;
 
-if ($response->isSuccess() ) {
-  print("Transaction UID: " . $response->getUid() . PHP_EOL);
-  print("Trying to Void transaction " . $response->getUid() . PHP_EOL);
+if ($response->isSuccess()) {
+    echo 'Transaction UID: ' . $response->getUid() . PHP_EOL;
+    echo 'Trying to Void transaction ' . $response->getUid() . PHP_EOL;
 
-  $void = new \BeGateway\VoidOperation;
-  $void->setParentUid($response->getUid());
-  $void->money->setAmount($transaction->money->getAmount());
+    $void = new BeGateway\VoidOperation;
+    $void->setParentUid($response->getUid());
+    $void->money->setAmount($transaction->money->getAmount());
 
-  $void_response = $void->submit();
+    $void_response = $void->submit();
 
-  if ($void_response->isSuccess()) {
-    print("Voided successfuly. Void transaction UID " . $void_response->getUid() . PHP_EOL);
-  }else{
-    print("Problem to void" . PHP_EOL);
-    print("Void message: " . $void_response->getMessage() . PHP_EOL);
-  }
+    if ($void_response->isSuccess()) {
+        echo 'Voided successfuly. Void transaction UID ' . $void_response->getUid() . PHP_EOL;
+    } else {
+        echo 'Problem to void' . PHP_EOL;
+        echo 'Void message: ' . $void_response->getMessage() . PHP_EOL;
+    }
 }
-?>

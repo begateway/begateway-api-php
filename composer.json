@@ -1,25 +1,39 @@
 {
     "name": "begateway/begateway-api-php",
-    "description" : "BeGateway PHP API library",
+    "description": "BeGateway PHP API library",
     "keywords": [
-      "bepaid",
-      "begateway",
-      "payment processing",
-      "api"
+        "bepaid",
+        "begateway",
+        "payment processing",
+        "api"
     ],
-    "license" : "MIT",
+    "license": "MIT",
     "authors": [
-      { "name" : "BeGateway",
-        "email": "admin@begateway.com"
-      }
+        {
+            "name": "BeGateway",
+            "email": "admin@begateway.com"
+        }
     ],
-    "require" : {
-        "php" : ">= 5.6.0",
+    "require": {
+        "php": ">=7.3.0",
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*"
     },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.10"
+    },
     "autoload": {
-     "psr-4": { "BeGateway\\" : "lib/BeGateway" }
+        "psr-4": {
+            "BeGateway\\": "lib/"
+        }
+    },
+    "scripts": {
+        "sniff": [
+            "./vendor/bin/php-cs-fixer fix -vvv --dry-run --show-progress=dots"
+        ],
+        "lint": [
+            "./vendor/bin/php-cs-fixer fix -vvv --show-progress=dots"
+        ]
     }
 }

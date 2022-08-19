@@ -1,10 +1,11 @@
 <?php
+
 require_once __DIR__ . '/../lib/BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
+BeGateway\Logger::getInstance()->setLogLevel(BeGateway\Logger::DEBUG);
 
-$transaction = new \BeGateway\AuthorizationOperation;
+$transaction = new BeGateway\AuthorizationOperation;
 
 $amount = rand(1, 100);
 
@@ -30,27 +31,25 @@ $transaction->customer->setZip('LV-1082');
 $transaction->customer->setIp('127.0.0.1');
 $transaction->customer->setEmail('john@example.com');
 
-
 $response = $transaction->submit();
 
-print("Transaction message: " . $response->getMessage() . PHP_EOL);
-print("Transaction status: " . $response->getStatus(). PHP_EOL);
+echo 'Transaction message: ' . $response->getMessage() . PHP_EOL;
+echo 'Transaction status: ' . $response->getStatus() . PHP_EOL;
 
-if ($response->isSuccess() ) {
-  print("Transaction UID: " . $response->getUid() . PHP_EOL);
-  print("Trying to Capture transaction " . $response->getUid() . PHP_EOL);
+if ($response->isSuccess()) {
+    echo 'Transaction UID: ' . $response->getUid() . PHP_EOL;
+    echo 'Trying to Capture transaction ' . $response->getUid() . PHP_EOL;
 
-  $capture = new \BeGateway\CaptureOperation;
-  $capture->setParentUid($response->getUid());
-  $capture->money->setAmount($transaction->money->getAmount());
+    $capture = new BeGateway\CaptureOperation;
+    $capture->setParentUid($response->getUid());
+    $capture->money->setAmount($transaction->money->getAmount());
 
-  $capture_response = $capture->submit();
+    $capture_response = $capture->submit();
 
-  if ($capture_response->isSuccess()) {
-    print("Captured successfuly. Captured transaction UID " . $capture_response->getUid() . PHP_EOL);
-  }else{
-    print("Problem to capture" . PHP_EOL);
-    print("Capture message: " . $capture_response->getMessage() . PHP_EOL);
-  }
+    if ($capture_response->isSuccess()) {
+        echo 'Captured successfuly. Captured transaction UID ' . $capture_response->getUid() . PHP_EOL;
+    } else {
+        echo 'Problem to capture' . PHP_EOL;
+        echo 'Capture message: ' . $capture_response->getMessage() . PHP_EOL;
+    }
 }
-?>
