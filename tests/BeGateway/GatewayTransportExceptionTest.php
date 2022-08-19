@@ -1,36 +1,42 @@
 <?php
 
-namespace BeGateway;
+declare(strict_types=1);
 
-class GatewayTransportExceptionTest extends TestCase
+namespace Tests\BeGateway;
+
+use BeGateway\AuthorizationOperation;
+use BeGateway\Settings;
+use Tests\BaseTestCase;
+
+class GatewayTransportExceptionTest extends BaseTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_apiBase = Settings::$gatewayBase;
+
         Settings::$gatewayBase = 'https://thedomaindoesntexist.begatewaynotexist.com';
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         Settings::$gatewayBase = $this->_apiBase;
     }
 
-    public function test_networkIssuesHandledCorrectly()
+    public function testNetworkIssuesHandledCorrectly()
     {
         $auth = $this->getTestObject();
 
         $amount = rand(0, 10000) / 100;
 
         $auth->money->setAmount($amount);
-        $cents = $auth->money->getCents();
 
         $response = $auth->submit();
 
         $this->assertTrue($response->isError());
-        $this->assertPattern('|thedomaindoesntexist.begatewaynotexist.com|', $response->getMessage());
+        $this->assertMatchesRegularExpression('|thedomaindoesntexist.begatewaynotexist.com|', $response->getMessage());
     }
 
-    protected function getTestObject($threed = false)
+    protected function getTestObject(bool $threed = false): AuthorizationOperation
     {
         $transaction = $this->getTestObjectInstance($threed);
 
@@ -57,7 +63,7 @@ class GatewayTransportExceptionTest extends TestCase
         return $transaction;
     }
 
-    protected function getTestObjectInstance($threed = false)
+    protected function getTestObjectInstance(bool $threed = false): AuthorizationOperation
     {
         self::authorizeFromEnv($threed);
 
