@@ -1,10 +1,11 @@
 <?php
-require_once __DIR__ . '/../lib/BeGateway.php';
+
+require_once __DIR__ . '/../BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
+BeGateway\Logger::getInstance()->setLogLevel(BeGateway\Logger::DEBUG);
 
-$transaction = new \BeGateway\GetPaymentToken;
+$transaction = new BeGateway\GetPaymentToken;
 
 $amount = rand(1, 100);
 $transaction->money->setAmount($amount);
@@ -37,9 +38,8 @@ $transaction->customer->setBirthDate('1970-01-12');
 
 $response = $transaction->submit();
 
-print("Transaction message: " . $response->getMessage() . PHP_EOL);
+echo 'Transaction message: ' . $response->getMessage() . PHP_EOL;
 
-if ($response->isSuccess() ) {
-  print("Token: " . $response->getToken() . PHP_EOL);
+if ($response->isSuccess()) {
+    echo 'Token: ' . $response->getToken() . PHP_EOL;
 }
-?>

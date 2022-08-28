@@ -1,92 +1,95 @@
 <?php
+
 namespace BeGateway;
 
-class QueryByPaymentTokenTest extends TestCase {
+class QueryByPaymentTokenTest extends TestCase
+{
+    public function test_setToken()
+    {
+        $q = $this->getTestObjectInstance();
 
-  public function test_setToken() {
-    $q = $this->getTestObjectInstance();
+        $q->setToken('123456');
 
-    $q->setToken('123456');
+        $this->assertEqual($q->getToken(), '123456');
+    }
 
-    $this->assertEqual($q->getToken(), '123456');
-  }
+    public function test_endpoint()
+    {
+        $q = $this->getTestObjectInstance();
+        $q->setToken('1234');
 
-  public function test_endpoint() {
+        $reflection = new \ReflectionClass('BeGateway\QueryByPaymentToken');
+        $method = $reflection->getMethod('_endpoint');
+        $method->setAccessible(true);
+        $url = $method->invoke($q, '_endpoint');
 
-    $q = $this->getTestObjectInstance();
-    $q->setToken('1234');
+        $this->assertEqual($url, Settings::$checkoutBase . '/ctp/api/checkouts/1234');
+    }
 
-    $reflection = new \ReflectionClass('BeGateway\QueryByPaymentToken');
-    $method = $reflection->getMethod('_endpoint');
-    $method->setAccessible(true);
-    $url = $method->invoke($q, '_endpoint');
+    public function test_queryRequest()
+    {
+        $amount = rand(0, 10000);
 
-    $this->assertEqual($url, Settings::$checkoutBase . '/ctp/api/checkouts/1234');
+        $parent = $this->runParentTransaction($amount);
 
-  }
+        $q = $this->getTestObjectInstance();
 
-  public function test_queryRequest() {
-    $amount = rand(0,10000);
+        $q->setToken($parent->getToken());
 
-    $parent = $this->runParentTransaction($amount);
+        $response = $q->submit();
 
-    $q = $this->getTestObjectInstance();
+        $this->assertTrue($response->isValid());
+        $this->assertNotNull($response->getToken(), $parent->getToken());
+    }
 
-    $q->setToken($parent->getToken());
+    public function test_queryResponseForUnknownUid()
+    {
+        $q = $this->getTestObjectInstance();
 
-    $response = $q->submit();
+        $q->setToken('1234567890qwerty');
 
-    $this->assertTrue($response->isValid());
-    $this->assertNotNull($response->getToken(), $parent->getToken());
+        $response = $q->submit();
 
-  }
+        $this->assertTrue($response->isValid());
 
-  public function test_queryResponseForUnknownUid() {
-    $q = $this->getTestObjectInstance();
+        $this->assertEqual($response->getMessage(), 'Record not found');
+    }
 
-    $q->setToken('1234567890qwerty');
+    protected function runParentTransaction($amount = 10.00)
+    {
+        self::authorizeFromEnv();
 
-    $response = $q->submit();
+        $transaction = new GetPaymentToken();
 
-    $this->assertTrue($response->isValid());
+        $url = 'http://www.example.com';
 
-    $this->assertEqual($response->getMessage(), 'Record not found');
-  }
+        $transaction->money->setAmount($amount);
+        $transaction->money->setCurrency('EUR');
+        $transaction->setAuthorizationTransactionType();
+        $transaction->setDescription('test');
+        $transaction->setTrackingId('my_custom_variable');
+        $transaction->setNotificationUrl($url . '/n');
+        $transaction->setCancelUrl($url . '/c');
+        $transaction->setSuccessUrl($url . '/s');
+        $transaction->setDeclineUrl($url . '/d');
+        $transaction->setFailUrl($url . '/f');
 
-  protected function runParentTransaction($amount = 10.00 ) {
-    self::authorizeFromEnv();
+        $transaction->customer->setFirstName('John');
+        $transaction->customer->setLastName('Doe');
+        $transaction->customer->setCountry('LV');
+        $transaction->customer->setAddress('Demo str 12');
+        $transaction->customer->setCity('Riga');
+        $transaction->customer->setZip('LV-1082');
+        $transaction->customer->setIp('127.0.0.1');
+        $transaction->customer->setEmail('john@example.com');
 
-    $transaction = new GetPaymentToken();
+        return $transaction->submit();
+    }
 
-    $url = 'http://www.example.com';
+    protected function getTestObjectInstance()
+    {
+        self::authorizeFromEnv();
 
-    $transaction->money->setAmount($amount);
-    $transaction->money->setCurrency('EUR');
-    $transaction->setAuthorizationTransactionType();
-    $transaction->setDescription('test');
-    $transaction->setTrackingId('my_custom_variable');
-    $transaction->setNotificationUrl($url . '/n' );
-    $transaction->setCancelUrl($url . '/c' );
-    $transaction->setSuccessUrl($url . '/s' );
-    $transaction->setDeclineUrl($url . '/d' );
-    $transaction->setFailUrl($url . '/f' );
-
-    $transaction->customer->setFirstName('John');
-    $transaction->customer->setLastName('Doe');
-    $transaction->customer->setCountry('LV');
-    $transaction->customer->setAddress('Demo str 12');
-    $transaction->customer->setCity('Riga');
-    $transaction->customer->setZip('LV-1082');
-    $transaction->customer->setIp('127.0.0.1');
-    $transaction->customer->setEmail('john@example.com');
-
-    return $transaction->submit();
-  }
-
-  protected function getTestObjectInstance() {
-    self::authorizeFromEnv();
-
-    return new QueryByPaymentToken();
-  }
+        return new QueryByPaymentToken();
+    }
 }
-?>

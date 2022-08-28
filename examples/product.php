@@ -1,10 +1,11 @@
 <?php
-require_once __DIR__ . '/../lib/BeGateway.php';
+
+require_once __DIR__ . '/../BeGateway.php';
 require_once __DIR__ . '/test_shop_data.php';
 
-\BeGateway\Logger::getInstance()->setLogLevel(\BeGateway\Logger::DEBUG);
+BeGateway\Logger::getInstance()->setLogLevel(BeGateway\Logger::DEBUG);
 
-$transaction = new \BeGateway\Product;
+$transaction = new BeGateway\Product;
 
 $amount = rand(1, 100);
 
@@ -17,7 +18,7 @@ $transaction->setTestMode(true);
 $response = $transaction->submit();
 
 if ($response->isSuccess()) {
-  print("Product Id: " . $response->getId() . PHP_EOL);
-  print("Link to pay: " . $response->getPayLink() . PHP_EOL);
-  print("URL for website: " . $response->getPayUrl() . PHP_EOL);
+    echo 'Product Id: ' . $response->getId() . PHP_EOL;
+    echo 'Link to pay: ' . $response->getPayLink() . PHP_EOL;
+    echo 'URL for website: ' . $response->getPayUrl() . PHP_EOL;
 }

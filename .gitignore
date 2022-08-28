@@ -1,3 +1,6 @@
 .idea
 .tags
 .tags1
+/vendor
+/composer.lock
+/.php-cs-fixer.cache

@@ -1,65 +1,66 @@
 <?php
+
 namespace BeGateway;
 
-class GatewayTransportExceptionTest extends TestCase {
+class GatewayTransportExceptionTest extends TestCase
+{
+    public function setUp()
+    {
+        $this->_apiBase = Settings::$gatewayBase;
+        Settings::$gatewayBase = 'https://thedomaindoesntexist.begatewaynotexist.com';
+    }
 
-  function setUp() {
-    $this->_apiBase = Settings::$gatewayBase;
-    Settings::$gatewayBase = 'https://thedomaindoesntexist.begatewaynotexist.com';
-  }
+    public function tearDown()
+    {
+        Settings::$gatewayBase = $this->_apiBase;
+    }
 
-  function tearDown() {
-    Settings::$gatewayBase = $this->_apiBase;
-  }
+    public function test_networkIssuesHandledCorrectly()
+    {
+        $auth = $this->getTestObject();
 
-  public function test_networkIssuesHandledCorrectly() {
-    $auth = $this->getTestObject();
+        $amount = rand(0, 10000) / 100;
 
-    $amount = rand(0,10000) / 100;
+        $auth->money->setAmount($amount);
+        $cents = $auth->money->getCents();
 
-    $auth->money->setAmount($amount);
-    $cents = $auth->money->getCents();
+        $response = $auth->submit();
 
-    $response = $auth->submit();
+        $this->assertTrue($response->isError());
+        $this->assertPattern('|thedomaindoesntexist.begatewaynotexist.com|', $response->getMessage());
+    }
 
-    $this->assertTrue($response->isError());
-    $this->assertPattern("|thedomaindoesntexist.begatewaynotexist.com|", $response->getMessage());
+    protected function getTestObject($threed = false)
+    {
+        $transaction = $this->getTestObjectInstance($threed);
 
-  }
+        $transaction->money->setAmount(12.33);
+        $transaction->money->setCurrency('EUR');
+        $transaction->setDescription('test');
+        $transaction->setTrackingId('my_custom_variable');
 
-  protected function getTestObject($threed = false) {
+        $transaction->card->setCardNumber('4200000000000000');
+        $transaction->card->setCardHolder('John Doe');
+        $transaction->card->setCardExpMonth(1);
+        $transaction->card->setCardExpYear(2030);
+        $transaction->card->setCardCvc('123');
 
-    $transaction = $this->getTestObjectInstance($threed);
+        $transaction->customer->setFirstName('John');
+        $transaction->customer->setLastName('Doe');
+        $transaction->customer->setCountry('LV');
+        $transaction->customer->setAddress('Demo str 12');
+        $transaction->customer->setCity('Riga');
+        $transaction->customer->setZip('LV-1082');
+        $transaction->customer->setIp('127.0.0.1');
+        $transaction->customer->setEmail('john@example.com');
 
-    $transaction->money->setAmount(12.33);
-    $transaction->money->setCurrency('EUR');
-    $transaction->setDescription('test');
-    $transaction->setTrackingId('my_custom_variable');
+        return $transaction;
+    }
 
-    $transaction->card->setCardNumber('4200000000000000');
-    $transaction->card->setCardHolder('John Doe');
-    $transaction->card->setCardExpMonth(1);
-    $transaction->card->setCardExpYear(2030);
-    $transaction->card->setCardCvc('123');
+    protected function getTestObjectInstance($threed = false)
+    {
+        self::authorizeFromEnv($threed);
 
-    $transaction->customer->setFirstName('John');
-    $transaction->customer->setLastName('Doe');
-    $transaction->customer->setCountry('LV');
-    $transaction->customer->setAddress('Demo str 12');
-    $transaction->customer->setCity('Riga');
-    $transaction->customer->setZip('LV-1082');
-    $transaction->customer->setIp('127.0.0.1');
-    $transaction->customer->setEmail('john@example.com');
-
-    return $transaction;
-  }
-
-  protected function getTestObjectInstance($threed = false) {
-    self::authorizeFromEnv($threed);
-
-    return new AuthorizationOperation();
-  }
-
-
+        return new AuthorizationOperation();
+    }
 }
-?>
