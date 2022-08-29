@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeGateway;
 
 class GetPaymentToken extends ApiAbstract
@@ -46,50 +48,50 @@ class GetPaymentToken extends ApiAbstract
     protected function _buildRequestMessage()
     {
         $request = [
-          'checkout' => [
-            'transaction_type' => $this->getTransactionType(),
-            'attempts' => $this->getAttempts(),
-            'test' => $this->getTestMode(),
-            'order' => [
-              'amount' => $this->money->getCents(),
-              'currency' => $this->money->getCurrency(),
-              'description' => $this->getDescription(),
-              'tracking_id' => $this->getTrackingId(),
-              'expired_at' => $this->getExpiryDate(),
-              'additional_data' => [
-                'receipt_text' => $this->additional_data->getReceipt(),
-                'contract' => $this->additional_data->getContract(),
-                'meta' => $this->additional_data->getMeta(),
-                'fiscalization' => $this->additional_data->getFiscalization(),
-                'platform_data' => $this->additional_data->getPlatformData(),
-                'integration_data' => $this->additional_data->getIntegrationData(),
-              ],
+            'checkout' => [
+                'transaction_type' => $this->getTransactionType(),
+                'attempts' => $this->getAttempts(),
+                'test' => $this->getTestMode(),
+                'order' => [
+                    'amount' => $this->money->getCents(),
+                    'currency' => $this->money->getCurrency(),
+                    'description' => $this->getDescription(),
+                    'tracking_id' => $this->getTrackingId(),
+                    'expired_at' => $this->getExpiryDate(),
+                    'additional_data' => [
+                        'receipt_text' => $this->additional_data->getReceipt(),
+                        'contract' => $this->additional_data->getContract(),
+                        'meta' => $this->additional_data->getMeta(),
+                        'fiscalization' => $this->additional_data->getFiscalization(),
+                        'platform_data' => $this->additional_data->getPlatformData(),
+                        'integration_data' => $this->additional_data->getIntegrationData(),
+                    ],
+                ],
+                'settings' => [
+                    'notification_url' => $this->getNotificationUrl(),
+                    'success_url' => $this->getSuccessUrl(),
+                    'decline_url' => $this->getDeclineUrl(),
+                    'fail_url' => $this->getFailUrl(),
+                    'cancel_url' => $this->getCancelUrl(),
+                    'language' => $this->getLanguage(),
+                    'customer_fields' => [
+                        'read_only' => $this->getReadonlyFields(),
+                        'visible' => $this->getVisibleFields(),
+                    ],
+                ],
+                'customer' => [
+                    'email' => $this->customer->getEmail(),
+                    'first_name' => $this->customer->getFirstName(),
+                    'last_name' => $this->customer->getLastName(),
+                    'country' => $this->customer->getCountry(),
+                    'city' => $this->customer->getCity(),
+                    'state' => $this->customer->getState(),
+                    'zip' => $this->customer->getZip(),
+                    'address' => $this->customer->getAddress(),
+                    'phone' => $this->customer->getPhone(),
+                    'birth_date' => $this->customer->getBirthDate(),
+                ],
             ],
-            'settings' => [
-              'notification_url' => $this->getNotificationUrl(),
-              'success_url' => $this->getSuccessUrl(),
-              'decline_url' => $this->getDeclineUrl(),
-              'fail_url' => $this->getFailUrl(),
-              'cancel_url' => $this->getCancelUrl(),
-              'language' => $this->getLanguage(),
-              'customer_fields' => [
-                'read_only' => $this->getReadonlyFields(),
-                'visible' => $this->getVisibleFields(),
-              ],
-            ],
-            'customer' => [
-              'email' => $this->customer->getEmail(),
-              'first_name' => $this->customer->getFirstName(),
-              'last_name' => $this->customer->getLastName(),
-              'country' => $this->customer->getCountry(),
-              'city' => $this->customer->getCity(),
-              'state' => $this->customer->getState(),
-              'zip' => $this->customer->getZip(),
-              'address' => $this->customer->getAddress(),
-              'phone' => $this->customer->getPhone(),
-              'birth_date' => $this->customer->getBirthDate(),
-            ],
-          ],
         ];
 
         if (is_null($this->getAttempts())) {
@@ -453,7 +455,7 @@ class GetPaymentToken extends ApiAbstract
         $this->_test_mode = $mode;
     }
 
-    public function getTestMode()
+    public function getTestMode(): bool
     {
         return $this->_test_mode;
     }

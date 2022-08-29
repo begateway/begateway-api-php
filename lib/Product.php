@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeGateway;
 
 class Product extends ApiAbstract
@@ -37,28 +39,28 @@ class Product extends ApiAbstract
     protected function _buildRequestMessage()
     {
         $request = [
-          'name'             => $this->getName(),
-          'description'      => $this->getDescription(),
-          'amount'           => $this->money->getCents(),
-          'currency'         => $this->money->getCurrency(),
-          'infinite'         => $this->getInfiniteState(),
-          'language'         => $this->getLanguage(),
-          'notification_url' => $this->getNotificationUrl(),
-          'success_url'      => $this->getSuccessUrl(),
-          'fail_url'         => $this->getFailUrl(),
-          'return_url'       => $this->getReturnUrl(),
-          'immortal'         => $this->getImmortalState(),
-          'visible'          => $this->getVisibleFields(),
-          'test'             => $this->getTestMode(),
-          'transaction_type' => $this->getTransactionType(),
-          'additional_data'  => [
-            'receipt_text' => $this->additional_data->getReceipt(),
-            'contract'     => $this->additional_data->getContract(),
-            'meta'         => $this->additional_data->getMeta(),
-            'fiscalization' => $this->additional_data->getFiscalization(),
-            'platform_data' => $this->additional_data->getPlatformData(),
-            'integration_data' => $this->additional_data->getIntegrationData(),
-          ],
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'amount' => $this->money->getCents(),
+            'currency' => $this->money->getCurrency(),
+            'infinite' => $this->getInfiniteState(),
+            'language' => $this->getLanguage(),
+            'notification_url' => $this->getNotificationUrl(),
+            'success_url' => $this->getSuccessUrl(),
+            'fail_url' => $this->getFailUrl(),
+            'return_url' => $this->getReturnUrl(),
+            'immortal' => $this->getImmortalState(),
+            'visible' => $this->getVisibleFields(),
+            'test' => $this->getTestMode(),
+            'transaction_type' => $this->getTransactionType(),
+            'additional_data' => [
+                'receipt_text' => $this->additional_data->getReceipt(),
+                'contract' => $this->additional_data->getContract(),
+                'meta' => $this->additional_data->getMeta(),
+                'fiscalization' => $this->additional_data->getFiscalization(),
+                'platform_data' => $this->additional_data->getPlatformData(),
+                'integration_data' => $this->additional_data->getIntegrationData(),
+            ],
         ];
 
         if ($this->_quantity > 0) {
@@ -328,7 +330,7 @@ class Product extends ApiAbstract
         $this->_visible = array_diff($this->_visible, ['birth_date']);
     }
 
-    public function setTestMode($mode = true)
+    public function setTestMode(bool $mode = true): void
     {
         $this->_test_mode = $mode;
     }

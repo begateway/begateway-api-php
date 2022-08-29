@@ -18,7 +18,7 @@ $transaction->setTestMode(true);
 
 $transaction->card->setCardNumber('4200000000000000');
 $transaction->card->setCardHolder('JOHN DOE');
-$transaction->card->setCardExpMonth(1);
+$transaction->card->setCardExpMonth('01');
 $transaction->card->setCardExpYear(2030);
 $transaction->card->setCardCvc('123');
 

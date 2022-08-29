@@ -8,7 +8,7 @@ BeGateway\Logger::getInstance()->setLogLevel(BeGateway\Logger::DEBUG);
 $token = new BeGateway\CardToken;
 $token->card->setCardNumber('4200000000000000');
 $token->card->setCardHolder('John Doe');
-$token->card->setCardExpMonth(1);
+$token->card->setCardExpMonth('01');
 $token->card->setCardExpYear(2029);
 
 $response = $token->submit();

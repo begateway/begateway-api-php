@@ -156,5 +156,5 @@ Visit https://doc.begateway.com for up-to-date documentation.
 To run tests
 
 ```bash
-php -f ./test/BeGateway.php
+./vendor/bin/phpunit
 ```
